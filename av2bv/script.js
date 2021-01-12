@@ -88,5 +88,6 @@ function copyValue() {
 	if (copy(document.getElementById('output'))) document.getElementById("result").innerHTML = '<strong style="color:green">复制成功</strong>';
 	else document.getElementById("result").innerHTML = '<strong>复制失败</strong>';
 }
+
 document.getElementById("input").placeholder = example;
 realtime();

@@ -1,6 +1,14 @@
+* {
+	outline: none;
+}
+
+::selection {
+	background-color: #936bff49;
+}
+
 body {
 	text-align: center;
-	background-color: #f0eef5;
+	background-color: #f1eff6;
 }
 
 a {
@@ -10,11 +18,26 @@ a {
 }
 
 a:hover {
-	background-color: #00ff003f;
+	background-color: #3cfb4c49;
 }
 
 a:active {
-	background-color: #00ff00bf;
+	background-color: #19f02b6d;
+}
+
+button {
+	background-color: #4ca951;
+	color: #faf9f8;
+	border: none;
+	border-radius: 2px;
+}
+
+button:hover {
+	background-color: #57d15d;
+}
+
+button:active {
+	background-color: #37723a;
 }
 
 .line {
@@ -40,12 +63,8 @@ strong {
 }
 
 .disabled {
+	opacity: 0.2;
 	pointer-events: none;
-	opacity: 0.2;
-}
-
-.fade {
-	opacity: 0.2;
 }
 
 .hide {
