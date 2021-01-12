@@ -6,6 +6,10 @@
 	background-color: #936bff49;
 }
 
+::-moz-selection {
+	background-color: #936bff49;
+}
+
 body {
 	text-align: center;
 	background-color: #f1eff6;
@@ -17,6 +21,7 @@ a {
 	border-radius: 2px;
 }
 
+input[type="checkbox"]+label:hover,
 a:hover {
 	background-color: #3cfb4c49;
 }
@@ -27,7 +32,7 @@ a:active {
 
 button {
 	background-color: #4ca951;
-	color: #faf9f8;
+	color: white;
 	border: none;
 	border-radius: 2px;
 }
@@ -38,6 +43,18 @@ button:hover {
 
 button:active {
 	background-color: #37723a;
+}
+
+input[type="checkbox"] {
+	display: none;
+}
+
+input[type="checkbox"]+label::before {
+	content: "\2610\20";
+}
+
+input[type="checkbox"]:checked+label::before {
+	content: "\2611\20";
 }
 
 .line {

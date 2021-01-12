@@ -33,10 +33,10 @@
 		<div class="textbox">
 			<div class="inner left">输入：</div>
 			<div class="inner right">
-				<div class="left"><input type="checkbox" id="av2bv" onchange="check()" checked>av转bv</div>
-				<div class="left"><input type="checkbox" id="bv2av" onchange="check()" checked>bv转av</div>
-				<div class="left"><input type="checkbox" id="realtime" onchange="realtime()" checked>实时转换</div>
-				<div class="left disabled"><input type="checkbox" id="api" onchange="api()">调用api</div>
+				<input type="checkbox" id="av2bv" onchange="check()" checked><label class="left" for="av2bv">av转bv</label>
+				<input type="checkbox" id="bv2av" onchange="check()" checked><label class="left" for="bv2av">bv转av</label>
+				<input type="checkbox" id="realtime" onchange="realtime()" checked><label class="left" for="realtime">实时转换</label>
+				<input type="checkbox" id="api" onchange="api()"><label class="left disabled" for="api">调用api</label>
 			</div>
 			<div class="clear"></div>
 			<textarea id="input" class="text" oninput="check()"></textarea>
