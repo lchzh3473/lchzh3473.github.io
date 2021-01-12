@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,minimum-scale=1,user-scalable=no">
+	<link rel="stylesheet" href="../static/style.css">
+	<title>Error</title>
+</head>
+
+<body>
+	<h1 id="title"></h1>
+	<p id="info"></p><br>
+	<div style="display: none">
+		<div>当前分数：
+			<span id="score"></span>
+		</div><br>
+		<div>从
+			<span id="min"></span>&nbsp;-
+			<span id="max"></span>&nbsp;之间的整数中猜(已经猜了
+			<span id="times">0</span>&nbsp;次)
+		</div><br>
+		<div>输入要猜的数字：
+			<input id="num" type="text" name="text">
+			<input id="ok" type="button" onclick="guess()" value="确定">
+			<input type="button" value="重置" onclick="location.reload()">
+		</div><br>
+		<div>结果：
+			<span id="result"></span>
+		</div><br><br>
+	</div>
+	<noscript><strong>此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<script src="./script.js"></script>
+	<script src="../static/script.js"></script>
+</body>
+
+</html>

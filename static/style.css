@@ -1,0 +1,55 @@
+body {
+	text-align: center;
+	background-color: #f0eef5;
+}
+
+a {
+	text-decoration: none;
+	color: red;
+	border-radius: 2px;
+}
+
+a:hover {
+	background-color: #00ff003f;
+}
+
+a:active {
+	background-color: #00ff00bf;
+}
+
+.line {
+	text-decoration: underline;
+}
+
+.index a {
+	line-height: 3;
+}
+
+#title {
+	color: blue;
+}
+
+#info,
+strong {
+	color: red;
+}
+
+.profile {
+	font-size: 10pt;
+	line-height: 1.5;
+}
+
+.disabled {
+	pointer-events: none;
+	opacity: 0.2;
+}
+
+.fade {
+	opacity: 0.2;
+}
+
+.hide {
+	position: absolute;
+	top: -9999px;
+	left: -9999px;
+}

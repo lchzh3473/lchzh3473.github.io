@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,minimum-scale=1,user-scalable=no">
+	<title>视频转字符画 - lchzh3473制作</title>
+	<style>
+		#stage {
+			line-height: 0px;
+			font-family: Consolas, monospace;
+			font-size: 12px;
+			white-space: pre;
+			margin-left: -100%;
+			margin-right: -100%;
+		}
+
+		#hide {
+			display: none;
+		}
+
+		.fade {
+			opacity: 0.2;
+		}
+	</style>
+</head>
+
+<body style="text-align: center">
+	<h1 style="color: blue">视频转字符画 v1.0.4</h1>
+	<p style="color: red">
+		作者：<a href="https://space.bilibili.com/274753872" style="color: red">lchzh3473</a>
+		(2020年6月16日制作)<br><br>最后更新于2020年11月14日
+	</p>
+	<p>
+		<span id="control">选择视频文件：<input id="file-selector" type="file"></span><input type="button" value="重置" onclick="location.reload()">
+	</p>
+	<p><span id="info">视频信息：</span><span id="fps"></span></p>
+	<div id="hide">
+		<p id="stage" style="border: 1px solid gray"></p>
+		<p>
+			字符画参数设置：<input id="xianshi" type="button" onclick="showsettings()">
+		</p>
+		<div id="inf">
+			<p>
+				字符数：水平<input id="width" type="number" min="1" max="304">，垂直<input id="height" type="number" min="1" max="114">
+			</p>
+			<p>
+				<input type="checkbox" id="inverse">反色
+				<input type="checkbox" id="flash">频闪(反色时不可用)
+			</p>
+		</div>
+		<input id="m" type="button" value="播放" onclick="bofang()">
+	</div>
+</body>
+<script charset="utf-8">
+	fileSelector = document.getElementById("file-selector");
+	stageEl = document.getElementById("stage");
+	videoEl = "";
+	canvasEl = "";
+	rowEls = [];
+	rows = "";
+	videoWidth = 280;
+	videoHeight = 105;
+	ws = new WebSocket("ws://localhost:8080");
+	txt = "";
+	start = 0;
+	l = 0;
+	fuck1 = document.getElementById("inf");
+	fuck2 = document.getElementById("xianshi");
+	fuck3 = document.getElementById("width");
+	fuck5 = document.getElementById("height");
+
+	function inflateStage() {
+		rows.forEach(function(elt, i) {
+			rowEls[i].innerHTML = elt;
+		});
+	}
+
+	function characterFromGrayscale(gs) {
+		if (gs > 220) {
+			return "&";
+		} else if (gs > 200) {
+			return "&";
+		} else if (gs > 180) {
+			return "#";
+		} else if (gs > 150) {
+			return "E";
+		} else if (gs > 120) {
+			return "Q";
+		} else if (gs > 100) {
+			return "=";
+		} else if (gs > 80) {
+			return "_";
+		} else if (gs > 40) {
+			return ".";
+		} else {
+			return " ";
+		}
+	}
+
+	function onFrame() {
+		ctx = canvasEl.getContext("2d");
+		ctx.clearRect(0, 0, videoWidth, videoHeight);
+
+		ctx.drawImage(videoEl, 0, 0, videoWidth, videoHeight);
+		imageData = ctx.getImageData(0, 0, videoWidth, videoHeight);
+		rows = [];
+		rowLength = videoWidth * 4;
+		for (i = 0; i < imageData.height; i++) {
+			rowString = "\n";
+			for (j = 0; j < imageData.width * 4; j += 4) {
+				r = imageData.data[i * rowLength + j];
+				g = imageData.data[i * rowLength + j + 1];
+				b = imageData.data[i * rowLength + j + 2];
+				a = imageData.data[i * rowLength + j + 3];
+				gs = r * 0.299 + g * 0.587 + b * 0.114;
+				if (
+					!(
+						document.getElementById("inverse").checked ||
+						(document.getElementById("flash").checked && l % 2 == 0)
+					)
+				) {
+					gs = 255 - gs;
+				}
+				rowString += characterFromGrayscale(gs);
+			}
+			rows.push(rowString);
+
+			//txt+=rowString;
+		}
+		if (ws) {
+			if (ws.readyState !== ws.OPEN) {
+				ws = null;
+			} else {
+				ws.send(rows.join("\n"));
+			}
+		} else {
+			inflateStage();
+		}
+		requestAnimationFrame(onFrame);
+		l++;
+		if (l % 10 == 0) {
+			end = Math.round(1e4 / (new Date().getTime() - start));
+			document.getElementById("fps").innerHTML =
+				'<strong style="color:green">帧率：' + end + "fps</strong>";
+			start = new Date().getTime();
+		}
+	}
+
+	fileSelector.onchange = function(fuck6) {
+		//上传文件
+		document.getElementById("control").className = "fade"; //按钮变灰
+		fileSelector.disabled = true; //禁用相关按钮
+		document.getElementById("hide").style.display = "block"; //显示播放器
+		showsettings();
+		videoEl = document.createElement("video");
+		videoEl.src = URL.createObjectURL(fuck6.target.files[0]);
+
+		videoEl.addEventListener("loadedmetadata", function() {
+			document.getElementById("info").innerHTML +=
+				'<strong style="color:green">时长：' +
+				videoEl.duration +
+				"s，尺寸：" +
+				videoEl.videoWidth +
+				"x" +
+				videoEl.videoHeight +
+				"，</strong>";
+		});
+
+		videoEl.addEventListener("ended", function() {
+			alert("播放结束");
+		});
+
+		fuck3.addEventListener("input", function() {
+			fuck4 = fuck3.value;
+			if (fuck4 > 0 && fuck4 < 304) {
+				videoWidth = fuck4;
+			} else {
+				videoWidth = 304;
+			}
+		});
+		fuck5.addEventListener("input", function() {
+			fuck4 = fuck5.value;
+			if (fuck4 > 0 && fuck4 < 114) {
+				videoHeight = fuck4;
+			} else {
+				videoHeight = 114;
+			}
+		});
+		canvasEl = document.createElement("canvas");
+		canvasEl.width = videoWidth;
+		canvasEl.height = videoHeight;
+		for (i = 0; i < videoHeight; i++) {
+			p = document.createElement("p");
+			stageEl.appendChild(p);
+			rowEls.push(p);
+		}
+		onFrame();
+	};
+
+	function bofang() {
+		videoEl.play();
+		document.getElementById("m").className = "fade";
+		document.getElementById("m").disabled = true;
+	}
+
+	function showsettings() {
+		if (fuck1.style.display == "none") {
+			fuck1.style.display = "block";
+			fuck2.value = "隐藏";
+		} else {
+			fuck1.style.display = "none";
+			fuck2.value = "显示";
+		}
+	}
+</script>
+
+</html>
