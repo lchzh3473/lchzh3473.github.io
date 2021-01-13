@@ -1,8 +1,8 @@
 "use strict";
 const title = 'AV号与BV号转换器';
-const version = [2, 0, 3];
+const version = [2, 0, 4];
 const firstUpdate = 1585055154756;
-const lastUpdate = 1610287220706;
+const lastUpdate = 1610537676901;
 
 const example = '示例：\nav92343654\nBV1UE411n763';
 const table = "fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF";
@@ -32,11 +32,12 @@ function bv2av(bvCode) {
 }
 
 function convert() {
-	let avNum = 0,
-		bvNum = 0,
-		avTotal = 0,
-		bvTotal = 0,
-		inValue = document.getElementById("input").value;
+	let avNum = 0;
+	let bvNum = 0;
+	let avTotal = 0;
+	let bvTotal = 0;
+	let result = document.getElementById("result");
+	let inValue = document.getElementById("input").value;
 	let out = inValue ? inValue : example;
 	out = out.replace(/&/g, "&amp;");
 	out = out.replace(/</g, "&lt;");
@@ -70,7 +71,10 @@ function convert() {
 	out = out.replace(/[Cc][Vv](\d+)/g, '<a class="cv"href="https://www.bilibili.com/read/cv$1">cv$1</a>');
 	out = out.replace(/&&/g, "");
 	document.getElementById("output").innerHTML = out;
-	document.getElementById("result").innerHTML = `<strong style="color:green">转换成功（av:${avNum}/${avTotal}&ensp;bv:${bvNum}/${bvTotal}）</strong>`;
+	if (avTotal + bvTotal == 0) result.innerHTML = `<strong>未检测到av号或bv号</strong>`;
+	else if (avTotal + bvTotal != avNum + bvNum) result.innerHTML = `<strong style="color:orange">已部分转换（av:${avNum}/${avTotal}&ensp;bv:${bvNum}/${bvTotal}）</strong>`;
+	else result.innerHTML = `<strong style="color:green">已全部转换（av:${avNum}/${avTotal}&ensp;bv:${bvNum}/${bvTotal}）</strong>`;
+	document.getElementById("copy").innerHTML = '复制';
 }
 
 function check() {
@@ -85,8 +89,7 @@ function realtime() {
 }
 
 function copyValue() {
-	if (copy(document.getElementById('output'))) document.getElementById("result").innerHTML = '<strong style="color:green">复制成功</strong>';
-	else document.getElementById("result").innerHTML = '<strong>复制失败</strong>';
+	if (copy(document.getElementById('output'))) document.getElementById("copy").innerHTML = '复制成功';
 }
 
 document.getElementById("input").placeholder = example;

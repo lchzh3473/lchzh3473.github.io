@@ -3,11 +3,11 @@
 }
 
 ::selection {
-	background-color: #936bff49;
+	background-color: rgba(147, 107, 255, 0.286);
 }
 
 ::-moz-selection {
-	background-color: #936bff49;
+	background-color: rgba(147, 107, 255, 0.286);
 }
 
 body {
@@ -23,11 +23,11 @@ a {
 
 input[type="checkbox"]+label:hover,
 a:hover {
-	background-color: #3cfb4c49;
+	background-color: rgba(60, 251, 76, 0.286);
 }
 
 a:active {
-	background-color: #19f02b6d;
+	background-color: rgba(25, 240, 43, 0.427);
 }
 
 button {
@@ -43,6 +43,12 @@ button:hover {
 
 button:active {
 	background-color: #37723a;
+}
+
+button,
+label {
+	-webkit-user-select: none;
+	-moz-user-select: none;
 }
 
 input[type="checkbox"] {

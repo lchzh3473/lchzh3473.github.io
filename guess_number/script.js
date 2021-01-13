@@ -10,13 +10,13 @@ else {
 	score = window.localStorage.getItem("score");
 	document.getElementById("score").innerHTML = Number(score);
 }
-var pNum = 0,
-	sNum = 0,
-	pMax = 1000,
-	pMin = 0,
-	sMax = pMax,
-	sMin = pMin,
-	sMid = sMin;
+var pNum = 0;
+var sNum = 0;
+var pMax = 1000;
+var pMin = 0;
+var sMax = pMax;
+var sMin = pMin;
+var sMid = sMin;
 const Rand = Math.floor(Math.random() * (pMax - pMin)) + pMin + 1;
 max.innerHTML = pMax;
 min.innerHTML = pMin;
