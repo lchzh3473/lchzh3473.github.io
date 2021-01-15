@@ -1,8 +1,8 @@
 "use strict";
 const title = 'AV号与BV号转换器';
-const version = [2, 0, 4];
+const version = [2, 0, 5];
 const firstUpdate = 1585055154756;
-const lastUpdate = 1610537676901;
+const lastUpdate = 1610686958106;
 
 const example = '示例：\nav92343654\nBV1UE411n763';
 const table = "fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF";
@@ -14,8 +14,8 @@ for (let i = 0; i < 58; i++) {
 	tr[table[i]] = i;
 }
 
-function av2bv(avCode) {
-	let n = (avCode ^ xor) + add;
+function av2bv(code) {
+	let n = (code ^ xor) + add;
 	let s = {};
 	for (let i = 0; i < 6; i++) {
 		s[pos[i]] = table[Math.floor(n / 58 ** i) % 58];
@@ -23,10 +23,10 @@ function av2bv(avCode) {
 	return `1${s[1]}${s[2]}4${s[4]}1${s[6]}7${s[8]}${s[9]}`;
 }
 
-function bv2av(bvCode) {
+function bv2av(code) {
 	let n = 0;
 	for (let i = 0; i < 6; i++) {
-		n += tr[bvCode[pos[i]]] * 58 ** i;
+		n += tr[code[pos[i]]] * 58 ** i;
 	}
 	return (n - add) ^ xor;
 }
@@ -41,35 +41,34 @@ function convert() {
 	let out = inValue ? inValue : example;
 	out = out.replace(/&/g, "&amp;");
 	out = out.replace(/</g, "&lt;");
-	if (document.getElementById("av2bv").checked) {
-		out = out.replace(/[Aa][Vv][1-9]\d*/g, function(code) {
-			let avCode = code.substring(2);
-			let bvCode = av2bv(avCode);
-			avTotal++;
-			if (avCode == bv2av(bvCode)) {
-				avNum++;
-				return `B<${bvCode}&&`;
-			}
-			return `A<${avCode}&&`;
-		});
-	}
-	if (document.getElementById("bv2av").checked) {
-		out = out.replace(/[Bb][Vv]1[1-9A-z]{9}/g, function(code) {
-			let bvCode = code.substring(2);
-			let avCode = bv2av(bvCode);
-			bvTotal++;
-			if (bvCode == av2bv(avCode)) {
-				bvNum++;
-				return `A<${avCode}&&`;
-			}
-			return `B<${bvCode}&&`;
-		});
-	}
-	out = out.replace(/</g, "V");
-	out = out.replace(/[Aa][Vv]([1-9]\d*)/g, '<a class="av"href="https://www.bilibili.com/video/av$1">av$1</a>');
-	out = out.replace(/[Bb][Vv]1[1-9A-z]{9}/g, '<a class="bv"href="https://www.bilibili.com/video/$&">$&</a>');
-	out = out.replace(/[Cc][Vv](\d+)/g, '<a class="cv"href="https://www.bilibili.com/read/cv$1">cv$1</a>');
-	out = out.replace(/&&/g, "");
+	out = out.replace(/av[1-9]\d*|bv1[1-9a-z]{9}|cv\d+/gi, function(code) {
+		let encode = code.substring(2);
+		let decode;
+		switch (code[0]) {
+			case 'A':
+			case 'a':
+				decode = av2bv(encode);
+				avTotal++;
+				if (encode == bv2av(decode)) {
+					avNum++;
+					if (document.getElementById("av2bv").checked) return `<a class="bv"href="https://www.bilibili.com/video/BV${decode}">BV${decode}</a>`;
+					return `<a class="av"href="https://www.bilibili.com/video/av${encode}">av${encode}</a>`;
+				}
+				return `<a class="invalid"href="https://www.bilibili.com/video/av${encode}">av${encode}</a>`;
+			case 'B':
+			case 'b':
+				decode = bv2av(encode);
+				bvTotal++;
+				if (decode > 0 && encode == av2bv(decode)) {
+					bvNum++;
+					if (document.getElementById("bv2av").checked) return `<a class="av"href="https://www.bilibili.com/video/av${decode}">av${decode}</a>`;
+					return `<a class="bv"href="https://www.bilibili.com/video/BV${encode}">BV${encode}</a>`;
+				}
+				return `<a class="invalid"href="https://www.bilibili.com/video/BV${encode}">BV${encode}</a>`;
+			default:
+				return `<a class="cv"href="https://www.bilibili.com/read/cv${encode}">cv${encode}</a>`;
+		}
+	});
 	document.getElementById("output").innerHTML = out;
 	if (avTotal + bvTotal == 0) result.innerHTML = `<strong>未检测到av号或bv号</strong>`;
 	else if (avTotal + bvTotal != avNum + bvNum) result.innerHTML = `<strong style="color:orange">已部分转换（av:${avNum}/${avTotal}&ensp;bv:${bvNum}/${bvTotal}）</strong>`;
