@@ -51,22 +51,22 @@ function convert() {
 				avTotal++;
 				if (encode == bv2av(decode)) {
 					avNum++;
-					if (document.getElementById("av2bv").checked) return `<a class="bv"href="https://www.bilibili.com/video/BV${decode}">BV${decode}</a>`;
-					return `<a class="av"href="https://www.bilibili.com/video/av${encode}">av${encode}</a>`;
+					if (document.getElementById("av2bv").checked) return `<a class="bv"href="http://www.bilibili.com/video/BV${decode}">BV${decode}</a>`;
+					return `<a class="av"href="http://www.bilibili.com/video/av${encode}">av${encode}</a>`;
 				}
-				return `<a class="invalid"href="https://www.bilibili.com/video/av${encode}">av${encode}</a>`;
+				return `<a class="invalid"href="http://www.bilibili.com/video/av${encode}">av${encode}</a>`;
 			case 'B':
 			case 'b':
 				decode = bv2av(encode);
 				bvTotal++;
 				if (decode > 0 && encode == av2bv(decode)) {
 					bvNum++;
-					if (document.getElementById("bv2av").checked) return `<a class="av"href="https://www.bilibili.com/video/av${decode}">av${decode}</a>`;
-					return `<a class="bv"href="https://www.bilibili.com/video/BV${encode}">BV${encode}</a>`;
+					if (document.getElementById("bv2av").checked) return `<a class="av"href="http://www.bilibili.com/video/av${decode}">av${decode}</a>`;
+					return `<a class="bv"href="http://www.bilibili.com/video/BV${encode}">BV${encode}</a>`;
 				}
-				return `<a class="invalid"href="https://www.bilibili.com/video/BV${encode}">BV${encode}</a>`;
+				return `<a class="invalid"href="http://www.bilibili.com/video/BV${encode}">BV${encode}</a>`;
 			default:
-				return `<a class="cv"href="https://www.bilibili.com/read/cv${encode}">cv${encode}</a>`;
+				return `<a class="cv"href="http://www.bilibili.com/read/cv${encode}">cv${encode}</a>`;
 		}
 	});
 	document.getElementById("output").innerHTML = out;

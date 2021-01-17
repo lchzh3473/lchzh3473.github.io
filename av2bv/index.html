@@ -5,9 +5,53 @@
 	<base target="_blank">
 	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,minimum-scale=1,user-scalable=no">
 	<link rel="stylesheet" href="../static/style.css">
-	<link rel="stylesheet" href="./style.css">
 	<title>Error</title>
 	<style>
+		.inner {
+			margin: 5px 0px;
+		}
+
+		.left {
+			float: left;
+			margin-left: 5px;
+		}
+
+		.right {
+			float: right;
+			margin-right: 5px;
+		}
+
+		.clear {
+			clear: both;
+		}
+
+		.textbox {
+			display: inline-block;
+			width: 80vw;
+			min-width: 12px;
+			max-width: 384px;
+			height: calc(40vh - 180px);
+			min-height: 84px;
+			max-height: 280px;
+			font-size: 10pt;
+		}
+
+		.text {
+			display: inline-block;
+			width: calc(100% - 10px);
+			height: calc(100% - 37px);
+			text-align: start;
+			font-family: monospace;
+			background-color: white;
+			resize: none;
+			white-space: pre-wrap;
+			overflow: auto;
+			overflow-wrap: break-word;
+			padding: 2px;
+			border: 1px solid gray;
+			border-radius: 2px;
+		}
+
 		a.av {
 			color: #fa7298;
 		}
