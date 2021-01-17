@@ -21,7 +21,7 @@ String.prototype.s = function(t, u) {
 	return v;
 };
 
-function a() {
+function convert() {
 	document.getElementById("result").innerHTML = "";
 	document.getElementById("output").innerHTML = "";
 	var d = document.getElementById("openfile").files[0];
