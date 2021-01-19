@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,minimum-scale=1,user-scalable=no">
+	<link rel="stylesheet" href="../static/style.css">
+	<title>Error</title>
+</head>
+
+<body>
+	<h1 id="title"></h1>
+	<p id="info"></p>
+	<div style="display: none">
+		<p>
+			<input type="file" accept="audio/midi" id="openfile">
+			<input type="button" value="重置" onclick="location.reload()">
+		</p>
+		<textarea id="result" rows="30" cols="40" placeholder="最终输出将在这里。" style="border: 1px solid gray" readonly></textarea>
+		<p>最小音符:
+			<select id="limnotes">
+				<option value="256">H</option>
+				<option value="128">I</option>
+				<option value="64">J</option>
+				<option value="32">K</option>
+				<option value="16">L</option>
+				<option value="8">M</option>
+				<option value="4">N</option>
+				<option value="2">O</option>
+				<option value="1" selected>P</option>
+			</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="checkbox" id="drumsets">鼓点模式&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>
+			<input type="button" value="转换" onclick="convert()">
+		</p>
+		<p>结果：</p>
+		<p id="output"></p>
+	</div>
+	<noscript><strong>此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<script src="./script.js"></script>
+	<script src="../static/script.js"></script>
+</body>
+
+</html>
