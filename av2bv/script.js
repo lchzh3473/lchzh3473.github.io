@@ -70,9 +70,16 @@ function convert() {
 		}
 	});
 	document.getElementById("output").innerHTML = out;
-	if (avTotal + bvTotal == 0) result.innerHTML = `<strong>未检测到av号或bv号</strong>`;
-	else if (avTotal + bvTotal != avNum + bvNum) result.innerHTML = `<strong style="color:orange">已部分转换（av:${avNum}/${avTotal}&ensp;bv:${bvNum}/${bvTotal}）</strong>`;
-	else result.innerHTML = `<strong style="color:green">已全部转换（av:${avNum}/${avTotal}&ensp;bv:${bvNum}/${bvTotal}）</strong>`;
+	if (avTotal + bvTotal == 0) {
+		result.className = 'error';
+		result.innerHTML = `未检测到av号或bv号`;
+	} else if (avTotal + bvTotal != avNum + bvNum) {
+		result.className = 'warning';
+		result.innerHTML = `已部分转换（av:${avNum}/${avTotal}&ensp;bv:${bvNum}/${bvTotal}）`;
+	} else {
+		result.className = 'accept';
+		result.innerHTML = `已全部转换（av:${avNum}/${avTotal}&ensp;bv:${bvNum}/${bvTotal}）`;
+	}
 	document.getElementById("copy").innerHTML = '复制';
 }
 

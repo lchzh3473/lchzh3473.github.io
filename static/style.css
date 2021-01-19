@@ -76,8 +76,16 @@ input[type="checkbox"]:checked+label::before {
 }
 
 #info,
-strong {
+strong.error {
 	color: red;
+}
+
+strong.warning {
+	color: orange;
+}
+
+strong.accept {
+	color: green;
 }
 
 .profile {
