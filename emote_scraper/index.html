@@ -5,36 +5,17 @@
 	<base target="_blank">
 	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,minimum-scale=1,user-scalable=no">
 	<link rel="stylesheet" href="../static/style.css">
-	<title>Error</title>
-	<style>
-		.input {
-			border: 1px solid gray;
-			border-radius: 2px;
-			/*height: 40vh;
-			width: 80vw;*/
-		}
-		iframe {
-			border: 1px solid gray;
-			border-radius: 2px;
-			height: 60vh;
-			width: 80vw;
-		}
-		button{
-			margin:5px;
-		}
-	</style>
+	<title>(っ °Д °;)っ</title>
 </head>
 
 <body>
 	<h1 id="title"></h1>
 	<p id="info"></p>
-	<p class="profile">
-		由于浏览器跨域限制不允许页面直接读取表情列表，请按照如下提示进行操作（需要跳转新页面，建议在浏览器中打开）：<br>
-		复制<a href="https://api.bilibili.com/x/emote/setting/panel?business=reply">https://api.bilibili.com/x/emote/setting/panel?business=reply</a>的全部内容粘贴到下框，<br>
-		然后点击“转换”按钮（若显示未登录则先在<a href="https://passport.bilibili.com/login">https://passport.bilibili.com/login</a>登录自己的b站账号）
-	</p>
 	<div style="display: none">
-		<p>
+		<p class="profile">
+			浏览器打开链接：<span id="website">https://api.bilibili.com/x/emote/setting/panel?business=reply</span>
+			<button onclick="copy(document.getElementById('website'))">复制链接</button><br>
+			复制全部内容粘贴到下框，然后点击“转换”按钮。
 		</p>
 		<textarea class="input" id="input"></textarea>
 		<br>
@@ -43,6 +24,20 @@
 	<noscript><strong>此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
 	<script src="./script.js"></script>
 	<script src="../static/script.js"></script>
+	<script>
+		window.onload = function() {
+			var url = "panel.json"
+			var request = new XMLHttpRequest();
+			request.open("get", url);
+			request.send(null);
+			request.onload = function() {
+				if (request.status == 200) {
+					var json = JSON.parse(request.responseText);
+					console.log(json);
+				}
+			}
+		}
+	</script>
 </body>
 
 </html>
