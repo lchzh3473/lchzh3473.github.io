@@ -5,16 +5,24 @@
 	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,minimum-scale=1,user-scalable=no">
 	<link rel="stylesheet" href="../static/style.css">
 	<title>(っ °Д °;)っ</title>
+	<style>
+		#stage{
+			width:96vw;
+			max-width: 960px;
+			height:56vw;
+			max-height: 560px;
+		}
+	</style>
 </head>
 
 <body>
 	<h1 id="title"></h1>
 	<p id="info"></p><br>
 	<div style="display: none">
-		<embed src="./combat.swf" width="960" height="560"></embed>
+		<embed id="stage" src="./combat.swf"></embed>
 	</div>
-	<div id="FlashInfo"></div>
-	<noscript><strong>此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<div><strong id="flashInfo"></strong></div>
+	<noscript><strong class="error">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
 	<script src="./script.js"></script>
 	<script src="../static/script.js"></script>
 </body>
