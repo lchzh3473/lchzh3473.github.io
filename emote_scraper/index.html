@@ -14,7 +14,6 @@
 		#stage {
 			width: 96vw;
 			max-width: 1650px;
-			/*66x25*/
 			line-height: 0px;
 			margin: auto;
 		}
@@ -31,18 +30,30 @@
 		}
 
 		.img:hover {
-			-webkit-filter: brightness(0.9);
-			filter: brightness(0.9);
+			-webkit-filter: brightness(1);
+			filter: brightness(1);
 		}
 
+		.fold,
 		.unfold {
-			-webkit-filter: url("fold.svg");
-			filter: url("fold.svg");
+			-webkit-filter: brightness(0.8);
+			filter: brightness(0.8);
 		}
 
-		.fold {
-			-webkit-filter: url("unfold.svg");
-			filter: url("unfold.svg");
+		.fold::after {
+			content: url(fold.svg);
+			position: absolute;
+			left: 1px;
+			top: calc(1em - 64px);
+			pointer-events: none;
+		}
+
+		.unfold::after {
+			content: url(unfold.svg);
+			position: absolute;
+			left: 1px;
+			top: calc(1em - 64px);
+			pointer-events: none;
 		}
 	</style>
 </head>
