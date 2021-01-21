@@ -35,6 +35,7 @@ button {
 	color: white;
 	border: none;
 	border-radius: 2px;
+	margin:1px;
 }
 
 button:hover {
@@ -51,6 +52,7 @@ label {
 	-moz-user-select: none;
 }
 
+.hide,
 input[type="checkbox"] {
 	display: none;
 }
@@ -96,10 +98,4 @@ strong.accept {
 .disabled {
 	opacity: 0.2;
 	pointer-events: none;
-}
-
-.hide {
-	position: absolute;
-	top: -9999px;
-	left: -9999px;
 }
