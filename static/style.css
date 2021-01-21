@@ -99,3 +99,6 @@ strong.accept {
 	opacity: 0.2;
 	pointer-events: none;
 }
+.fade{
+	visibility: hidden;
+}

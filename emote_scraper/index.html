@@ -6,6 +6,45 @@
 	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,minimum-scale=1,user-scalable=no">
 	<link rel="stylesheet" href="../static/style.css">
 	<title>(っ °Д °;)っ</title>
+	<style>
+		::-webkit-scrollbar {
+			display: none;
+		}
+
+		#stage {
+			width: 96vw;
+			max-width: 1650px;
+			/*66x25*/
+			line-height: 0px;
+			margin: auto;
+		}
+
+		.img {
+			width: 56px;
+			height: 56px;
+			border: 2px solid blue;
+			border-radius: 2px;
+			margin: 1px;
+			padding: 2px;
+			resize: none;
+			background-color: white;
+		}
+
+		.img:hover {
+			-webkit-filter: brightness(0.9);
+			filter: brightness(0.9);
+		}
+
+		.unfold {
+			-webkit-filter: url("fold.svg");
+			filter: url("fold.svg");
+		}
+
+		.fold {
+			-webkit-filter: url("unfold.svg");
+			filter: url("unfold.svg");
+		}
+	</style>
 </head>
 
 <body>
@@ -13,17 +52,19 @@
 	<p id="info"></p>
 	<div style="display: none">
 		<p class="profile">
-			浏览器打开链接：<span id="website">https://api.bilibili.com/x/emote/setting/panel?business=reply</span>
-			<button onclick="copy(document.getElementById('website'))">复制链接</button><br>
-			复制全部内容粘贴到下框，然后点击“转换”按钮。
+			请按照如下提示进行操作(点击链接可以复制)：<br>
+			首先登录：<a id="website1" onclick="copy(document.getElementById('website1'))">https://passport.bilibili.com/login</a><br>
+			然后打开以下链接，将页面内全部内容复制粘贴至文本框：<br>
+			<a id="website2" onclick="copy(document.getElementById('website2'))">https://api.bilibili.com/x/emote/setting/panel?business=reply</a><br>
+			最后点击“解析”按钮。留空以调用最近一次记录。
 		</p>
-		<textarea class="input" id="input"></textarea>
-		<br>
-		<button type="button" id="convert" onclick="convert()">转换</button>
+		<textarea class="input" id="input" style="resize: none" placeholder="这是文本框。"></textarea><br>
+		<button type="button" id="convert" onclick="convert()">解析</button>
 		<p>结果：</p>
 		<p><strong id="output"></strong></p>
+		<div id="stage"></div>
 	</div>
-	<noscript><strong class="error">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<noscript><strong style="color:red">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
 	<script src="./script.js"></script>
 	<script src="../static/script.js"></script>
 	<script>

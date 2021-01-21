@@ -1,47 +1,103 @@
 "use strict";
-const title = 'b站表情图获取工具'
+const title = 'b站表情图获取工具';
 const version = [1, 0];
 const firstUpdate = 1610790787128;
 const lastUpdate = 1610790787128;
 
-var error;
+var panel, packages, packagesNew, emotesNew, gifsNew, panelNew;
 
 function convert() {
+	panel = {};
+	packages = [];
+	packagesNew = [];
+	emotesNew = [];
+	gifsNew = [];
+	panelNew = {};
+	var startTime = new Date().getTime();
 	let input = document.getElementById("input").value;
+	document.getElementById("input").value = "";
 	let output = document.getElementById("output");
-	try {
-		var arr1 = JSON.parse(input).data.all_packages;
-	} catch (err) {
-		error = err;
-	}
 	if (!input) {
 		output.className = "error";
 		output.innerHTML = "输入为空。";
-	} else if (error) {
-		output.className = "error";
-		output.innerHTML = "输入有误。";
-	} else {
-		var arr = new Array();
-		var str = "";
-		for (let i = 0; i < arr1.length; i++) {
-			let arr2 = arr1[i].emote;
-			for (let j = 0; j < arr2.length; j++) {
-				arr = arr.concat(arr2[j]);
+		return;
+	}
+	try {
+		panel = JSON.parse(input);
+		if (panel.code == -101) throw 2;
+		if (panel.code != 0) throw 3;
+		packages = panel.data.all_packages;
+		for (let i in packages) {
+			let packageNew = {};
+			packageNew.id = packages[i].id;
+			packageNew.text = packages[i].text;
+			packageNew.type = packages[i].type;
+			packageNew.url = packages[i].url;
+			packagesNew.push(packageNew);
+			let emotes = packages[i].emote;
+			for (let j in emotes) {
+				let emoteNew = {};
+				emoteNew.id = emotes[j].id;
+				emoteNew.pid = emotes[j].package_id;
+				emoteNew.text = emotes[j].text;
+				emoteNew.type = emotes[j].type;
+				emoteNew.url = emotes[j].url;
+				emotesNew.push(emoteNew);
+				if (emotes[j].gif_url != null) {
+					let gifNew = JSON.parse(JSON.stringify(emoteNew));
+					gifNew.url = emotes[j].gif_url;
+					gifsNew.push(gifNew);
+				}
 			}
 		}
-		arr.sort(function(obj1, obj2) {
-			let val1 = obj1.id;
-			let val2 = obj2.id;
-			return val1 - val2;
-		});
-		str += `<style>::-webkit-scrollbar{display:none;}</style>`;
-		for (let i = 0; i < arr.length; i++) {
-			if (arr[i].url[0] == 'h') str += `<a href='${arr[i].url}'target='_blank'><img title='${('0000'+arr[i].id).slice(-4)}_${arr[i].text}'src='${arr[i].url}@56w_56h.webp'width='56px'height='56px'></img></a>`;
-			else str += `<a href='#'><img title='${('0000'+arr[i].id).slice(-4)}_${arr[i].text}'width='56px'height='56px'></img></a>`;
+		panelNew.packages = packagesNew;
+		panelNew.statics = emotesNew;
+		panelNew.dynamics = gifsNew;
+		window.localStorage.setItem("panel", JSON.stringify(panelNew));
+	} catch (err) {
+		if (err == 2) {
+			output.className = "warning";
+			output.innerHTML = "请登录b站账号。";
+			return;
 		}
-		str += `<br><br>`;
-		console.log(str);
-		output.className = "accept";
-		output.innerHTML = "转换成功。";
+		output.className = "error";
+		output.innerHTML = "输入有误。" + err;
+		return;
+	}
+	var endTime = (new Date().getTime() - startTime) / 1000;
+	document.getElementById("stage").innerHTML = "";
+	output.className = "accept";
+	output.innerHTML = `解析成功。(${endTime}s)`;
+	let arr = panelNew.packages;
+	for (let i in arr) {
+		let img0 = document.createElement("img");
+		img0.id = `img${arr[i].id}`;
+		img0.className = "img fold";
+		img0.title = `${(`000${arr[i].id}`).slice(-3)}_${arr[i].text}`;
+		img0.src = `${arr[i].url}@56w_56h.webp`;
+		img0.onclick = function() {
+			document.getElementById(`img${arr[i].id}`).classList.toggle("fold");
+			document.getElementById(`img${arr[i].id}`).classList.toggle("unfold");
+			document.getElementById(`span${arr[i].id}`).classList.toggle("hide");
+		}
+		let span0 = document.createElement("span");
+		span0.id = `span${arr[i].id}`;
+		span0.className = "hide";
+		document.getElementById("stage").appendChild(img0);
+		document.getElementById("stage").appendChild(span0);
+	}
+	let arr1 = panelNew.statics;
+	for (let i in arr1) {
+		let img1 = document.createElement((arr1[i].type == 4) ? "textarea" : "img");
+		img1.className = "img";
+		img1.title = `${(`0000${arr1[i].id}`).slice(-4)}_${arr1[i].text}`;
+		if (arr1[i].type == 4) img1.innerHTML = arr1[i].url;
+		else img1.src = `${arr1[i].url}@56w_56h.webp`;
+		document.getElementById(`span${arr1[i].pid}`).appendChild(img1);
+	}
+	for (let i = 0; i < 25; i++) {
+		let img1 = document.createElement("img");
+		img1.className = "img fade";
+		document.getElementById("stage").appendChild(img1);
 	}
 }
