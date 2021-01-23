@@ -22,6 +22,7 @@ a {
 }
 
 input[type="checkbox"]+label:hover,
+input[type="radio"]+label:hover,
 a:hover {
 	background-color: rgba(60, 251, 76, 0.286);
 }
@@ -35,7 +36,7 @@ button {
 	color: white;
 	border: none;
 	border-radius: 2px;
-	margin:1px;
+	margin: 1px;
 }
 
 button:hover {
@@ -53,7 +54,8 @@ label {
 }
 
 .hide,
-input[type="checkbox"] {
+input[type="checkbox"],
+input[type="radio"] {
 	display: none;
 }
 
@@ -63,6 +65,14 @@ input[type="checkbox"]+label::before {
 
 input[type="checkbox"]:checked+label::before {
 	content: "\2611\20";
+}
+
+input[type="radio"]+label::before {
+	content: "\29be\20";
+}
+
+input[type="radio"]:checked+label::before {
+	content: "\29bf\20";
 }
 
 .line {
@@ -99,6 +109,7 @@ strong.accept {
 	opacity: 0.2;
 	pointer-events: none;
 }
-.fade{
+
+.fade {
 	visibility: hidden;
 }

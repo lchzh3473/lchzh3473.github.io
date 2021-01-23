@@ -13,25 +13,38 @@
 
 		#stage {
 			width: 96vw;
-			max-width: 1650px;
+			max-width: 1600px;
+			height: 400px;
 			line-height: 0px;
 			margin: auto;
+			overflow: scroll;
 		}
 
 		.img {
 			width: 56px;
 			height: 56px;
-			border: 2px solid blue;
+			border: 3px solid gray;
 			border-radius: 2px;
 			margin: 1px;
-			padding: 2px;
+			padding: 0px;
 			resize: none;
 			background-color: white;
 		}
 
-		.img:hover {
-			-webkit-filter: brightness(1);
-			filter: brightness(1);
+		.default {
+			border-color: blue;
+		}
+
+		.new {
+			border-color: limegreen;
+		}
+
+		.changed {
+			border-color: orange;
+		}
+
+		.removed {
+			border-color: red;
 		}
 
 		.fold,
@@ -69,29 +82,52 @@
 			<a id="website2" onclick="copy(document.getElementById('website2'))">https://api.bilibili.com/x/emote/setting/panel?business=reply</a><br>
 			最后点击“解析”按钮。留空以调用最近一次记录。
 		</p>
-		<textarea class="input" id="input" style="resize: none" placeholder="这是文本框。"></textarea><br>
-		<button type="button" id="convert" onclick="convert()">解析</button>
-		<p>结果：</p>
+		<div style="display:flex;justify-content:center">
+			<textarea class="input" id="input" style="resize: none" rows="1" placeholder="这是文本框。"></textarea>
+			<button type="button" onclick="analyse()">解析</button>
+		</div>
 		<p><strong id="output"></strong></p>
-		<div id="stage"></div>
+		<div id="control" class="hide">
+			选择类型：
+			<input type="radio" name="type" id="packages" onchange="convert()">
+			<label for="packages">表情包</label>
+			<input type="radio" name="type" id="statics" onchange="convert()">
+			<label for="statics">静态</label>
+			<input type="radio" name="type" id="dynamics" onchange="convert()">
+			<label for="dynamics">动态</label>
+			<div>
+				筛选：
+				<input type="radio" name="filter" id="new" onchange="convert()">
+				<label for="new" style="color:green">新增</label>
+				<input type="radio" name="filter" id="removed" onchange="convert()">
+				<label for="removed" style="color:red">移除</label>
+				<input type="radio" name="filter" id="changed" onchange="convert()">
+				<label for="changed" style="color:orange">更改</label>
+				<input type="radio" name="filter" id="all" onchange="convert()">
+				<label for="all" style="color:blue">全部</label>
+			</div>
+			<div>
+				<span id="static">
+					<button type="button" onclick="fold(0)">全部展开</button>
+					<button type="button" onclick="fold(1)">全部收起</button>
+				</span>
+				<span id="scroll">
+					<button type="button" onclick="scrollStage(0)">滑到顶部</button>
+					<button type="button" onclick="scrollStage(1)">滑到底部</button>
+				</span>
+				<input type="checkbox" id="sort" onchange="convert()">
+				<label for="sort">按id排序</label>
+				<button type="button" onclick="saveHistory()">保存记录</button>
+			</div>
+			<hr>
+			<div id="stage"></div>
+			<hr>
+		</div>
 	</div>
 	<noscript><strong style="color:red">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<script src="test.js"></script>
 	<script src="./script.js"></script>
 	<script src="../static/script.js"></script>
-	<script>
-		window.onload = function() {
-			var url = "panel.json"
-			var request = new XMLHttpRequest();
-			request.open("get", url);
-			request.send(null);
-			request.onload = function() {
-				if (request.status == 200) {
-					var json = JSON.parse(request.responseText);
-					console.log(json);
-				}
-			}
-		}
-	</script>
 </body>
 
 </html>

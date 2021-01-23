@@ -17,10 +17,10 @@ if (a) {
 		}
 	}
 }
-if (iFlash == null) {
-	flashInfo.className = 'error';
-	flashInfo.innerHTML = `此浏览器未安装或已禁用Flash，该脚本无法运行。`;
-} else {
+if (iFlash) {
 	flashInfo.className = 'accept';
 	flashInfo.innerHTML = `当前Flash版本：${vFlash}`;
+} else {
+	flashInfo.className = 'error';
+	flashInfo.innerHTML = `此浏览器未安装或已禁用Flash，该脚本无法运行。`;
 }
