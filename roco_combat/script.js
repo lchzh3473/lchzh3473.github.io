@@ -22,5 +22,5 @@ if (iFlash) {
 	flashInfo.innerHTML = `当前Flash版本：${vFlash}`;
 } else {
 	flashInfo.className = 'error';
-	flashInfo.innerHTML = `此浏览器未安装或已禁用Flash，该脚本无法运行。`;
+	flashInfo.innerHTML = `此浏览器不支持Flash，该脚本无法运行。`;
 }

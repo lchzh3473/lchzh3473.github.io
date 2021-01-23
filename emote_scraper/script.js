@@ -131,7 +131,7 @@ function addEmote(str) {
 			img.id = `img${i.id}`;
 			img.classList.add("img", arrd[i.m]);
 			img.title = `${(`000${i.id}`).slice(-3)}_${i.text}`;
-			img.src = `${i.url.replace(/http:/g,"https:")}@56w_56h.webp`;
+			img.src = `${i.url}@56w_56h.webp`;
 			pack.onclick = function() {
 				document.getElementById(`pack${i.id}`).classList.toggle("fold");
 				document.getElementById(`pack${i.id}`).classList.toggle("unfold");
@@ -148,10 +148,10 @@ function addEmote(str) {
 		for (let i of panelSort[arrw[1]]) {
 			let img = document.createElement((i.type == 4) ? "textarea" : "img");
 			img.classList.add("img", arrd[i.m]);
-			img.title = `${(`0000${i.id}`).slice(-4)}_${i.text}`;
+			img.title = `${(`0000${i.id}`).slice(-4)}${i.text}`;
 			if (i.type == 4) img.innerHTML = i.url;
 			else {
-				img.src = `${i.url.replace(/http:/g,"https:")}@56w_56h.webp`;
+				img.src = `${i.url}@56w_56h.webp`;
 				img.onclick = function() {
 					window.open(i.url);
 				};
@@ -163,10 +163,10 @@ function addEmote(str) {
 		for (let i of panelSort[str]) {
 			let img = document.createElement((i.type == 4) ? "textarea" : "img");
 			img.classList.add("img", arrd[i.m]);
-			img.title = `${(`0000${i.id}`).slice(-4)}_${i.text}`;
+			img.title = `${(`0000${i.id}`).slice(-4)}${i.text}`;
 			if (i.type == 4) img.innerHTML = i.url;
 			else {
-				img.src = `${i.url.replace(/http:/g,"https:")}@56w_56h.webp`;
+				img.src = `${i.url}@56w_56h.webp`;
 				img.onclick = function() {
 					window.open(i.url);
 				};
