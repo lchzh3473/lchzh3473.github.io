@@ -47,7 +47,7 @@ function analyse() {
 			panelNew.packages.push(packageNew);
 		}
 		//
-		let str=window.localStorage.getItem("panel");
+		let str = window.localStorage.getItem("panel");
 		if (!str) {
 			let request = new XMLHttpRequest();
 			request.open("get", "panelOld.json");
