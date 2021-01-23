@@ -62,7 +62,6 @@ function analyse() {
 		}
 		let panelOld = JSON.parse(str);
 		//
-		if (!panelOld) panelOld = JSON.parse(test);
 		let panelArray = {
 			"packages": [],
 			"statics": [],
