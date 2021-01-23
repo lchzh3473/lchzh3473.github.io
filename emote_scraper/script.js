@@ -7,6 +7,7 @@ const lastUpdate = 1610790787128;
 var panelSort, panelNew = {};
 let arrw = ["packages", "statics", "dynamics"];
 let arrd = ["default", "new", "changed", "removed"];
+let arrn = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 function analyse() {
 	var startTime = new Date().getTime();
@@ -32,9 +33,9 @@ function analyse() {
 					"id": j.id,
 					"m": 1,
 					"pid": j.package_id,
-					"text": j.text.replace(/[\"']/g, "\\$&"),
+					"text": j.text,
 					"type": i.type,
-					"url": j.url.replace(/[\"']/g, "\\$&")
+					"url": j.url
 				};
 				panelNew.statics.push(emoteNew);
 				if (j.gif_url) {
@@ -45,18 +46,23 @@ function analyse() {
 			}
 			panelNew.packages.push(packageNew);
 		}
-		let panelOld = window.localStorage.getItem("panel");
-		if (!panelOld) {
+		//
+		let str=window.localStorage.getItem("panel");
+		if (!str) {
 			let request = new XMLHttpRequest();
-			request.open("get", "panelNew.json");
+			request.open("get", "panelOld.json");
 			request.send(null);
 			request.onload = function() {
 				if (request.status == 200) {
-					panelOld = JSON.parse(request.responseText);
+					str = request.responseText;
+					window.localStorage.setItem("panel", str);
+					window.localStorage.setItem("panel_old", str);
 				}
 			}
 		}
-		if (!panelOld) panelOld = JSON.parse(test); //test
+		let panelOld = JSON.parse(str);
+		//
+		if (!panelOld) panelOld = JSON.parse(test);
 		let panelArray = {
 			"packages": [],
 			"statics": [],
@@ -70,7 +76,7 @@ function analyse() {
 					i.m = 3;
 					j = i;
 					panelNew[k].push(i);
-				} else if (j.text.replace(/\\([\"'])/g, "$1") == i.text && j.url.replace(/\\([\"'])/g, "$1") == i.url) j.m = 0;
+				} else if (j.text == i.text && j.url == i.url) j.m = 0;
 				else j.m = 2;
 			}
 		}
@@ -125,8 +131,8 @@ function addEmote(str) {
 			let img = document.createElement("img");
 			img.id = `img${i.id}`;
 			img.classList.add("img", arrd[i.m]);
-			img.title = `${(`000${i.id}`).slice(-3)}_${i.text.replace(/\\([\"'])/g,"$1")}`;
-			img.src = `${i.url}@56w_56h.webp`;
+			img.title = `${(`000${i.id}`).slice(-3)}_${i.text}`;
+			img.src = `${i.url.replace(/http:/g,"https:")}@56w_56h.webp`;
 			pack.onclick = function() {
 				document.getElementById(`pack${i.id}`).classList.toggle("fold");
 				document.getElementById(`pack${i.id}`).classList.toggle("unfold");
@@ -143,10 +149,10 @@ function addEmote(str) {
 		for (let i of panelSort[arrw[1]]) {
 			let img = document.createElement((i.type == 4) ? "textarea" : "img");
 			img.classList.add("img", arrd[i.m]);
-			img.title = `${(`0000${i.id}`).slice(-4)}_${i.text.replace(/\\([\"'])/g,"$1")}`;
-			if (i.type == 4) img.innerHTML = i.url.replace(/\\([\"'])/g, "$1");
+			img.title = `${(`0000${i.id}`).slice(-4)}_${i.text}`;
+			if (i.type == 4) img.innerHTML = i.url;
 			else {
-				img.src = `${i.url}@56w_56h.webp`;
+				img.src = `${i.url.replace(/http:/g,"https:")}@56w_56h.webp`;
 				img.onclick = function() {
 					window.open(i.url);
 				};
@@ -158,10 +164,10 @@ function addEmote(str) {
 		for (let i of panelSort[str]) {
 			let img = document.createElement((i.type == 4) ? "textarea" : "img");
 			img.classList.add("img", arrd[i.m]);
-			img.title = `${(`0000${i.id}`).slice(-4)}_${i.text.replace(/\\([\"'])/g,"$1")}`;
-			if (i.type == 4) img.innerHTML = i.url.replace(/\\([\"'])/g, "$1");
+			img.title = `${(`0000${i.id}`).slice(-4)}_${i.text}`;
+			if (i.type == 4) img.innerHTML = i.url;
 			else {
-				img.src = `${i.url}@56w_56h.webp`;
+				img.src = `${i.url.replace(/http:/g,"https:")}@56w_56h.webp`;
 				img.onclick = function() {
 					window.open(i.url);
 				};
