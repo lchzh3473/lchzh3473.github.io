@@ -8,9 +8,7 @@
 </head>
 
 <body>
-	<h1 id="title"></h1>
-	<p id="info"></p>
-	<div style="display: none">
+	<div id="main" style="display: none">
 		<p>
 			<input type="file" accept="audio/midi" id="openfile">
 			<input type="button" value="重置" onclick="location.reload()">
@@ -27,8 +25,10 @@
 				<option value="4">N</option>
 				<option value="2">O</option>
 				<option value="1" selected>P</option>
-			</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="checkbox" id="drumsets">鼓点模式&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>
+			</select>&ensp;&ensp;
+			<input type="checkbox" id="drumsets">
+			<label for="drumsets">鼓点模式</label>
+			&ensp;&ensp;<br><br>
 			<input type="button" value="转换" onclick="convert()">
 		</p>
 		<p>结果：</p>

@@ -1,9 +1,5 @@
 "use strict";
-const title = 'MIDI转JSON'
-const version = [2, 1, 4];
-const firstUpdate = 1585107102456;
-const lastUpdate = 1590850976470;
-
+const _i = ['MIDI转JSON', [2, 1, 4], 1585107102, 1590850976];
 if (typeof FileReader == "undefined") {
 	document.getElementById("output").innerHTML = '<strong style="color:red">此浏览器不支持FileReader接口，该脚本无法运行。</strong>';
 	openfile.setAttribute("disabled", "disabled");

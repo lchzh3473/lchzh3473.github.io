@@ -1,9 +1,5 @@
 "use strict";
-const title = '猜数字';
-const version = [1, 1, 1];
-const firstUpdate = 1601468724894;
-const lastUpdate = 1609750968737;
-
+const _i = ['猜数字', [1, 1, 1], 1601468724, 1609750968];
 var score;
 if (!window.localStorage) alert("浏览器不支持localstorage");
 else {

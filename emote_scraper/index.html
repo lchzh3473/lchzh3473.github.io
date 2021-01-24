@@ -52,6 +52,7 @@
 			-webkit-filter: brightness(0.7);
 			filter: brightness(0.7);
 		}
+
 		.fold:hover,
 		.unfold:hover {
 			-webkit-filter: brightness(1);
@@ -59,15 +60,15 @@
 		}
 
 		.fold::after {
-			content: url(fold.svg);
-			position: absolute;
-			left: 1px;
-			top: calc(1em - 64px);
-			pointer-events: none;
+			content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABAAgMAAADXB5lNAAAACVBMVEUAAAAAAAD///+D3c/SAAAAAXRSTlMAQObYZgAAAC5JREFUOMtjGAWjYHCD0BBCAlFTSBRgDI2aGopfIGvVqqWEBQgbSoZLCXt/8AAAjlUVzSZo0oMAAAAASUVORK5CYII=);
 		}
 
 		.unfold::after {
-			content: url(unfold.svg);
+			content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABAAgMAAADXB5lNAAAACVBMVEUAAAAAAAD///+D3c/SAAAAAXRSTlMAQObYZgAAAB9JREFUOMtjGAWjYMQBxlAgwC+QtWrVUsICRBg6vAEAhEsMgTSeMuwAAAAASUVORK5CYII=);
+		}
+
+		.fold::after,
+		.unfold::after {
 			position: absolute;
 			left: 1px;
 			top: calc(1em - 64px);
@@ -77,9 +78,7 @@
 </head>
 
 <body>
-	<h1 id="title"></h1>
-	<p id="info"></p>
-	<div style="display: none">
+	<div id="main" style="display: none">
 		<p class="profile">
 			请按照如下提示进行操作(点击链接可以复制)：<br>
 			首先登录：<a id="website1" onclick="copy(document.getElementById('website1'))">https://passport.bilibili.com/login</a><br>

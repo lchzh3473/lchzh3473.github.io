@@ -1,8 +1,5 @@
 "use strict";
-const title = '洛克王国战斗模拟'
-const version = [1, 0, 3];
-const firstUpdate = 1606394205088;
-const lastUpdate = 1611080357852;
+const _i = ['洛克王国战斗模拟', [1, 0, 3], 1606394205, 1611080357];
 //检测Flash插件，参考http://lizux.bokee.com/541040.html
 var iFlash;
 var vFlash;

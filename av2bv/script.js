@@ -1,9 +1,5 @@
 "use strict";
-const title = 'AV号与BV号转换器';
-const version = [2, 0, 5];
-const firstUpdate = 1585055154756;
-const lastUpdate = 1610686958106;
-
+const _i = ['AV号与BV号转换器', [2, 0, 6], 1585055154, 1611451045];
 const example = '示例：\nav92343654\nBV1UE411n763';
 const table = "fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF";
 const pos = [9, 8, 1, 6, 2, 4];
@@ -83,20 +79,8 @@ function convert() {
 	document.getElementById("copy").innerHTML = '复制';
 }
 
-function check() {
-	if (document.getElementById("realtime").checked) convert();
-}
-
-function realtime() {
-	if (document.getElementById("realtime").checked) {
-		document.getElementById("convert").classList.add("disabled");
-		convert();
-	} else document.getElementById("convert").classList.remove("disabled");
-}
-
 function copyValue() {
 	if (copy(document.getElementById('output'))) document.getElementById("copy").innerHTML = '复制成功';
 }
-
 document.getElementById("input").placeholder = example;
-realtime();
+convert();

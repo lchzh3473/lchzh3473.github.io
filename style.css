@@ -75,19 +75,22 @@ input[type="radio"]:checked+label::before {
 	content: "\29bf\20";
 }
 
-.line {
-	text-decoration: underline;
+.index {
+	width: 60vw;
+	max-width: 270px;
+	display: flex;
+	margin: auto;
+	flex-direction: column;
+	justify-content: center;
+	align-items: stretch;
 }
 
 .index a {
-	line-height: 3;
+	border: 2px solid #37723a;
+	border-radius: 5px;
+	padding: 10px;
 }
 
-#title {
-	color: blue;
-}
-
-#info,
 strong.error {
 	color: red;
 }
