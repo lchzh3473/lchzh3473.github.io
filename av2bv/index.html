@@ -2,52 +2,42 @@
 <html>
 
 <head>
+	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
 	<base target="_blank">
-	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,minimum-scale=1,user-scalable=no">
 	<link rel="stylesheet" href="/style.css">
 	<title>(っ °Д °;)っ</title>
 	<style>
-		.inner {
-			margin: 5px 0px;
-		}
-
-		.left {
-			float: left;
-			margin-left: 5px;
-		}
-
-		.right {
-			float: right;
-			margin-right: 5px;
-		}
-
-		.clear {
-			clear: both;
-		}
-
 		.textbox {
-			display: inline-block;
+			margin: auto;
 			width: 80vw;
-			min-width: 12px;
-			max-width: 384px;
-			height: calc(40vh - 180px);
-			min-height: 84px;
-			max-height: 280px;
-			font-size: 10pt;
+			min-width: 1.8em;
+			max-width: 27.6em;
+			font: 13.33px sans-serif;
+		}
+
+		.inner {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 3px;
 		}
 
 		.text {
 			display: inline-block;
-			width: calc(100% - 10px);
-			height: calc(100% - 37px);
+			width: 80vw;
+			min-width: 1.8em;
+			max-width: 27.6em;
+			height: calc(40vh - 217px);
+			min-height: 3.8em;
+			max-height: 16.8em;
 			text-align: start;
-			font-family: monospace;
+			font: 13.33px monospace;
 			background-color: white;
 			resize: none;
 			white-space: pre-wrap;
 			overflow: auto;
 			overflow-wrap: break-word;
-			padding: 2px;
+			padding: 0.2em;
 			border: 1px solid gray;
 			border-radius: 2px;
 		}
@@ -77,27 +67,34 @@
 			点击彩色字可以跳转，点击“复制”按钮将转换结果复制到剪贴板。
 		</p>
 		<div class="textbox">
-			<div class="inner left">输入：</div>
-			<div class="inner right">
-				<input type="checkbox" id="av2bv" onchange="convert()" checked>
-				<label class="left" for="av2bv">av转bv</label>
-				<input type="checkbox" id="bv2av" onchange="convert()" checked>
-				<label class="left" for="bv2av">bv转av</label>
+			<div class="inner">
+				<div>输入：</div>
+				<div>
+					<input type="checkbox" id="av2bv" onchange="convert()" checked>
+					<label for="av2bv">av转bv</label>
+					<input type="checkbox" id="bv2av" onchange="convert()" checked>
+					<label for="bv2av">bv转av</label>
+				</div>
 			</div>
-			<div class="clear"></div>
-			<textarea id="input" class="text" oninput="convert()"></textarea>
-		</div><br>
+		</div>
+		<textarea id="input" class="text" oninput="convert()"></textarea>
 		<div class="textbox">
-			<div class="inner left">输出：</div>
-			<div class="inner right">
-				<div class="left"><button type="button" id="copy" onclick="copyValue()">复制</button></div>
-				<div class="left"><button type="button" onclick="document.getElementById('input').value='';convert()">重置</button></div>
+			<div class="inner">
+				<div>输出：</div>
+				<div>
+					<button type="button" id="copy">复制</button>
+					<button type="button" id="reset">重置</button>
+				</div>
 			</div>
-			<div class="clear"></div>
-			<div id="output" class="text"></div>
-			<div class="left">结果：<strong id="result"></strong></div>
-			<div class="clear"></div><br>
-			<div class="left">不知道什么是bv号？<a href="https://www.bilibili.com/read/cv5167957">点此了解</a></div>
+		</div>
+		<div id="output" class="text"></div>
+		<div class="textbox">
+			<div class="inner">
+				<div>结果：<strong id="result"></strong></div>
+			</div><br>
+			<div class="inner">
+				<div>不知道什么是bv号？<a href="https://www.bilibili.com/read/cv5167957">点此了解</a></div>
+			</div>
 		</div>
 	</div>
 	<noscript><strong style="color:red">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>

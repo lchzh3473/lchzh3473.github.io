@@ -1,47 +1,54 @@
 "use strict";
-const _i = ['AV号与BV号转换器(api)', [2, 1], 1585055154, 1611449777];
-function check(){
-	let aid=document.getElementById("input").value;
-	let script = document.createElement('script');
-	script.src = `https://api.bilibili.com/x/web-interface/view?aid=${aid}&jsonp=jsonp&callback=test`;
-	document.head.appendChild(script);
-}
-function test(data) {
-	let bvid = (data.data ? data.data.bvid : 0);
-	document.getElementById("output").innerHTML=bvid;
-	document.head.removeChild(document.head.lastChild);
-}
-/*function a2b(aid) {
-	var bvid;
-	$.ajax({
-		url: 'https://api.bilibili.com/x/web-interface/view',
-		type: 'get',
-		dataType: 'jsonp',
-		data: {
-			aid: aid,
-			jsonp: 'jsonp'
-		},
-		success: function(data) {
-			let a = (data.data ? data.data.bvid : 0);
-			console.log(a);
-			bvid = a;
-			return a;
+(function() {
+	let c1 = document.querySelectorAll(".inner");
+	let c2 = c1[c1.length - 1];
+	let c3 = document.createElement("div");
+	c3.innerHTML = '调用api次数：<span id="api"></span>';
+	c2.appendChild(c3);
+	document.querySelector(".profile").innerHTML += "<br>点击“检查”按钮调用B站API检查视频是否存在。(频繁操作可能被封禁)";
+	let e1 = document.querySelector("#reset");
+	let e2 = e1.parentElement;
+	let e3 = document.createElement("button");
+	e3.type = "button";
+	e3.onclick = function() {
+		let isError = false;
+		for (let i of document.getElementById("output").getElementsByTagName("a")) {
+			let j = i.classList;
+			if (j.contains("av") || j.contains("bv")) {
+				let isav = j.contains("av");
+				let code = i.innerText;
+				if (isav) code = code.substring(2);
+				let script = document.createElement('script');
+				script.src = `https://api.bilibili.com/x/web-interface/view?${isav?"aid":"bvid"}=${code}&jsonp=jsonp&callback=data=`;
+				document.body.appendChild(script);
+				script.onload = function() {
+					document.body.removeChild(document.body.lastChild);
+					if (data.code) {
+						j.remove("av", "bv");
+						j.add("invalid");
+					} else i.title = data.data.title;
+					apiNum++;
+					document.getElementById("api").innerHTML = apiNum;
+					window.localStorage.setItem("api", apiNum);
+				}
+				script.onerror = function() {
+					document.body.removeChild(document.body.lastChild);
+					if (!isError) {
+						alert("调用api过于频繁，已被b站暂时封禁，请30分钟后重试");
+						isError = true;
+					}
+				}
+			}
 		}
-	})
-	return bvid;
-}
-
-var aaid, flag;
-
-function test(data) {
-	aaid = (data.data ? data.data.bvid : 0);
-	flag = 0;
-}
-
-function a2b2(aid) {
-	script = document.createElement('script');
-	script.src = `https://api.bilibili.com/x/web-interface/view?aid=${aid}&jsonp=jsonp&callback=test`;
-	document.head.appendChild(script);
-	flag = 1;
-	return aaid;
-}*/
+		this.classList.add("disabled");
+	}
+	e3.innerHTML = "检查";
+	e2.insertBefore(e3, e1);
+	e2.insertBefore(document.createTextNode("\n"), e1);
+	document.getElementById("input").addEventListener("input", function() {
+		e3.classList.remove("disabled");
+	});
+})();
+var apiNum, data;
+apiNum = window.localStorage.getItem("api");
+document.getElementById("api").innerHTML = Number(apiNum);

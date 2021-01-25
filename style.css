@@ -36,7 +36,9 @@ button {
 	color: white;
 	border: none;
 	border-radius: 2px;
-	margin: 1px;
+	font: 1em sans-serif;
+	padding: 0.2em 0.6em;
+	margin: 0px 1px;
 }
 
 button:hover {
@@ -75,22 +77,6 @@ input[type="radio"]:checked+label::before {
 	content: "\29bf\20";
 }
 
-.index {
-	width: 60vw;
-	max-width: 270px;
-	display: flex;
-	margin: auto;
-	flex-direction: column;
-	justify-content: center;
-	align-items: stretch;
-}
-
-.index a {
-	border: 2px solid #37723a;
-	border-radius: 5px;
-	padding: 10px;
-}
-
 strong.error {
 	color: red;
 }
@@ -104,7 +90,7 @@ strong.accept {
 }
 
 .profile {
-	font-size: 10pt;
+	font: 13.33px sans-serif;
 	line-height: 1.5;
 }
 

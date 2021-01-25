@@ -1,11 +1,8 @@
 "use strict";
 const _i = ['猜数字', [1, 1, 1], 1601468724, 1609750968];
 var score;
-if (!window.localStorage) alert("浏览器不支持localstorage");
-else {
-	score = window.localStorage.getItem("score");
-	document.getElementById("score").innerHTML = Number(score);
-}
+score = window.localStorage.getItem("score");
+document.getElementById("score").innerHTML = Number(score);
 var pNum = 0;
 var sNum = 0;
 var pMax = 1000;
