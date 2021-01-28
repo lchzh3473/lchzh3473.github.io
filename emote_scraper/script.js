@@ -1,5 +1,5 @@
 "use strict";
-const _i = ['b站表情图获取工具', [1, 1], 1610790787, 1611844708];
+const _i = ['b站表情图获取工具', [1, 1, 1], 1610790787, 1611846432];
 const pName = ["packages", "statics", "dynamics"];
 const pMode = ["default", "new-add", "changed", "new-remove", "removed", "re-add"];
 const pType = "m";
@@ -93,7 +93,7 @@ document.getElementById("analyse").onclick = function() {
 			}
 			for (let i of panelNew[pName[1]]) {
 				let j = panelArray[pName[0]][i.pid];
-				if (j && (i[pType] != 0 || i[pType] != 4) && j[pType] == 0) j[pType] = 2;
+				if (j && i[pType] != 0 && i[pType] != 4 && j[pType] == 0) j[pType] = 2;
 			}
 			return panelNew;
 		}
