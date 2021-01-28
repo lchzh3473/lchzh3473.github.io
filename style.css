@@ -1,3 +1,8 @@
+@font-face {
+	font-family: icomoon;
+	src: url("data:application/font-woff;base64,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");
+}
+
 * {
 	outline: none;
 }
@@ -21,9 +26,9 @@ a {
 	border-radius: 2px;
 }
 
+a:hover,
 input[type="checkbox"]+label:hover,
-input[type="radio"]+label:hover,
-a:hover {
+input[type="radio"]+label:hover {
 	background-color: rgba(60, 251, 76, 0.286);
 }
 
@@ -31,50 +36,74 @@ a:active {
 	background-color: rgba(25, 240, 43, 0.427);
 }
 
-button {
+button,
+input[type="button"] {
 	background-color: #4ca951;
 	color: white;
 	border: none;
 	border-radius: 2px;
-	font: 1em sans-serif;
-	padding: 0.2em 0.6em;
-	margin: 0px 1px;
+	font: 0.9em sans-serif;
+	padding: 0.1em 0.6em;
+	margin: 0.1em;
 }
 
-button:hover {
+button:hover,
+input[type="button"]:hover {
 	background-color: #57d15d;
 }
 
-button:active {
+button:active,
+input[type="button"]:active {
 	background-color: #37723a;
 }
 
 button,
-label {
+label,
+input[type="button"] {
 	-webkit-user-select: none;
 	-moz-user-select: none;
 }
 
-.hide,
 input[type="checkbox"],
-input[type="radio"] {
+input[type="radio"],
+.hide {
 	display: none;
 }
 
 input[type="checkbox"]+label::before {
-	content: "\2610\20";
+	font: 0.9em icomoon;
+	content: "\ea53";
+	margin-left: 0.4em;
+	margin-right: 0.2em;
 }
 
 input[type="checkbox"]:checked+label::before {
-	content: "\2611\20";
+	font: 0.9em icomoon;
+	content: "\ea52";
+	margin-left: 0.4em;
+	margin-right: 0.2em;
 }
 
 input[type="radio"]+label::before {
-	content: "\29be\20";
+	font: 0.9em icomoon;
+	content: "\ea56";
+	margin-left: 0.4em;
+	margin-right: 0.2em;
 }
 
 input[type="radio"]:checked+label::before {
-	content: "\29bf\20";
+	font: 0.9em icomoon;
+	content: "\ea54";
+	margin-left: 0.4em;
+	margin-right: 0.2em;
+}
+
+textarea,
+input[type="text"] {
+	border: 1px solid gray;
+	border-radius: 2px;
+	padding: 0.2em;
+	margin: 1px;
 }
 
 strong.error {
@@ -87,6 +116,22 @@ strong.warning {
 
 strong.accept {
 	color: green;
+}
+
+.index {
+	width: 60vw;
+	max-width: 270px;
+	display: flex;
+	margin: auto;
+	flex-direction: column;
+	justify-content: center;
+	align-items: stretch;
+}
+
+.index a {
+	border: 2px solid #37723a;
+	border-radius: 5px;
+	padding: 10px;
 }
 
 .profile {

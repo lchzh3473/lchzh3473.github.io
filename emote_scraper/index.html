@@ -2,112 +2,45 @@
 <html>
 
 <head>
-	<base target="_blank">
 	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
-	<link rel="stylesheet" href="/style.css">
+	<base target="_blank">
 	<title>(っ °Д °;)っ</title>
-	<style>
-		::-webkit-scrollbar {
-			display: none;
-		}
-
-		#stage {
-			width: 96vw;
-			max-width: 1600px;
-			height: 400px;
-			line-height: 0px;
-			margin: auto;
-			overflow: scroll;
-		}
-
-		.img {
-			width: 56px;
-			height: 56px;
-			border: 3px solid gray;
-			border-radius: 2px;
-			margin: 1px;
-			padding: 0px;
-			resize: none;
-			background-color: white;
-		}
-
-		.default {
-			border-color: blue;
-		}
-
-		.new {
-			border-color: limegreen;
-		}
-
-		.changed {
-			border-color: orange;
-		}
-
-		.removed {
-			border-color: red;
-		}
-
-		.fold,
-		.unfold {
-			-webkit-filter: brightness(0.7);
-			filter: brightness(0.7);
-		}
-
-		.fold:hover,
-		.unfold:hover {
-			-webkit-filter: brightness(1);
-			filter: brightness(1);
-		}
-
-		.fold::after {
-			content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABAAgMAAADXB5lNAAAACVBMVEUAAAAAAAD///+D3c/SAAAAAXRSTlMAQObYZgAAAC5JREFUOMtjGAWjYHCD0BBCAlFTSBRgDI2aGopfIGvVqqWEBQgbSoZLCXt/8AAAjlUVzSZo0oMAAAAASUVORK5CYII=);
-		}
-
-		.unfold::after {
-			content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABAAgMAAADXB5lNAAAACVBMVEUAAAAAAAD///+D3c/SAAAAAXRSTlMAQObYZgAAAB9JREFUOMtjGAWjYMQBxlAgwC+QtWrVUsICRBg6vAEAhEsMgTSeMuwAAAAASUVORK5CYII=);
-		}
-
-		.fold::after,
-		.unfold::after {
-			position: absolute;
-			left: 1px;
-			top: calc(1em - 64px);
-			pointer-events: none;
-		}
-	</style>
+	<link rel="stylesheet" href="/style.css">
+	<link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 	<div id="main" style="display: none">
 		<p class="profile">
-			请按照如下提示进行操作(点击链接可以复制)：<br>
+			请按照提示进行操作(点击链接可以复制)：<br>
 			首先登录：<a id="website1" onclick="copy(document.getElementById('website1'))">https://passport.bilibili.com/login</a><br>
 			然后打开以下链接，将页面内全部内容复制粘贴至文本框：<br>
 			<a id="website2" onclick="copy(document.getElementById('website2'))">https://api.bilibili.com/x/emote/setting/panel?business=reply</a><br>
 			最后点击“解析”按钮。留空以调用最近一次记录。
 		</p>
 		<div style="display:flex;justify-content:center">
-			<textarea class="input" id="input" style="resize: none" rows="1" placeholder="这是文本框。"></textarea>
-			<button type="button" onclick="analyse()">解析</button>
+			<textarea class="input" id="input" style="resize: none" cols="30" rows="1" placeholder="这是文本框。"></textarea>
+			<button type="button" id="analyse">解析</button>
+			<button type="button" onclick="location.reload()">重置</button>
 		</div>
 		<p><strong id="output"></strong></p>
 		<div id="control" class="hide">
 			选择类型：
-			<input type="radio" name="type" id="packages" onchange="convert()">
+			<input type="radio" name="type" id="packages">
 			<label for="packages">表情包</label>
-			<input type="radio" name="type" id="statics" onchange="convert()">
+			<input type="radio" name="type" id="statics">
 			<label for="statics">静态</label>
-			<input type="radio" name="type" id="dynamics" onchange="convert()">
+			<input type="radio" name="type" id="dynamics">
 			<label for="dynamics">动态</label>
 			<div>
 				筛选：
-				<input type="radio" name="filter" id="new" onchange="convert()">
-				<label for="new" style="color:green">新增</label>
-				<input type="radio" name="filter" id="removed" onchange="convert()">
+				<input type="radio" name="filter" id="added">
+				<label for="added" style="color:green">新增</label>
+				<input type="radio" name="filter" id="removed">
 				<label for="removed" style="color:red">移除</label>
-				<input type="radio" name="filter" id="changed" onchange="convert()">
+				<input type="radio" name="filter" id="changed">
 				<label for="changed" style="color:orange">更改</label>
-				<input type="radio" name="filter" id="all" onchange="convert()">
+				<input type="radio" name="filter" id="all">
 				<label for="all" style="color:blue">全部</label>
 			</div>
 			<div>
@@ -119,13 +52,14 @@
 					<button type="button" onclick="scrollStage(0)">滑到顶部</button>
 					<button type="button" onclick="scrollStage(1)">滑到底部</button>
 				</span>
-				<input type="checkbox" id="sort" onchange="convert()">
+				<input type="checkbox" id="sort">
 				<label for="sort">按id排序</label>
-				<button type="button" onclick="saveHistory()">保存记录</button>
 			</div>
 			<hr>
 			<div id="stage"></div>
 			<hr>
+			最近一次记录：<span id="date"></span>
+			<button type="button" onclick="saveHistory()">保存记录</button>
 		</div>
 	</div>
 	<noscript><strong style="color:red">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>

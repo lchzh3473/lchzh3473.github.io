@@ -1,131 +1,127 @@
 "use strict";
-const _i = ['b站表情图获取工具', [1, 0], 1610790787, 1610790787];
-var panelSort, panelNew = {};
-let arrw = ["packages", "statics", "dynamics"];
-let arrd = ["default", "new", "changed", "removed"];
-let arrn = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-function analyse() {
-	var startTime = new Date().getTime();
+const _i = ['b站表情图获取工具', [1, 1], 1610790787, 1611844708];
+const pName = ["packages", "statics", "dynamics"];
+const pMode = ["default", "new-add", "changed", "new-remove", "removed", "re-add"];
+const pType = "m";
+var panelSort, panelNew;
+document.getElementById("analyse").onclick = function() {
+	let startTime = new Date().getTime();
 	let input = document.getElementById("input").value;
 	document.getElementById("input").value = "";
 	let output = document.getElementById("output");
 	try {
-		if (!input) throw 1;
-		let panel = JSON.parse(input);
-		if (panel.code == -101) throw 2;
-		for (let i of arrw) panelNew[i] = [];
-		for (let i of panel.data.all_packages) {
-			let packageNew = {
-				"id": i.id,
-				"m": 1,
-				"text": i.text,
-				"type": i.type,
-				"url": i.url
-			};
-			let emotes = i.emote;
-			for (let j of emotes) {
-				let emoteNew = {
-					"id": j.id,
-					"m": 1,
-					"pid": j.package_id,
-					"text": j.text,
-					"type": i.type,
-					"url": j.url
-				};
-				panelNew.statics.push(emoteNew);
-				if (j.gif_url) {
-					let gifNew = JSON.parse(JSON.stringify(emoteNew));
-					gifNew.url = j.gif_url;
-					panelNew.dynamics.push(gifNew);
-				}
-			}
-			panelNew.packages.push(packageNew);
-		}
-		//
 		let str = window.localStorage.getItem("panel");
-		if (!str) {
+		if (str) analyseInput(str);
+		else {
 			let request = new XMLHttpRequest();
-			request.open("get", "panelOld.json");
+			request.open("get", "panel.json");
 			request.send(null);
 			request.onload = function() {
 				if (request.status == 200) {
 					str = request.responseText;
 					window.localStorage.setItem("panel", str);
-					window.localStorage.setItem("panel_old", str);
+					analyseInput(str);
 				}
 			}
 		}
-		let panelOld = JSON.parse(str);
-		//
-		let panelArray = {
-			"packages": [],
-			"statics": [],
-			"dynamics": []
-		};
-		for (let k of arrw) {
-			for (let i of panelNew[k]) panelArray[k][i.id] = i;
-			for (let i of panelOld[k]) {
-				let j = panelArray[k][i.id];
-				if (!j) {
-					i.m = 3;
-					j = i;
-					panelNew[k].push(i);
-				} else if (j.text == i.text && j.url == i.url) j.m = 0;
-				else j.m = 2;
-			}
-		}
-		for (let i of panelNew.statics) {
-			let j = panelArray.packages[i.pid];
-			if (i.m != 0 && j.m == 0) j.m = 2;
-		}
-		panelNew.mtime = Math.floor(startTime / 1000);
 	} catch (err) {
-		if (err == 1) {
-			output.className = "error";
-			output.innerHTML = "输入为空。";
-			return;
-		}
 		if (err == 2) {
 			output.className = "warning";
 			output.innerHTML = "请登录b站账号。";
-			return;
+		} else {
+			output.className = "error";
+			output.innerHTML = "输入有误。" + err;
 		}
-		output.className = "error";
-		output.innerHTML = "输入有误。" + err;
-		return;
 	}
-	var endTime = (new Date().getTime() - startTime) / 1000;
-	document.getElementById("stage").innerHTML = "";
-	output.className = "accept";
-	output.innerHTML = `解析成功。(${endTime}s)`;
-	document.getElementById("control").className = "";
-	document.getElementById("static").classList.add("disabled");
-	for (let i of arrw) document.getElementById(i).checked = false;
-	resizeStage();
+
+	function analyseInput(str) {
+		let panelOld = JSON.parse(str);
+		panelNew = input ? inputToPanel(panelOld) : panelOld;
+		panelNew.mtime = Math.floor(startTime / 1000);
+		document.getElementById("stage").innerHTML = "";
+		output.className = "accept";
+		output.innerHTML = `解析成功。(${(new Date().getTime()-startTime)/1000}s)`;
+		document.getElementById("control").classList.remove("hide");
+		document.getElementById("static").classList.add("disabled");
+		document.getElementById("date").innerHTML = cnymd(panelOld.mtime); //test
+		for (let i of pName) document.getElementById(i).checked = false;
+		resizeStage();
+
+		function inputToPanel(panelOld) {
+			let panel = JSON.parse(input);
+			if (panel.code == -101) throw 2;
+			let panelNew = {};
+			for (let i of pName) panelNew[i] = [];
+			for (let i of panel.data.all_packages) {
+				let packageNew = {};
+				packageNew.id = i.id;
+				packageNew.text = i.text;
+				packageNew.type = i.type;
+				packageNew.url = i.url;
+				packageNew[pType] = 1;
+				for (let j of i.emote) {
+					let emoteNew = {};
+					emoteNew.id = j.id;
+					emoteNew.pid = j.package_id;
+					emoteNew.text = j.text;
+					emoteNew.type = j.type;
+					emoteNew.url = j.url;
+					emoteNew[pType] = 1;
+					panelNew[pName[1]].push(emoteNew);
+					if (j.gif_url) {
+						let gifNew = JSON.parse(JSON.stringify(emoteNew));
+						gifNew.url = j.gif_url;
+						panelNew[pName[2]].push(gifNew);
+					}
+				}
+				panelNew[pName[0]].push(packageNew);
+			}
+			let panelArray = {};
+			for (let i of pName) {
+				panelArray[i] = [];
+				for (let j of panelNew[i]) panelArray[i][j.id] = j;
+				for (let j of panelOld[i]) {
+					let k = panelArray[i][j.id];
+					if (!k) {
+						k = JSON.parse(JSON.stringify(j));
+						k[pType] = (j[pType] == 3 || j[pType] == 4) ? 4 : 3;
+						panelNew[i].push(k);
+					} else if (j[pType] == 3 || j[pType] == 4) k[pType] = 5;
+					else if (k.text == j.text && k.url == j.url) k[pType] = 0;
+					else k[pType] = 2;
+				}
+			}
+			for (let i of panelNew[pName[1]]) {
+				let j = panelArray[pName[0]][i.pid];
+				if (j && (i[pType] != 0 || i[pType] != 4) && j[pType] == 0) j[pType] = 2;
+			}
+			return panelNew;
+		}
+	}
+}
+for (let i of document.querySelectorAll("input")) {
+	i.onchange = function() {
+		panelSort = JSON.parse(JSON.stringify(panelNew));
+		if (document.getElementById("sort").checked)
+			for (let i of pName) panelSort[i].sort(function(obj1, obj2) {
+				return obj1.id - obj2.id;
+			});
+		for (let i of pName)
+			if (document.getElementById(i).checked) addToStage(i);
+	};
 }
 
-function convert() {
-	panelSort = JSON.parse(JSON.stringify(panelNew));
-	if (document.getElementById("sort").checked)
-		for (let i of arrw) panelSort[i].sort(function(obj1, obj2) {
-			return obj1.id - obj2.id;
-		});
-	for (let i of arrw)
-		if (document.getElementById(i).checked) addEmote(i);
-}
-
-function addEmote(str) {
+function addToStage(str) {
 	document.getElementById("stage").innerHTML = "";
-	if (str == arrw[0]) {
+	if (str == pName[0]) {
 		document.getElementById("static").classList.remove("disabled");
 		for (let i of panelSort[str]) {
 			let pack = document.createElement("span");
 			pack.id = `pack${i.id}`;
-			pack.className = "fold";
+			pack.classList.add("fold");
 			let img = document.createElement("img");
 			img.id = `img${i.id}`;
-			img.classList.add("img", arrd[i.m]);
+			img.classList.add("img", pMode[i[pType]]);
 			img.title = `${(`000${i.id}`).slice(-3)}_${i.text}`;
 			img.src = `${i.url}@56w_56h.webp`;
 			pack.onclick = function() {
@@ -136,14 +132,14 @@ function addEmote(str) {
 			};
 			let emote = document.createElement("span");
 			emote.id = `emote${i.id}`;
-			emote.className = "hide";
+			emote.classList.add("hide");
 			pack.appendChild(img);
 			document.getElementById("stage").appendChild(pack);
 			document.getElementById("stage").appendChild(emote);
 		}
-		for (let i of panelSort[arrw[1]]) {
+		for (let i of panelSort[pName[1]]) {
 			let img = document.createElement((i.type == 4) ? "textarea" : "img");
-			img.classList.add("img", arrd[i.m]);
+			img.classList.add("img", pMode[i[pType]]);
 			img.title = `${(`0000${i.id}`).slice(-4)}${i.text}`;
 			if (i.type == 4) img.innerHTML = i.url;
 			else {
@@ -158,7 +154,7 @@ function addEmote(str) {
 		document.getElementById("static").classList.add("disabled");
 		for (let i of panelSort[str]) {
 			let img = document.createElement((i.type == 4) ? "textarea" : "img");
-			img.classList.add("img", arrd[i.m]);
+			img.classList.add("img", pMode[i[pType]]);
 			img.title = `${(`0000${i.id}`).slice(-4)}${i.text}`;
 			if (i.type == 4) img.innerHTML = i.url;
 			else {
@@ -170,17 +166,25 @@ function addEmote(str) {
 			document.getElementById("stage").appendChild(img);
 		}
 	}
+	if (document.getElementById("added").checked) {
+		for (let i of document.querySelectorAll(".default,.new-remove,.removed")) i.style.display = "none";
+	}
+	if (document.getElementById("removed").checked) {
+		for (let i of document.querySelectorAll(".new-add,.default,.re-add")) i.style.display = "none";
+	}
+	if (document.getElementById("changed").checked) {
+		for (let i of document.querySelectorAll(".default")) i.style.display = "none";
+	}
 	for (let i = 0; i < 25; i++) {
 		let img = document.createElement("img");
-		img.className = "img fade";
-		img.style = "height:0;border-top-width:0;border-bottom-width:0;margin-top:0;margin-bottom:0";
+		img.classList.add("img", "img-void", "fade");
 		document.getElementById("stage").appendChild(img);
 	}
 	resizeStage();
 }
 
 function fold(num) {
-	for (let i of panelSort.packages) {
+	for (let i of panelSort[pName[0]]) {
 		document.getElementById(`pack${i.id}`).classList.remove("fold", "unfold");
 		document.getElementById(`pack${i.id}`).classList.add(num ? "fold" : "unfold");
 		document.getElementById(`emote${i.id}`).classList[num ? "add" : "remove"]("hide");
@@ -196,6 +200,10 @@ function scrollStage(num) {
 function resizeStage() {
 	let i = document.getElementById('stage').scrollHeight;
 	document.getElementById("scroll").classList[i > 400 ? "remove" : "add"]("disabled");
+}
+
+function saveHistory() {
+	window.localStorage.setItem("panel", JSON.stringify(panelNew));
 }
 window.addEventListener("resize", resizeStage);
 document.addEventListener("error", function(err) {
