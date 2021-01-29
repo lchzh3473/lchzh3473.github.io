@@ -5,16 +5,34 @@
 	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
 	<link rel="stylesheet" href="/style.css">
 	<title>(っ °Д °;)っ</title>
+	<style>
+		.upload {
+			min-width: 80vw;
+			max-width: calc(175vh - 720px);
+			display: inline-flex;
+			justify-content: center;
+		}
+
+		.textbox {
+			min-width: 80vw;
+			max-width: calc(175vh - 720px);
+			height: calc(100vh - 400px);
+			min-height: 4.8em;
+			resize: none;
+		}
+	</style>
 </head>
 
 <body>
 	<div id="main" style="display: none">
-		<p>
-			<input type="file" accept="audio/midi" id="openfile">
+		<div class="upload">
+			<input type="file" accept="audio/midi" id="upload">
+			<label for="upload">上传midi</label>
+			<input type="text" style="width:0;flex-grow: 1;flex-shrink: 1; pointer-events:none" id="filename">
 			<input type="button" value="重置" onclick="location.reload()">
-		</p>
-		<textarea id="result" rows="30" cols="40" placeholder="最终输出将在这里。" style="border: 1px solid gray" readonly></textarea>
-		<p>最小音符:
+		</div><br>
+		<textarea id="result" class="textbox" placeholder="最终输出将在这里。" readonly></textarea>
+		<p><!--最小音符:
 			<select id="limnotes">
 				<option value="256">H</option>
 				<option value="128">I</option>
@@ -28,11 +46,10 @@
 			</select>&ensp;&ensp;
 			<input type="checkbox" id="drumsets">
 			<label for="drumsets">鼓点模式</label>
-			&ensp;&ensp;<br><br>
+			&ensp;&ensp;<br><br>-->
 			<input type="button" value="转换" onclick="convert()">
 		</p>
-		<p>结果：</p>
-		<p id="output"></p>
+		<p><strong id="output"></strong></p>
 	</div>
 	<noscript><strong style="color:red">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
 	<script src="./script.js"></script>

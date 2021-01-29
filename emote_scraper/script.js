@@ -44,22 +44,22 @@ document.getElementById("analyse").onclick = function() {
 		document.getElementById("control").classList.remove("hide");
 		document.getElementById("static").classList.add("disabled");
 		document.getElementById("date").innerHTML = cnymd(panelOld.mtime); //test
-		for (let i of pName) document.getElementById(i).checked = false;
+		for (const i of pName) document.getElementById(i).checked = false;
 		resizeStage();
 
 		function inputToPanel(panelOld) {
 			let panel = JSON.parse(input);
 			if (panel.code == -101) throw 2;
 			let panelNew = {};
-			for (let i of pName) panelNew[i] = [];
-			for (let i of panel.data.all_packages) {
+			for (const i of pName) panelNew[i] = [];
+			for (const i of panel.data.all_packages) {
 				let packageNew = {};
 				packageNew.id = i.id;
 				packageNew.text = i.text;
 				packageNew.type = i.type;
 				packageNew.url = i.url;
 				packageNew[pType] = 1;
-				for (let j of i.emote) {
+				for (const j of i.emote) {
 					let emoteNew = {};
 					emoteNew.id = j.id;
 					emoteNew.pid = j.package_id;
@@ -77,10 +77,10 @@ document.getElementById("analyse").onclick = function() {
 				panelNew[pName[0]].push(packageNew);
 			}
 			let panelArray = {};
-			for (let i of pName) {
+			for (const i of pName) {
 				panelArray[i] = [];
-				for (let j of panelNew[i]) panelArray[i][j.id] = j;
-				for (let j of panelOld[i]) {
+				for (const j of panelNew[i]) panelArray[i][j.id] = j;
+				for (const j of panelOld[i]) {
 					let k = panelArray[i][j.id];
 					if (!k) {
 						k = JSON.parse(JSON.stringify(j));
@@ -91,7 +91,7 @@ document.getElementById("analyse").onclick = function() {
 					else k[pType] = 2;
 				}
 			}
-			for (let i of panelNew[pName[1]]) {
+			for (const i of panelNew[pName[1]]) {
 				let j = panelArray[pName[0]][i.pid];
 				if (j && i[pType] != 0 && i[pType] != 4 && j[pType] == 0) j[pType] = 2;
 			}
@@ -99,14 +99,14 @@ document.getElementById("analyse").onclick = function() {
 		}
 	}
 }
-for (let i of document.querySelectorAll("input")) {
+for (const i of document.querySelectorAll("input")) {
 	i.onchange = function() {
 		panelSort = JSON.parse(JSON.stringify(panelNew));
 		if (document.getElementById("sort").checked)
-			for (let i of pName) panelSort[i].sort(function(obj1, obj2) {
+			for (const i of pName) panelSort[i].sort(function(obj1, obj2) {
 				return obj1.id - obj2.id;
 			});
-		for (let i of pName)
+		for (const i of pName)
 			if (document.getElementById(i).checked) addToStage(i);
 	};
 }
@@ -115,7 +115,7 @@ function addToStage(str) {
 	document.getElementById("stage").innerHTML = "";
 	if (str == pName[0]) {
 		document.getElementById("static").classList.remove("disabled");
-		for (let i of panelSort[str]) {
+		for (const i of panelSort[str]) {
 			let pack = document.createElement("span");
 			pack.id = `pack${i.id}`;
 			pack.classList.add("fold");
@@ -137,7 +137,7 @@ function addToStage(str) {
 			document.getElementById("stage").appendChild(pack);
 			document.getElementById("stage").appendChild(emote);
 		}
-		for (let i of panelSort[pName[1]]) {
+		for (const i of panelSort[pName[1]]) {
 			let img = document.createElement((i.type == 4) ? "textarea" : "img");
 			img.classList.add("img", pMode[i[pType]]);
 			img.title = `${(`0000${i.id}`).slice(-4)}${i.text}`;
@@ -152,7 +152,7 @@ function addToStage(str) {
 		}
 	} else {
 		document.getElementById("static").classList.add("disabled");
-		for (let i of panelSort[str]) {
+		for (const i of panelSort[str]) {
 			let img = document.createElement((i.type == 4) ? "textarea" : "img");
 			img.classList.add("img", pMode[i[pType]]);
 			img.title = `${(`0000${i.id}`).slice(-4)}${i.text}`;
@@ -167,15 +167,15 @@ function addToStage(str) {
 		}
 	}
 	if (document.getElementById("added").checked) {
-		for (let i of document.querySelectorAll(".default,.new-remove,.removed")) i.style.display = "none";
+		for (const i of document.querySelectorAll(".default,.new-remove,.removed")) i.style.display = "none";
 	}
 	if (document.getElementById("removed").checked) {
-		for (let i of document.querySelectorAll(".new-add,.default,.re-add")) i.style.display = "none";
+		for (const i of document.querySelectorAll(".new-add,.default,.re-add")) i.style.display = "none";
 	}
 	if (document.getElementById("changed").checked) {
-		for (let i of document.querySelectorAll(".default")) i.style.display = "none";
+		for (const i of document.querySelectorAll(".default")) i.style.display = "none";
 	}
-	for (let i = 0; i < 25; i++) {
+	for (const i = 0; i < 25; i++) {
 		let img = document.createElement("img");
 		img.classList.add("img", "img-void", "fade");
 		document.getElementById("stage").appendChild(img);
@@ -184,7 +184,7 @@ function addToStage(str) {
 }
 
 function fold(num) {
-	for (let i of panelSort[pName[0]]) {
+	for (const i of panelSort[pName[0]]) {
 		document.getElementById(`pack${i.id}`).classList.remove("fold", "unfold");
 		document.getElementById(`pack${i.id}`).classList.add(num ? "fold" : "unfold");
 		document.getElementById(`emote${i.id}`).classList[num ? "add" : "remove"]("hide");

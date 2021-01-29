@@ -6,7 +6,7 @@ var vFlash;
 var flashInfo = document.getElementById("flashInfo");
 let a = navigator.plugins;
 if (a) {
-	for (var i = 0; i < a.length; i++) {
+	for (const i of a) {
 		if (a[i].name.toLowerCase().indexOf("shockwave flash") >= 0) {
 			let b = a[i].description;
 			iFlash = true;

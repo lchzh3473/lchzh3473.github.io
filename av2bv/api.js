@@ -12,7 +12,7 @@
 	e3.type = "button";
 	e3.onclick = function() {
 		let isError = false;
-		for (let i of document.getElementById("output").getElementsByTagName("a")) {
+		for (const i of document.getElementById("output").getElementsByTagName("a")) {
 			let j = i.classList;
 			if (j.contains("av") || j.contains("bv")) {
 				let isav = j.contains("av");

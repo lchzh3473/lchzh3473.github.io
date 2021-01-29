@@ -1,7 +1,7 @@
 "use strict";
 const _i = ['MIDI转JSON', [2, 1, 4], 1585107102, 1590850976];
 if (typeof FileReader == "undefined") {
-	document.getElementById("output").innerHTML = '<strong style="color:red">此浏览器不支持FileReader接口，该脚本无法运行。</strong>';
+	ou.innerHTML = '<strong style="color:red">此浏览器不支持FileReader接口，该脚本无法运行。</strong>';
 	openfile.setAttribute("disabled", "disabled");
 }
 
@@ -18,119 +18,120 @@ String.prototype.s = function(t, u) {
 };
 
 function convert() {
-	document.getElementById("result").innerHTML = "";
-	document.getElementById("output").innerHTML = "";
-	var d = document.getElementById("openfile").files[0];
-	if (d) {
-		var start = new Date().getTime();
-		var e = document.getElementById("openfile").files[0].size;
-		var f = new FileReader();
-		f.readAsBinaryString(d);
-		f.onprogress = function(a) {
-			document.getElementById("output").innerHTML = `<strong style="color:red">加载中：${parseInt((a.loaded / e) * 100)}%</strong>`;
+	var re = document.getElementById("result");
+	var ou = document.getElementById("output");
+	re.innerHTML = "";
+	ou.innerHTML = "";
+	var midi = document.getElementById("openfile").files[0];
+	if (midi) {
+		const start = new Date().getTime();
+		let files = new FileReader();
+		files.readAsBinaryString(midi);
+		files.onprogress = function(progress) { //显示加载文件进度
+			let size = document.getElementById("openfile").files[0].size;
+			ou.innerHTML = `<strong style="color:red">加载中：${parseInt((progress.loaded / size) * 100)}%</strong>`;
 		};
-		f.onload = function() {
-			document.getElementById("output").innerHTML = '<strong style="color:red">发生了致命错误</strong>';
-			var g = this.result;
-			g = g.split("");
-			var h = "";
-			for (var i = 0; i < 4; i++) h += g.shift();
-			if (h != "MThd") document.getElementById("output").innerHTML = '<strong style="color:red">不是有效的midi文件！</strong>';
+		files.onload = function() {
+			ou.innerHTML = '<strong style="color:red">发生了致命错误</strong>'; //读取错误时此条不会被替换
+			var bin = this.result.split("");
+			var text = "";
+			for (let i = 0; i < 4; i++) text += bin.shift();
+			if (text != "MThd") ou.innerHTML = '<strong style="color:red">不是有效的midi文件！</strong>'; //检查midi头
 			else {
 				var j = "";
-				for (var i = 0; i < g.length; i++) g[i] = 0 + g[i].charCodeAt().toString(16);
-				g = g.join();
-				g = g.replace(/0+([0-f]{2})/g, "$1");
-				g = g.split(",");
-				h = "";
-				for (var i = 0; i < 4; i++) h += g.shift();
-				var k = parseInt(h, 16);
-				if (k != 6) document.getElementById("output").innerHTML = '<strong style="color:red">不支持的midi文件！</strong>';
+				for (let i = 0; i < bin.length; i++) bin[i] = 0 + bin[i].charCodeAt().toString(16);
+				bin = bin.join();
+				bin = bin.replace(/0+([0-f]{2})/g, "$1");
+				bin = bin.split(",");
+				text = "";
+				for (let i = 0; i < 4; i++) text += bin.shift();
+				var k = parseInt(text, 16);
+				if (k != 6) ou.innerHTML = '<strong style="color:red">不支持的midi文件！</strong>';
 				else {
-					for (var i = 0; i < 4; i++) g.shift();
-					h = "";
-					for (var i = 0; i < k - 4; i++) h += g.shift();
-					var l = parseInt(h, 16);
+					for (let i = 0; i < 4; i++) bin.shift();
+					text = "";
+					for (let i = 0; i < k - 4; i++) text += bin.shift();
+					var ppqn = parseInt(text, 16);
 					var w = document.getElementById("drumsets").checked;
 					var m = 0;
-					while (g.length > 1 && m != g.length) {
-						m = g.length;
+					while (bin.length > 1 && m != bin.length) {
+						m = bin.length;
 						var o;
-						switch (parseInt(g[0].substr(0, 1), 16)) {
+						switch (parseInt(bin[0].substr(0, 1), 16)) {
 							case 4:
 								var n = "";
-								for (var i = 0; i < 4; i++) n += g.shift();
+								for (let i = 0; i < 4; i++) n += bin.shift();
 								if (n == "4d54726b") {
-									for (var i = 0; i < 4; i++) g.shift();
+									for (let i = 0; i < 4; i++) bin.shift();
 									o = 1;
-									o += c(g);
-								} else document.getElementById("result").innerHTML = "CODE ERROR(4)\n" + n + "\n" + g.slice(0, 10);
+									o += c(bin);
+								} else re.innerHTML = "CODE ERROR(4)\n" + n + "\n" + bin.slice(0, 10);
 								break;
 							case 8:
-								h = g.shift();
-								if (!(h == "89") != w) j += o + "999,\n";
-								g.shift();
-								g.shift();
-								o += c(g);
-								if (parseInt(g[0].substr(0, 1), 16) < 8) g.unshift(h);
+								text = bin.shift();
+								if (!(text == "89") != w) j += o + "999,\n";
+								bin.shift();
+								bin.shift();
+								o += c(bin);
+								if (parseInt(bin[0].substr(0, 1), 16) < 8) bin.unshift(text);
 								break;
 							case 9:
-								h = g.shift();
-								var p = parseInt(g.shift(), 16);
-								if (!(h == "99") != w) {
-									if (parseInt(g.shift(), 16) == 0) j += o + "999,\n";
+								text = bin.shift();
+								var p = parseInt(bin.shift(), 16);
+								if (!(text == "99") != w) {
+									if (parseInt(bin.shift(), 16) == 0) j += o + "999,\n";
 									else j += o * 1000 + p + ",\n";
-								} else g.shift();
-								o += c(g);
-								if (parseInt(g[0].substr(0, 1), 16) < 8) g.unshift(h);
+								} else bin.shift();
+								o += c(bin);
+								if (parseInt(bin[0].substr(0, 1), 16) < 8) bin.unshift(text);
 								break;
 							case 10:
 							case 11:
 							case 14:
-								h = g.shift();
-								g.shift();
-								g.shift();
-								o += c(g);
-								if (parseInt(g[0].substr(0, 1), 16) < 8) g.unshift(h);
+								text = bin.shift();
+								bin.shift();
+								bin.shift();
+								o += c(bin);
+								if (parseInt(bin[0].substr(0, 1), 16) < 8) bin.unshift(text);
 								break;
 							case 12:
 							case 13:
-								h = g.shift();
-								g.shift();
-								o += c(g);
-								if (parseInt(g[0].substr(0, 1), 16) < 8) g.unshift(h);
+								text = bin.shift();
+								bin.shift();
+								o += c(bin);
+								if (parseInt(bin[0].substr(0, 1), 16) < 8) bin.unshift(text);
 								break;
 							case 15:
-								if (g.shift() == "ff") {
-									switch (g.shift()) {
+								if (bin.shift() == "ff") {
+									switch (bin.shift()) {
 										case "2f":
-											g.shift();
+											bin.shift();
 											break;
 										case "51":
-											h = parseInt(g.shift(), 16);
+											text = parseInt(bin.shift(), 16);
 											var z = "";
-											for (var i = 0; i < h; i++) z += g.shift();
+											for (let i = 0; i < text; i++) z += bin.shift();
 											var q = 60000000 / parseInt(z, 16);
-											o += c(g);
+											o += c(bin);
 											break;
 										default:
-											h = parseInt(g.shift(), 16);
-											if (h != 0) {
-												for (var i = 0; i < h; i++) g.shift();
-												o += c(g);
-											} else o += c(g);
+											text = parseInt(bin.shift(), 16);
+											if (text != 0) {
+												for (let i = 0; i < text; i++) bin.shift();
+												o += c(bin);
+											} else o += c(bin);
 									}
 								} else {
-									h = parseInt(g.shift(), 16);
-									for (var i = 0; i < h; i++) g.shift();
-									o += c(g);
+									text = parseInt(bin.shift(), 16);
+									for (let i = 0; i < text; i++) bin.shift();
+									o += c(bin);
 								}
 								break;
 							default:
-								document.getElementById("result").innerHTML = `CODE ERROR(15)\n\n${g.slice(0, 10)}`;
+								re.innerHTML = `CODE ERROR(15)\n\n${bin.slice(0, 10)}`;
 						}
 					}
-					if (g.length == 0 && j) {
+					if (bin.length == 0 && j) {
 						j = j.split(",");
 						j.sort(function(a, b) {
 							return a - b;
@@ -143,10 +144,10 @@ function convert() {
 						j = j.split(",");
 						j = j.map(Number);
 						var x = document.getElementById("limnotes").value;
-						var r = l / 32;
-						for (var i = Math.floor(j.length / 2) * 2; i >= 2; i -= 2) j[i] = (Math.round(j[i] / r / x) - Math.round(j[i - 2] / r / x)) * x;
+						var r = ppqn / 32;
+						for (let i = Math.floor(j.length / 2) * 2; i >= 2; i -= 2) j[i] = (Math.round(j[i] / r / x) - Math.round(j[i - 2] / r / x)) * x;
 						j.shift();
-						for (var i = 1; i < j.length; i += 2) j[i] = j[i].toString(2);
+						for (let i = 1; i < j.length; i += 2) j[i] = j[i].toString(2);
 						j = j.toString().replace(/,/g, "\n");
 						j = j.replace(/\n(.+\n)/g, ",$1");
 						j = j.replace(/,0\n/g, ".");
@@ -375,12 +376,12 @@ function convert() {
 						j = j.replace(/KK/g, "J");
 						j = j.replace(/JJ/g, "I");
 						j = j.replace(/II/g, "H");
-						document.getElementById("result").innerHTML = j;
-						var end = (new Date().getTime() - start) / 1000;
-						document.getElementById("output").innerHTML = `<strong style="color:green">转换成功。(${end}s)<br><br>PPQN: ${l} BPM: ${Math.round(q)}</strong>`;
-					} else document.getElementById("output").innerHTML = '<strong style="color:red">转换失败或转换结果为空</strong>';
+						re.innerHTML = j;
+						const end = (new Date().getTime() - start) / 1000;
+						ou.innerHTML = `<strong style="color:green">转换成功。(${end}s)<br><br>PPQN: ${ppqn} BPM: ${Math.round(q)}</strong>`;
+					} else ou.innerHTML = '<strong style="color:red">转换失败或转换结果为空</strong>';
 				}
 			}
 		}
-	} else document.getElementById("output").innerHTML = '<strong style="color:red">未选择任何文件</strong>';
+	} else ou.innerHTML = '<strong style="color:red">未选择任何文件</strong>';
 }

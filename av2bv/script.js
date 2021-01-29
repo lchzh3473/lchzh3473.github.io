@@ -6,7 +6,7 @@ const pos = [9, 8, 1, 6, 2, 4];
 const xor = 177451812;
 const add = 8728348608;
 var tr = {};
-for (let i in table) {
+for (const i in table) {
 	tr[table[i]] = i;
 }
 document.getElementById("input").placeholder = example;
@@ -15,13 +15,13 @@ convert();
 function av2bv(code) {
 	let n = (code ^ xor) + add;
 	let s = {};
-	for (let i in pos) s[pos[i]] = table[Math.floor(n / 58 ** i) % 58];
+	for (const i in pos) s[pos[i]] = table[Math.floor(n / 58 ** i) % 58];
 	return `1${s[1]}${s[2]}4${s[4]}1${s[6]}7${s[8]}${s[9]}`;
 }
 
 function bv2av(code) {
 	let n = 0;
-	for (let i in pos) n += tr[code[pos[i]]] * 58 ** i;
+	for (const i in pos) n += tr[code[pos[i]]] * 58 ** i;
 	return (n - add) ^ xor;
 }
 
