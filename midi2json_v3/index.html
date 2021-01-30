@@ -32,21 +32,10 @@
 			<input type="button" value="重置" onclick="location.reload()">
 		</div><br>
 		<textarea id="result" class="textbox" placeholder="最终输出将在这里。" readonly></textarea>
-		<p><!--最小音符:
-			<select id="limnotes">
-				<option value="256">H</option>
-				<option value="128">I</option>
-				<option value="64">J</option>
-				<option value="32">K</option>
-				<option value="16">L</option>
-				<option value="8">M</option>
-				<option value="4">N</option>
-				<option value="2">O</option>
-				<option value="1" selected>P</option>
-			</select>&ensp;&ensp;
-			<input type="checkbox" id="drumsets">
-			<label for="drumsets">鼓点模式</label>
-			&ensp;&ensp;<br><br>-->
+		<p>
+			最小音量(1~127)：<input type="number" style="width:3em" id="volume" value="2" min="1" max="127">
+			<input type="checkbox" id="single">
+			<label for="single">单音轨</label><br><br>
 			<input type="button" value="转换" onclick="convert()">
 		</p>
 		<p><strong id="output"></strong></p>
