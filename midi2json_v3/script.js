@@ -70,6 +70,8 @@ function convert() {
 			data.time = buffer.getUint(4, 2); //暂未考虑SMPTE
 			data.mintick = Infinity;
 			data.maxtick = -Infinity;
+			data.mindur = Infinity;
+			data.maxdur = -Infinity;
 			p += thdlen;
 			let track = [];
 			for (let i = 0; i < data.track; i++) {
@@ -143,29 +145,48 @@ function convert() {
 					return;
 				}
 				if (!single && track.length) {
-					tracks.push([track]);
+					tracks.push(track);
 					track = [];
 				}
 			}
-			if (single) tracks.push([track]);
-			tempo.sort(arrange);
+			if (single) tracks.push(track);
+			tempo.sort(arrange); //按tick排序，同时计算绝对时间
 			for (let i = 0; i < tempo.length; i++) {
-				tempo[i].duration = ((tempo[i + 1] ? tempo[i + 1].tick : data.maxtick) - tempo[i].tick) * tempo[i].tempo + (tempo[i - 1] ? tempo[i - 1].duration : 0);
+				let j = tempo[i];
+				let k = tempo[i - 1];
+				j.duration = (j.tick - (k ? k.tick : 0)) * (k ? k.tempo : 0) + (k ? k.duration : 0);
 			}
-			data.bpm = 6e7 / tempo[tempo.length - 1].duration * data.maxtick;
 			drum.sort(arrange);
-			for (const i of tracks) i.sort(arrange);
+			calcDur(drum);
+			for (const i of tracks) {
+				i.sort(arrange);
+				calcDur(i);
+			}
+			data.bpm = 6e7 / (data.maxdur - data.mindur) * (data.maxtick - data.mintick);
+			data.dur = (data.maxdur - data.mindur) / data.time / 1e6;
 		} else {
 			err("不是有效的midi文件！");
 			return;
 		}
+		/**/
 		console.log(data); //test
 		console.log(tracks);
 		console.log(drum);
 		console.log(tempo); //test
+		/**/
 		const end = new Date().getTime();
 		out.className = "accept";
-		out.innerHTML = `转换成功。(${(end - start) / 1000}s)<br><br>PPQN:&nbsp;${data.time}&emsp;BPM:&nbsp;${Math.round(data.bpm*1000)/1000}`;
+		out.innerHTML = `转换成功。(${(end - start) / 1000}s)<br><br>时长:&nbsp;${Math.round(data.dur*1000)/1000}s&emsp;BPM:&nbsp;${Math.round(data.bpm*1000)/1000}`;
+	}
+
+	function calcDur(obj) {
+		let num = 0;
+		for (const k of obj) {
+			while (k.tick >= (tempo[num + 1] ? tempo[num + 1].tick : Infinity)) num++;
+			k.duration = tempo[num].duration + (k.tick - tempo[num].tick) * tempo[num].tempo;
+			data.mindur = Math.min(data.mindur, k.duration);
+			data.maxdur = Math.max(data.maxdur, k.duration);
+		}
 	}
 
 	function arrange(a, b) {
