@@ -1,5 +1,5 @@
 "use strict";
-const _i = ['b站表情图获取工具', [1, 1, 1], 1610790787, 1611846432];
+const _i = ['b站表情图获取工具', [1, 1, 2], 1610790787, 1612046850];
 const pName = ["packages", "statics", "dynamics"];
 const pMode = ["default", "new-add", "changed", "new-remove", "removed", "re-add"];
 const pType = "m";
@@ -175,7 +175,7 @@ function addToStage(str) {
 	if (document.getElementById("changed").checked) {
 		for (const i of document.querySelectorAll(".default")) i.style.display = "none";
 	}
-	for (const i = 0; i < 25; i++) {
+	for (let i = 0; i < 25; i++) {
 		let img = document.createElement("img");
 		img.classList.add("img", "img-void", "fade");
 		document.getElementById("stage").appendChild(img);
