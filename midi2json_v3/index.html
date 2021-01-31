@@ -7,15 +7,15 @@
 	<title>(っ °Д °;)っ</title>
 	<style>
 		.upload {
-			min-width: 80vw;
-			max-width: calc(175vh - 720px);
+			width: 80vw;
+			max-width: 500px;
 			display: inline-flex;
 			justify-content: center;
 		}
 
 		.textbox {
-			min-width: 80vw;
-			max-width: calc(175vh - 720px);
+			width: 80vw;
+			max-width: 500px;
 			height: calc(100vh - 400px);
 			min-height: 4.8em;
 			resize: none;
@@ -27,18 +27,31 @@
 	<div id="main" style="display: none">
 		<div class="upload">
 			<input type="file" accept="audio/midi" id="upload">
-			<label for="upload">上传midi</label>
+			<label for="upload">选择midi</label>
 			<input type="text" style="width:0;flex-grow: 1;flex-shrink: 1; pointer-events:none" id="filename">
 			<input type="button" value="重置" onclick="location.reload()">
 		</div><br>
 		<textarea id="result" class="textbox" placeholder="最终输出将在这里。" readonly></textarea>
-		<p>
+		<p style="line-height:2">
 			最小音量(1~127)：<input type="number" style="width:3em" id="volume" value="2" min="1" max="127">
 			<input type="checkbox" id="single">
-			<label for="single">单音轨</label><br><br>
-			<input type="button" value="转换" onclick="convert()">
+			<label for="single">合并音轨</label><br>
+			最小音符：<select id="note">
+				<option value="0.125">H</option>
+				<option value="0.25">I</option>
+				<option value="0.5">J</option>
+				<option value="1">K</option>
+				<option value="2">L</option>
+				<option value="4">M</option>
+				<option value="8">N</option>
+				<option value="16">O</option>
+				<option value="32" selected>P</option>
+			</select>
+			&emsp;选择音轨：<select id="track" style="width:5em"></select><br>
+			<input type="button" value="分析" onclick="analyse()">
+			<input type="button" value="转换" onclick="convert()"><br>
+			<strong id="output"></strong>
 		</p>
-		<p><strong id="output"></strong></p>
 	</div>
 	<noscript><strong style="color:red">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
 	<script src="./script.js"></script>
