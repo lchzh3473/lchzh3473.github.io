@@ -28,14 +28,14 @@
 		<div class="upload">
 			<input type="file" accept="audio/midi" id="upload">
 			<label for="upload">选择midi</label>
-			<input type="text" style="width:0;flex-grow: 1;flex-shrink: 1; pointer-events:none" id="filename">
+			<input type="text" style="width:0;flex-grow:1;flex-shrink:1;pointer-events:none" id="filename">
 			<input type="button" value="重置" onclick="location.reload()">
 		</div><br>
 		<textarea id="result" class="textbox" placeholder="最终输出将在这里。" readonly></textarea>
 		<p style="line-height:2">
-			最小音量(1~127)：<input type="number" style="width:3em" id="volume" value="2" min="1" max="127">
-			<input type="checkbox" id="single">
-			<label for="single">合并音轨</label><br>
+			最小音量(1~127)：<input type="number" style="width:3em" id="volMin" value="2" min="1" max="127">
+			<input type="checkbox" id="isMerged">
+			<label for="isMerged">合并音轨</label><br>
 			最小音符：<select id="note">
 				<option value="0.125">H</option>
 				<option value="0.25">I</option>
