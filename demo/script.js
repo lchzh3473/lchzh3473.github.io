@@ -5,6 +5,9 @@ window.addEventListener("resize", resize);
 resize();
 /* */
 const item = [];
+canvas.onclick = function(e) {
+	item.push(new point(e.clientX * window.devicePixelRatio, e.clientY * window.devicePixelRatio, rand(-1, 1), rand(-1, 1), rand(10, 50)));
+};
 class point {
 	constructor(x, y, vx, vy, r, color) {
 		this.x = isNaN(x) ? 0 : x;
@@ -23,13 +26,13 @@ class point {
 		const dist = Math.sqrt(this.sqdist(point));
 		const rdist = this.r + point.r;
 		if (dist && dist <= rdist) {
-			const sin = this.y - point.y;
-			const cos = this.x - point.x;
-			const r = sin ** 2 + cos ** 2;
-			const dv = (this.vx - point.vx) * cos / r + (this.vy - point.vy) * sin / r;
-			//if (dist < rdist && this.y < point.y) this.y -= Math.sqrt(rdist ** 2 - (dist * cos / r) ** 2) - dist * Math.abs(sin) / r;
-			this.ax -= dv * cos;
-			this.ay -= dv * sin;
+			const dx = this.x - point.x;
+			const dy = this.y - point.y;
+			const r = dx ** 2 + dy ** 2;
+			let dv = (this.vx - point.vx) * dx + (this.vy - point.vy) * dy;
+			dv -= (rdist - dist) * 10 / df; //???
+			this.ax -= dv * dx / r * df;
+			this.ay -= dv * dy / r * df;
 		}
 	}
 	wall() {
@@ -38,14 +41,14 @@ class point {
 		if (this.x <= this.r && this.vx <= 0) this.vx = -this.vx * df;
 		if (this.y >= canvas.height - this.r && this.vy >= 0) this.vy = -this.vy * df;
 		if (this.y <= this.r && this.vy <= 0) this.vy = -this.vy * df;
-		/*强制防穿墙*/
+		/*防止穿墙*/
 		if (this.x > canvas.width - this.r) this.x = canvas.width - this.r;
 		if (this.x < this.r) this.x = this.r;
 		if (this.y > canvas.height - this.r) this.y = canvas.height - this.r;
 		if (this.y < this.r) this.y = this.r;
 	}
 }
-const df = 0.98; //摩擦因数
+const df = 0.5; //摩擦因数
 function draw() {
 	const ctx = canvas.getContext("2d");
 	ctx.fillStyle = "black";
@@ -65,16 +68,16 @@ function draw() {
 	}
 	ctx.font = "25px sans-serif";
 	ctx.fillStyle = "rgba(255,255,255,0.6)";
-	ctx.textAlign="start";
+	ctx.textAlign = "start";
 	ctx.fillText("平均动能：" + Math.round(ek / item.length * 150), 10, 35);
-	ctx.textAlign="end";
-	ctx.fillText("lchzh3473制作", canvas.width-10, canvas.height-10);
+	ctx.textAlign = "end";
+	ctx.fillText("lch\zh3473制作", canvas.width - 10, canvas.height - 10);
 	for (const i of item) {
 		for (const j of item) i.collide(j);
 		i.wall();
 	}
 	for (const i of item) {
-		//i.ay += 1; //重力
+		i.ay += 0.1; //重力
 		i.vx += i.ax * df;
 		i.vy += i.ay * df;
 		i.x += i.vx;
@@ -84,13 +87,7 @@ function draw() {
 	}
 	requestAnimationFrame(draw);
 }
-
-function init() {
-	for (let i = 0; i < Math.floor(canvas.width * canvas.height / 5000); i++) item.push(new point(rand(0, canvas.width), rand(0, canvas.height), rand(-1, 1), rand(-1, 1), 5));
-	draw();
-}
-
-init();
+draw();
 
 function rand(min, max) {
 	return Math.random() * (max - min) + min;
