@@ -3,11 +3,71 @@ const _i = ['测试', [1, 0], 1611795955, 1611795955];
 const canvas = document.getElementById("stage");
 window.addEventListener("resize", resize);
 resize();
-/* */
 const item = [];
-canvas.onclick = function(e) {
-	item.push(new point(e.clientX * window.devicePixelRatio, e.clientY * window.devicePixelRatio, rand(-1, 1), rand(-1, 1), rand(10, 50)));
+const tmp = [];
+/*适配PC鼠标*/
+let isMouseDown = false;
+canvas.addEventListener("mousedown", evt => {
+	evt.preventDefault();
+	if (isMouseDown) mouseup();
+	else {
+		tmp[0] = {
+			x1: evt.pageX * window.devicePixelRatio,
+			y1: evt.pageY * window.devicePixelRatio
+		};
+		isMouseDown = true;
+	}
+});
+canvas.addEventListener("mousemove", evt => {
+	evt.preventDefault();
+	if (isMouseDown) {
+		tmp[0].x2 = evt.pageX * window.devicePixelRatio;
+		tmp[0].y2 = evt.pageY * window.devicePixelRatio;
+	}
+});
+canvas.addEventListener("mouseup", evt => {
+	evt.preventDefault();
+	if (isMouseDown) mouseup();
+});
+
+function mouseup() {
+	item.push(new point(tmp[0].x1, tmp[0].y1, (tmp[0].x1 - tmp[0].x2) / 20, (tmp[0].y1 - tmp[0].y2) / 20, tmp[0].r, tmp[0].color));
+	tmp[0] = {};
+	isMouseDown = false;
+}
+/*适配移动设备*/
+const passive = {
+	passive: false
 };
+canvas.addEventListener("touchstart", evt => {
+	evt.preventDefault();
+	for (const i of evt.changedTouches) {
+		tmp[i.identifier] = {
+			x1: i.pageX * window.devicePixelRatio,
+			y1: i.pageY * window.devicePixelRatio
+		};
+	}
+}, passive);
+canvas.addEventListener("touchmove", evt => {
+	evt.preventDefault();
+	for (const i of evt.changedTouches) {
+		const idx = i.identifier;
+		if (idx >= 0) {
+			tmp[idx].x2 = i.pageX * window.devicePixelRatio;
+			tmp[idx].y2 = i.pageY * window.devicePixelRatio;
+		}
+	}
+}, passive);
+canvas.addEventListener("touchend", evt => {
+	evt.preventDefault();
+	for (const i of evt.changedTouches) {
+		const idx = i.identifier;
+		item.push(new point(tmp[idx].x1, tmp[idx].y1, (tmp[idx].x1 - tmp[idx].x2) / 20, (tmp[idx].y1 - tmp[idx].y2) / 20, tmp[idx].r, tmp[idx].color));
+		if (idx >= 0) tmp[idx] = {};
+	}
+});
+/*定义点类*/
+const df = 0.5; //摩擦因数
 class point {
 	constructor(x, y, vx, vy, r, color) {
 		this.x = isNaN(x) ? 0 : x;
@@ -15,15 +75,12 @@ class point {
 		this.vx = isNaN(vx) ? 0 : vx;
 		this.vy = isNaN(vy) ? 0 : vy;
 		this.r = isNaN(r) ? 5 : r;
-		this.color = color ? color : `rgb(${rand(0,256)},${rand(0,256)},${rand(0,256)})`;
+		this.color = color ? color : `rgb(${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)})`;
 		this.ax = 0;
 		this.ay = 0;
 	}
-	sqdist(point) {
-		return (this.x - point.x) ** 2 + (this.y - point.y) ** 2;
-	}
 	collide(point) {
-		const dist = Math.sqrt(this.sqdist(point));
+		const dist = Math.sqrt((this.x - point.x) ** 2 + (this.y - point.y) ** 2);
 		const rdist = this.r + point.r;
 		if (dist && dist <= rdist) {
 			const dx = this.x - point.x;
@@ -48,12 +105,14 @@ class point {
 		if (this.y < this.r) this.y = this.r;
 	}
 }
-const df = 0.5; //摩擦因数
+
+/*作图*/
 function draw() {
 	const ctx = canvas.getContext("2d");
 	ctx.fillStyle = "black";
-	ctx.strokeStyle = "white";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	/*绘制图形*/
+	ctx.strokeStyle = "white";
 	for (const i of item) {
 		const color = i.color;
 		ctx.fillStyle = color;
@@ -62,16 +121,36 @@ function draw() {
 		ctx.stroke();
 		ctx.fill();
 	}
-	let ek = 0;
-	for (const i of item) {
-		ek += i.vx ** 2 + i.vy ** 2;
+	/*绘制事件*/
+	let tek = "";
+	for (const i of tmp) {
+		i.color = `rgb(${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)})`;
+		i.r = rand(10, 50);
+		ctx.fillStyle = i.color;
+		ctx.beginPath();
+		ctx.arc(i.x1, i.y1, i.r, 0, 2 * Math.PI);
+		ctx.moveTo(i.x1, i.y1);
+		ctx.lineTo((i.x1 + i.x2) / 2, (i.y1 + i.y2) / 2);
+		tek = (i.x1 - i.x2) ** 2 + (i.y1 - i.y2) ** 2;
+		if (isNaN(tek)) tek = 0;
+		else tek = Math.round(Math.sqrt(tek) / 2);
+		ctx.stroke();
+		ctx.stroke();
+		ctx.fill();
 	}
-	ctx.font = "25px sans-serif";
+	/*绘制文本*/
+	let ek = 0;
+	for (const i of item) ek += i.vx ** 2 + i.vy ** 2;
+	const px = 25 * window.devicePixelRatio;
+	ctx.font = `${px}px sans-serif`;
 	ctx.fillStyle = "rgba(255,255,255,0.6)";
 	ctx.textAlign = "start";
-	ctx.fillText("平均动能：" + Math.round(ek / item.length * 150), 10, 35);
+	ctx.fillText(`小球数量：${item.length}`, 0.6 * px, 1.6 * px);
+	ctx.fillText(`动能：${ek ? Math.round(Math.sqrt(ek)*10) : 0}`, 0.6 * px, 2.9 * px);
+	ctx.fillText(tek, 0.6 * px, 4.2 * px); //test
 	ctx.textAlign = "end";
-	ctx.fillText("lch\zh3473制作", canvas.width - 10, canvas.height - 10);
+	ctx.fillText("lch\zh3473制作", canvas.width - 0.6 * px, canvas.height - 0.6 * px);
+	/*计算下一帧*/
 	for (const i of item) {
 		for (const j of item) i.collide(j);
 		i.wall();
@@ -95,5 +174,5 @@ function rand(min, max) {
 
 function resize() {
 	canvas.width = window.innerWidth * window.devicePixelRatio;
-	canvas.height = window.innerHeight * window.devicePixelRatio;
+	canvas.height = window.innerHeight * window.devicePixelRatio
 }
