@@ -6,21 +6,24 @@
 	<title>(っ °Д °;)っ</title>
 	<link rel="stylesheet" href="/style.css">
 	<style>
-		#stage{
-			width: 80vw;
-			max-width: 500px;
-			height: 80vw;
-			max-height: 500px;
-			border: 1px solid gray;
+		html,
+		body {
+			overflow: hidden;
+		}
+
+		#stage {
+			position: absolute;
+			width: 100vw;
+			height: 100vh;
+			left: 0;
+			top: 0;
 		}
 	</style>
+
 <body>
 	<div id="main" style="display: none">
-		<p class="profile">
-			这是测试页面。
-		</p>
-		<canvas id="stage" width="1000" height="1000"></canvas>
 	</div>
+	<canvas id="stage"></canvas>
 	<noscript><strong style="color:red">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
 	<script src="./script.js"></script>
 	<script src="/script.js"></script>
