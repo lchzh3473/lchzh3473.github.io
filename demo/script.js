@@ -80,16 +80,18 @@ class point {
 		this.ay = 0;
 	}
 	collide(point) {
+		/*碰撞判定*/
 		const dist = Math.sqrt((this.x - point.x) ** 2 + (this.y - point.y) ** 2);
 		const rdist = this.r + point.r;
 		if (dist && dist <= rdist) {
 			const dx = this.x - point.x;
 			const dy = this.y - point.y;
 			const r = dx ** 2 + dy ** 2;
-			let dv = (this.vx - point.vx) * dx + (this.vy - point.vy) * dy;
-			dv -= (rdist - dist) * 10 / df; //???
-			this.ax -= dv * dx / r * df;
-			this.ay -= dv * dy / r * df;
+			const dv = (this.vx - point.vx) * dx + (this.vy - point.vy) * dy;
+			//dv -= / df; 
+			const ds = (rdist - dist) * 15 - dv * df;//需要研究
+			this.ax += ds * dx / r;
+			this.ay += ds * dy / r;
 		}
 	}
 	wall() {
@@ -122,21 +124,20 @@ function draw() {
 		ctx.fill();
 	}
 	/*绘制事件*/
-	let tek = "";
+	let tek = [];
 	for (const i of tmp) {
-		i.color = `rgb(${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)})`;
-		i.r = rand(10, 50);
+		i.color = `rgb(${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)})`;
+		i.r = Math.random() * 50 + 10;
 		ctx.fillStyle = i.color;
 		ctx.beginPath();
 		ctx.arc(i.x1, i.y1, i.r, 0, 2 * Math.PI);
 		ctx.moveTo(i.x1, i.y1);
 		ctx.lineTo((i.x1 + i.x2) / 2, (i.y1 + i.y2) / 2);
-		tek = (i.x1 - i.x2) ** 2 + (i.y1 - i.y2) ** 2;
-		if (isNaN(tek)) tek = 0;
-		else tek = Math.round(Math.sqrt(tek) / 2);
 		ctx.stroke();
 		ctx.stroke();
 		ctx.fill();
+		let tekn = (i.x1 - i.x2) ** 2 + (i.y1 - i.y2) ** 2;
+		if (!isNaN(tekn)) tek.push(Math.round(Math.sqrt(tekn) / 2));
 	}
 	/*绘制文本*/
 	let ek = 0;
@@ -147,7 +148,7 @@ function draw() {
 	ctx.textAlign = "start";
 	ctx.fillText(`小球数量：${item.length}`, 0.6 * px, 1.6 * px);
 	ctx.fillText(`动能：${ek ? Math.round(Math.sqrt(ek)*10) : 0}`, 0.6 * px, 2.9 * px);
-	ctx.fillText(tek, 0.6 * px, 4.2 * px); //test
+	for (const i in tek) ctx.fillText(tek[i], 0.6 * px, (4.2 + i * 1.3) * px);
 	ctx.textAlign = "end";
 	ctx.fillText("lch\zh3473制作", canvas.width - 0.6 * px, canvas.height - 0.6 * px);
 	/*计算下一帧*/
@@ -167,10 +168,6 @@ function draw() {
 	requestAnimationFrame(draw);
 }
 draw();
-
-function rand(min, max) {
-	return Math.random() * (max - min) + min;
-}
 
 function resize() {
 	canvas.width = window.innerWidth * window.devicePixelRatio;
