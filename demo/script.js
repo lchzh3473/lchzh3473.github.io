@@ -74,7 +74,7 @@ class point {
 		this.y = isNaN(y) ? 0 : y;
 		this.vx = isNaN(vx) ? 0 : vx;
 		this.vy = isNaN(vy) ? 0 : vy;
-		this.r = isNaN(r) ? 5 : r;
+		this.r = isNaN(r) ? 20 : r;
 		this.color = color ? color : `rgb(${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)})`;
 		this.ax = 0;
 		this.ay = 0;
@@ -87,11 +87,10 @@ class point {
 			const dx = this.x - point.x;
 			const dy = this.y - point.y;
 			const r = dx ** 2 + dy ** 2;
-			const dv = (this.vx - point.vx) * dx + (this.vy - point.vy) * dy;
-			//dv -= / df; 
-			const ds = (rdist - dist) * 15 - dv * df;//需要研究
-			this.ax += ds * dx / r;
-			this.ay += ds * dy / r;
+			const dvs = (this.vx - point.vx) * dx + (this.vy - point.vy) * dy;
+			const dv = (rdist - dist) ** 0.5 * 100 - dvs * df; //需要研究
+			this.ax += dv * dx / r;
+			this.ay += dv * dy / r;
 		}
 	}
 	wall() {
@@ -127,7 +126,7 @@ function draw() {
 	let tek = [];
 	for (const i of tmp) {
 		i.color = `rgb(${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)})`;
-		i.r = Math.random() * 50 + 10;
+		i.r = Math.random() * 35 + 15;
 		ctx.fillStyle = i.color;
 		ctx.beginPath();
 		ctx.arc(i.x1, i.y1, i.r, 0, 2 * Math.PI);
@@ -142,15 +141,15 @@ function draw() {
 	/*绘制文本*/
 	let ek = 0;
 	for (const i of item) ek += i.vx ** 2 + i.vy ** 2;
-	const px = 25 * window.devicePixelRatio;
+	const px = 16 * window.devicePixelRatio;
 	ctx.font = `${px}px sans-serif`;
 	ctx.fillStyle = "rgba(255,255,255,0.6)";
 	ctx.textAlign = "start";
-	ctx.fillText(`小球数量：${item.length}`, 0.6 * px, 1.6 * px);
-	ctx.fillText(`动能：${ek ? Math.round(Math.sqrt(ek)*10) : 0}`, 0.6 * px, 2.9 * px);
-	for (const i in tek) ctx.fillText(tek[i], 0.6 * px, (4.2 + i * 1.3) * px);
+	ctx.fillText(`小球数量：${item.length}`, px * 0.6, px * 1.6);
+	ctx.fillText(`动能：${ek ? Math.round(Math.sqrt(ek)*10) : 0}`, px * 0.6, px * 2.9);
+	for (const i in tek) ctx.fillText(tek[i], px * 0.6, px * (4.2 + i * 1.3));
 	ctx.textAlign = "end";
-	ctx.fillText("lch\zh3473制作", canvas.width - 0.6 * px, canvas.height - 0.6 * px);
+	ctx.fillText("lch\zh3473制作", canvas.width - px * 0.6, canvas.height - px * 0.6);
 	/*计算下一帧*/
 	for (const i of item) {
 		for (const j of item) i.collide(j);
