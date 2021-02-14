@@ -5,64 +5,59 @@ const table = "fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF";
 const pos = [9, 8, 1, 6, 2, 4];
 const xor = 177451812;
 const add = 8728348608;
-var tr = {};
-for (const i in table) {
-	tr[table[i]] = i;
-}
+const tr = {};
+for (const i in table) tr[table[i]] = i;
 document.getElementById("input").placeholder = example;
-convert();
-
-function av2bv(code) {
-	let n = (code ^ xor) + add;
-	let s = {};
-	for (const i in pos) s[pos[i]] = table[Math.floor(n / 58 ** i) % 58];
+const av2bv = code => {
+	const n = (code ^ xor) + add;
+	const s = {};
+	pos.forEach((p, i) => s[p] = table[Math.floor(n / 58 ** i) % 58]);
 	return `1${s[1]}${s[2]}4${s[4]}1${s[6]}7${s[8]}${s[9]}`;
 }
-
-function bv2av(code) {
+const bv2av = code => {
 	let n = 0;
-	for (const i in pos) n += tr[code[pos[i]]] * 58 ** i;
+	pos.forEach((p, i) => n += tr[code[p]] * 58 ** i);
 	return (n - add) ^ xor;
 }
-
-function convert() {
-	let av = [0, 0];
-	let bv = [0, 0];
-	let result = document.getElementById("result");
-	let inValue = document.getElementById("input").value;
+const output = document.getElementById("output");
+const convert = () => {
+	const av = [0, 0];
+	const bv = [0, 0];
+	const result = document.getElementById("result");
+	const inValue = document.getElementById("input").value;
 	let out = inValue ? inValue : example;
 	document.getElementById("reset").classList[inValue ? "remove" : "add"]("disabled");
 	out = out.replace(/&/g, "&amp;");
 	out = out.replace(/</g, "&lt;");
-	out = out.replace(/av[1-9]\d*|bv1[1-9a-z]{9}|cv\d+/gi, function(code) {
-		let encode = code.substring(2);
-		let decode;
+	out = out.replace(/av[1-9]\d*|bv1[1-9a-z]{9}|cv\d+/gi, code => {
+		const enc = code.substring(2);
+		let dec;
 		switch (code[0]) {
 			case 'A':
 			case 'a':
-				decode = av2bv(encode);
+				dec = av2bv(enc);
 				av[0]++;
-				if (encode == bv2av(decode)) {
+				if (enc == bv2av(dec)) {
 					av[1]++;
-					if (document.getElementById("av2bv").checked) return `<a class="bv"href="http://www.bilibili.com/video/BV${decode}">BV${decode}</a>`;
-					return `<a class="av"href="http://www.bilibili.com/video/av${encode}">av${encode}</a>`;
+					if (document.getElementById("av2bv").checked) return `<a class="bv"href="http://www.bilibili.com/video/BV${dec}">BV${dec}</a>`;
+					return `<a class="av"href="http://www.bilibili.com/video/av${enc}">av${enc}</a>`;
 				}
-				return `<a class="invalid"href="http://www.bilibili.com/video/av${encode}">av${encode}</a>`;
+				return `<a class="invalid"href="http://www.bilibili.com/video/av${enc}">av${enc}</a>`;
 			case 'B':
 			case 'b':
-				decode = bv2av(encode);
+				dec = bv2av(enc);
 				bv[0]++;
-				if (decode > 0 && encode == av2bv(decode)) {
+				if (dec > 0 && enc == av2bv(dec)) {
 					bv[1]++;
-					if (document.getElementById("bv2av").checked) return `<a class="av"href="http://www.bilibili.com/video/av${decode}">av${decode}</a>`;
-					return `<a class="bv"href="http://www.bilibili.com/video/BV${encode}">BV${encode}</a>`;
+					if (document.getElementById("bv2av").checked) return `<a class="av"href="http://www.bilibili.com/video/av${dec}">av${dec}</a>`;
+					return `<a class="bv"href="http://www.bilibili.com/video/BV${enc}">BV${enc}</a>`;
 				}
-				return `<a class="invalid"href="http://www.bilibili.com/video/BV${encode}">BV${encode}</a>`;
+				return `<a class="invalid"href="http://www.bilibili.com/video/BV${enc}">BV${enc}</a>`;
 			default:
-				return `<a class="cv"href="http://www.bilibili.com/read/cv${encode}">cv${encode}</a>`;
+				return `<a class="cv"href="http://www.bilibili.com/read/cv${enc}">cv${enc}</a>`;
 		}
 	});
-	document.getElementById("output").innerHTML = out;
+	output.innerHTML = out;
 	if (av[0] + bv[0] == 0) {
 		result.className = 'error';
 		result.innerHTML = `未检测到av号或bv号`;
@@ -74,28 +69,26 @@ function convert() {
 		result.innerHTML = `已全部转换（av:${av[1]}/${av[0]}&ensp;bv:${bv[1]}/${bv[0]}）`;
 	}
 	document.getElementById("copy").innerHTML = '复制';
-	//document.getElementById("check").classList.remove("disabled");
 }
-
+convert();
 document.getElementById("copy").onclick = function() {
-	if (copy(document.getElementById('output'))) this.innerHTML = '复制成功';
+	if (copy(output)) this.innerHTML = '复制成功';
 }
-document.getElementById("reset").onclick = function() {
+document.getElementById("reset").onclick = () => {
 	document.getElementById('input').value = "";
 	convert();
 }
 //api test
-let enableAPI = window.localStorage.getItem("enableAPI") == "true";
+const enableAPI = window.localStorage.getItem("enableAPI") == "true";
 if (enableAPI) {
-	let script = document.createElement("script");
+	const script = document.createElement("script");
 	script.src = "./api.js";
 	document.body.appendChild(script);
 }
 document.getElementById("input").addEventListener("input", function() {
-	let i = this;
-	if (i.value == "/test\n") setTimeout(function() {
-		if (i.value == "/test\n") {
-			let str = enableAPI ? "关闭" : "开启";
+	if (this.value == "/test\n") setTimeout(() => {
+		if (this.value == "/test\n") {
+			const str = enableAPI ? "关闭" : "开启";
 			if (confirm(`是否${str}实验性功能(b站api)?`)) {
 				window.localStorage.setItem("enableAPI", !enableAPI);
 				alert(`已经${str}实验性功能。`);

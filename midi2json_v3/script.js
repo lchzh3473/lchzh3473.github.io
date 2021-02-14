@@ -60,8 +60,8 @@ function analyse() {
 	const start = new Date().getTime();
 	const reader = new FileReader();
 	reader.readAsArrayBuffer(file);
-	reader.onprogress = (progress) => { //显示加载文件进度
-		let size = file.size;
+	reader.onprogress = progress => { //显示加载文件进度
+		const size = file.size;
 		out.className = "accept";
 		out.innerHTML = `加载中：${Math.floor(progress.loaded / size * 100)}%`;
 	};

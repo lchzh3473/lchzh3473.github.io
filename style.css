@@ -63,6 +63,7 @@ input[type="file"]+label:active {
 button,
 label,
 input[type="button"] {
+	user-select: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 }
