@@ -111,6 +111,11 @@ input[type="text"] {
 	margin: 1px;
 }
 
+.title {
+	color: blue;
+}
+
+.info,
 strong.error {
 	color: red;
 }

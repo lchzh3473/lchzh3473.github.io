@@ -6,22 +6,29 @@
 	<title>(っ °Д °;)っ</title>
 	<link rel="stylesheet" href="/style.css">
 	<style>
+		::-webkit-scrollbar {
+			display: none;
+		}
+
+		html,
+		body {
+			overflow: hidden;
+			user-select: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+		}
+
 		#stage {
-			background-color: white;
-			width: 96vw;
-			max-width: 960px;
-			height: 56vw;
-			max-height: 560px;
+			position: absolute;
+			width: 100vw;
+			left: 0;
+			top: 0;
 		}
 	</style>
-</head>
 
 <body>
 	<div id="main" style="display: none">
-		<h1 class="title"></h1>
-		<p class="info"></p>
-		<embed id="stage" src="./combat.swf"></embed>
-		<div><strong id="flashInfo"></strong></div>
+	<canvas id="stage"></canvas>
 	</div>
 	<noscript><strong style="color:red">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
 	<script src="./script.js"></script>

@@ -7,8 +7,8 @@ var flashInfo = document.getElementById("flashInfo");
 let a = navigator.plugins;
 if (a) {
 	for (const i of a) {
-		if (a[i].name.toLowerCase().indexOf("shockwave flash") >= 0) {
-			let b = a[i].description;
+		if (i.name.toLowerCase().indexOf("shockwave flash") >= 0) {
+			let b = i.description;
 			iFlash = true;
 			vFlash = b.substring(b.toLowerCase().lastIndexOf("flash ") + 6, b.length);
 		}
