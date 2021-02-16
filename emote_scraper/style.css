@@ -14,12 +14,12 @@
 .img {
 	width: 56px;
 	height: 56px;
-	border: 3px solid gray;
+	border: 3px solid #888;
 	border-radius: 2px;
 	margin: 1px;
 	padding: 0px;
 	resize: none;
-	background-color: white;
+	background-color: #fff;
 }
 
 .img-void {
@@ -31,27 +31,27 @@
 }
 
 .default {
-	border-color: blue;
+	border-color: #00f;
 }
 
 .new-add {
-	border-color: limegreen;
+	border-color: #3c3;
 }
 
 .changed {
-	border-color: orange;
+	border-color: #fa0;
 }
 
 .new-remove {
-	border-color: red;
+	border-color: #f00;
 }
 
 .removed {
-	border-color: lightgray;
+	border-color: #ccc;
 }
 
 .re-add {
-	border-color: magenta;
+	border-color: #f0f;
 }
 
 .fold,

@@ -13,9 +13,9 @@
 		html,
 		body {
 			overflow: hidden;
-			user-select: none;
 			-webkit-user-select: none;
 			-moz-user-select: none;
+			user-select: none;
 		}
 
 		#stage {
@@ -25,12 +25,13 @@
 			top: 0;
 		}
 	</style>
+</head>
 
 <body>
 	<div id="main" style="display: none">
-	<canvas id="stage"></canvas>
+		<canvas id="stage"></canvas>
 	</div>
-	<noscript><strong style="color:red">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<noscript><strong style="color:#f00">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
 	<script src="./script.js"></script>
 	<script src="/script.js"></script>
 </body>

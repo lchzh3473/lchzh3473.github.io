@@ -1,7 +1,7 @@
 "use strict";
 const _i = ['MIDI转JSON', [2, 1, 4], 1585107102, 1590850976];
 if (typeof FileReader == "undefined") {
-	ou.innerHTML = '<strong style="color:red">此浏览器不支持FileReader接口，该脚本无法运行。</strong>';
+	ou.innerHTML = '<strong style="color:#f00">此浏览器不支持FileReader接口，该脚本无法运行。</strong>';
 	openfile.setAttribute("disabled", "disabled");
 }
 
@@ -29,14 +29,14 @@ function convert() {
 		files.readAsBinaryString(midi);
 		files.onprogress = function(progress) { //显示加载文件进度
 			let size = document.getElementById("openfile").files[0].size;
-			ou.innerHTML = `<strong style="color:red">加载中：${parseInt((progress.loaded / size) * 100)}%</strong>`;
+			ou.innerHTML = `<strong style="color:#f00">加载中：${parseInt((progress.loaded / size) * 100)}%</strong>`;
 		};
 		files.onload = function() {
-			ou.innerHTML = '<strong style="color:red">发生了致命错误</strong>'; //读取错误时此条不会被替换
+			ou.innerHTML = '<strong style="color:#f00">发生了致命错误</strong>'; //读取错误时此条不会被替换
 			var bin = this.result.split("");
 			var text = "";
 			for (let i = 0; i < 4; i++) text += bin.shift();
-			if (text != "MThd") ou.innerHTML = '<strong style="color:red">不是有效的midi文件！</strong>'; //检查midi头
+			if (text != "MThd") ou.innerHTML = '<strong style="color:#f00">不是有效的midi文件！</strong>'; //检查midi头
 			else {
 				var j = "";
 				for (let i = 0; i < bin.length; i++) bin[i] = 0 + bin[i].charCodeAt().toString(16);
@@ -46,7 +46,7 @@ function convert() {
 				text = "";
 				for (let i = 0; i < 4; i++) text += bin.shift();
 				var k = parseInt(text, 16);
-				if (k != 6) ou.innerHTML = '<strong style="color:red">不支持的midi文件！</strong>';
+				if (k != 6) ou.innerHTML = '<strong style="color:#f00">不支持的midi文件！</strong>';
 				else {
 					for (let i = 0; i < 4; i++) bin.shift();
 					text = "";
@@ -378,10 +378,10 @@ function convert() {
 						j = j.replace(/II/g, "H");
 						re.innerHTML = j;
 						const end = (new Date().getTime() - start) / 1000;
-						ou.innerHTML = `<strong style="color:green">转换成功。(${end}s)<br><br>PPQN: ${ppqn} BPM: ${Math.round(q)}</strong>`;
-					} else ou.innerHTML = '<strong style="color:red">转换失败或转换结果为空</strong>';
+						ou.innerHTML = `<strong style="color:#080">转换成功。(${end}s)<br><br>PPQN: ${ppqn} BPM: ${Math.round(q)}</strong>`;
+					} else ou.innerHTML = '<strong style="color:#f00">转换失败或转换结果为空</strong>';
 				}
 			}
 		}
-	} else ou.innerHTML = '<strong style="color:red">未选择任何文件</strong>';
+	} else ou.innerHTML = '<strong style="color:#f00">未选择任何文件</strong>';
 }

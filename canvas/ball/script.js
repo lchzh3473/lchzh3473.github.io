@@ -111,10 +111,10 @@ class point {
 /*作图*/
 function draw() {
 	const ctx = canvas.getContext("2d");
-	ctx.fillStyle = "black";
+	ctx.fillStyle = "#000";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 	/*绘制图形*/
-	ctx.strokeStyle = "white";
+	ctx.strokeStyle = "#fff";
 	for (const i of item) {
 		const color = i.color;
 		ctx.fillStyle = color;
