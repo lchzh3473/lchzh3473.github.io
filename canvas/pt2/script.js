@@ -245,7 +245,7 @@ function draw() {
 					scores: currentTile.scores,
 					hlen: currentTile.hlen,
 					hpos: hpos,
-					wpos: (currentTile.type != 5) ? wpos : wpos - k
+					wpos: (currentTile.type != 5) ? wpos : wpos - key
 				}
 				hpos += currentTile.hlen;
 				tiles.push(bb);
