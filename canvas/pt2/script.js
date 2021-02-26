@@ -1,5 +1,5 @@
 "use strict";
-const _i = ['钢琴块2', [1, 0,1], 1614358089, 1614362421];
+const _i = ['钢琴块2', [1, 0, 1], 1614358089, 1614362421];
 //document.oncontextmenu = e => e.returnValue = false;
 const canvas = document.getElementById("stage");
 window.addEventListener("resize", resize);
@@ -131,20 +131,19 @@ function init() {
 	}
 	//加载音色
 	function loadAudio() {
-		let request = new XMLHttpRequest();
-		request.open("get", "src/piano.json");
-		request.send();
-		request.onload = () => {
-			const audData = JSON.parse(request.response);
-			let audNum = audData.length;
+		let xhr = new XMLHttpRequest();
+		xhr.open("get", "src/piano.json");
+		xhr.send();
+		xhr.onprogress = progress => document.getElementById("cover-loading").innerHTML = `加载音乐资源...(${Math.floor(progress.loaded / progress.total * 100)}%)`; //显示加载文件进度
+		xhr.onload = () => {
+			const audData = JSON.parse(xhr.response);
 			for (const i of audData) {
 				actx.decodeAudioData(
 					base64ToArrayBuffer(i.data),
 					data => aud[i.name] = data
 				);
-				document.getElementById("cover-loading").innerText = `加载声音资源...(还剩${audNum}个文件)`;
-				if (--audNum <= 0) loadImage();
 			}
+			loadImage();
 		}
 	}
 	//base64转arraybuffer
