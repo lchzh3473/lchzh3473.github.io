@@ -1,5 +1,5 @@
 "use strict";
-const _i = ['钢琴块2', [1, 0], 1614358089, 1614358089];
+const _i = ['钢琴块2', [1, 0,1], 1614358089, 1614362421];
 //document.oncontextmenu = e => e.returnValue = false;
 const canvas = document.getElementById("stage");
 window.addEventListener("resize", resize);
@@ -57,10 +57,10 @@ function init() {
 	console.log(qwq);
 	if (!qwq) {
 		//加载默认json谱面
-		let request = new XMLHttpRequest();
-		request.open("get", "src/example.json");
-		request.send();
-		request.onload = () => loadJson(request.responseText);
+		let xhr = new XMLHttpRequest();
+		xhr.open("get", "src/example.json");
+		xhr.send();
+		xhr.onload = () => loadJson(xhr.responseText);
 	} else {
 		songName = qwq.songName;
 		bpm = qwq.bpm;
@@ -73,10 +73,10 @@ function init() {
 		document.getElementById("cfg-bpm").value = bpm;
 		try {
 			const data = JSON.parse(json);
-			console.log(data);
-			console.log(data.baseBpm);
+			console.log(data); //test
+			console.log(data.baseBpm); //test
 			const musics = data.musics.sort((a, b) => a.id - b.id);
-			console.log(musics);
+			console.log(musics); //test
 			for (const i of musics) {
 				let base = strToTiles(i.scores[0]);
 				for (let j = 1; j < i.scores.length; j++) {
@@ -131,21 +131,28 @@ function init() {
 	}
 	//加载音色
 	function loadAudio() {
-		let audNum = pt2Note.length;
-		for (const i of pt2Note) {
-			const xml = new XMLHttpRequest();
-			xml.responseType = "arraybuffer";
-			xml.open("get", `src/piano/${i.replace(/#/, "%23")}.ogg`, true);
-			xml.send();
-			xml.onload = () => {
+		let request = new XMLHttpRequest();
+		request.open("get", "src/piano.json");
+		request.send();
+		request.onload = () => {
+			const audData = JSON.parse(request.response);
+			let audNum = audData.length;
+			for (const i of audData) {
 				actx.decodeAudioData(
-					xml.response,
-					data => aud[i] = data
+					base64ToArrayBuffer(i.data),
+					data => aud[i.name] = data
 				);
 				document.getElementById("cover-loading").innerText = `加载声音资源...(还剩${audNum}个文件)`;
 				if (--audNum <= 0) loadImage();
-			};
+			}
 		}
+	}
+	//base64转arraybuffer
+	function base64ToArrayBuffer(base64) {
+		const binaryStr = atob(base64);
+		const bytes = new Uint8Array(binaryStr.length);
+		for (const i in bytes) bytes[i] = binaryStr.charCodeAt(i);
+		return bytes.buffer;
 	}
 	//加载图片
 	function loadImage() {
