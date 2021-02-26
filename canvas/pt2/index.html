@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
+	<title>(っ °Д °;)っ</title>
+	<link rel="stylesheet" href="/style.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<div id="main" style="display: none">
+		<canvas id="stage"></canvas>
+		<div id="cover-loading">加载json...</div>
+		<div id="btn-config" class="btn hide">&#59796;</div>
+		<div id="btn-pause" class="btn hide">&#59926;</div>
+		<div id="cover-dark" class="hide"></div>
+		<div id="view-config" class="hide">
+			<p class="config-title">设置</p>
+			<hr>
+			<table class="config-table">
+				<tr>
+					<td class="item-left"><a>歌曲名称：</a></td>
+					<td class="item-right"><input type="text" id="cfg-songName"></td>
+				</tr>
+				<tr>
+					<td class="item-left"><a>谱面JSON：</a></td>
+					<td class="item-right"><input type="text" id="cfg-json"></td>
+				</tr>
+				<tr>
+					<td class="item-left"><a>默认BPM：</a></td>
+					<td class="item-right"><input type="text" id="cfg-bpm"></td>
+				</tr>
+			</table>
+			<hr>
+		</div>
+		<div id="cover-light" class="hide"></div>
+		<div id="view-pause" class="hide">
+			<p class="pause-title">游戏暂停</p>
+			<p class="pause-config">
+				<a id="gameover">终止</a>
+				<a id="continue">继续</a>
+			</p>
+		</div>
+	</div>
+	<noscript><strong style="color:#f00">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<script src="./script.js"></script>
+	<script src="/script.js"></script>
+</body>
+
+</html>
