@@ -48,6 +48,7 @@ let sheet = [];
 let img = {};
 let aud = {};
 let starttime;
+const loading = document.getElementById("cover-loading");
 const actx = new AudioContext();
 init();
 //初始化
@@ -124,7 +125,7 @@ function init() {
 			}));
 			loadAudio();
 		} catch (err) {
-			document.getElementById("cover-loading").innerHTML = `加载json出错：<br><br>${err}<br><br><button onclick="window.localStorage.removeItem('pt2');location.reload();">点击重置</button>`; //以后换种错误显示
+			loading.innerHTML = `加载json出错：<br><br>${err}<br><br><button onclick="window.localStorage.removeItem('pt2');location.reload();">点击重置</button>`; //以后换种错误显示
 			canvas.style.display = "none";
 			console.log(err);
 		}
@@ -134,7 +135,7 @@ function init() {
 		let xhr = new XMLHttpRequest();
 		xhr.open("get", "src/piano.json");
 		xhr.send();
-		xhr.onprogress = progress => document.getElementById("cover-loading").innerHTML = `加载音乐资源...(${Math.floor(progress.loaded / progress.total * 100)}%)`; //显示加载文件进度
+		xhr.onprogress = progress => loading.innerText = `加载音乐资源...(${Math.floor(progress.loaded / 31181.38)}%)`; //显示加载文件进度
 		xhr.onload = () => {
 			const audData = JSON.parse(xhr.response);
 			for (const i of audData) {
@@ -177,7 +178,7 @@ function init() {
 			img[i] = new Image();
 			img[i].src = imgsrc[i];
 			img[i].onload = () => {
-				document.getElementById("cover-loading").innerText = `加载图片资源...(还剩${imgNum}个文件)`;
+				loading.innerText = `加载图片资源...(还剩${imgNum}个文件)`;
 				if (--imgNum <= 0) {
 					document.getElementById("btn-config").classList.remove("hide");
 					draw();
