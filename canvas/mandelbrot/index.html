@@ -19,17 +19,46 @@
 		}
 
 		#stage {
-			position: absolute;
-			width: 100vw;
-			left: 0;
-			top: 0;
+			width: 80vmin;
+			max-width: 500px;
+			height: 80vmin;
+			max-height: 500px;
+		}
+
+		.config-table,td {
+			font: 1em sans-serif;
+			margin: auto;
+			border: 1px solid #888;
 		}
 	</style>
 </head>
 
 <body>
 	<div id="main" style="display: none">
+		<h1 class="title"></h1>
+		<p class="info"></p>
+		<p class="profile">
+			操作说明：电脑鼠标左击放大，右击缩小；手机点击放大，长按缩小。<br>
+		</p>
 		<canvas id="stage"></canvas>
+		<table class="config-table">
+			<tr>
+				<td class="item-left">x坐标</td>
+				<td class="item-right"><span id="x">0</span></td>
+			</tr>
+			<tr>
+				<td class="item-left">y坐标</td>
+				<td class="item-right"><span id="y">0</span></td>
+			</tr>
+			<tr>
+				<td class="item-left">放大倍数</td>
+				<td class="item-right"><span id="px">0</span></td>
+			</tr>
+			<tr>
+				<td class="item-left">迭代次数</td>
+				<td class="item-right"><span id="ts">0</span></td>
+			</tr>
+		</table>
 	</div>
 	<noscript><strong style="color:#f00">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
 	<script src="./script.js"></script>
