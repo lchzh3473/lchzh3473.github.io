@@ -63,6 +63,12 @@ function init(x, y, zoom, maxitr, colorstr) {
 }
 draw();
 //适配PC
+document.getElementById("download").onclick = () => {
+	const download = document.createElement("a");
+	download.href = canvas.toDataURL("image/png",1.0);
+	download.download = "mandelbrot";
+	download.click();
+}
 canvas.addEventListener("mousedown", e => {
 	e.preventDefault();
 	let kx = dx + (e.offsetX - canvas.offsetWidth / 2) * 0.008 * 10 ** -dzoom;
