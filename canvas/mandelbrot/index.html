@@ -19,13 +19,15 @@
 		}
 
 		#stage {
+			background-color: #000;
 			width: 80vmin;
 			max-width: 500px;
 			height: 80vmin;
 			max-height: 500px;
 		}
 
-		.config-table,td {
+		.config-table,
+		td {
 			font: 1em sans-serif;
 			margin: auto;
 			border: 1px solid #888;
@@ -57,6 +59,20 @@
 			<tr>
 				<td class="item-left">迭代次数</td>
 				<td class="item-right"><span id="ts">0</span></td>
+			</tr>
+			<tr>
+				<td class="item-left">颜色</td>
+				<td class="item-right">
+					<select id="note" onchange="init('a','a','a','a',this.value)">
+						<option value="51,0,102" selected>RGB</option>
+						<option value="51,102,0">RBG</option>
+						<option value="102,51,0">GBR</option>
+						<option value="0,51,102">GRB</option>
+						<option value="0,102,51">BRG</option>
+						<option value="102,0,51">BGR</option>
+						<option value="0,0,0">Gray</option>
+					</select>
+				</td>
 			</tr>
 		</table>
 	</div>
