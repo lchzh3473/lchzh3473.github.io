@@ -6,18 +6,6 @@
 	<title>(っ °Д °;)っ</title>
 	<link rel="stylesheet" href="/style.css">
 	<style>
-		::-webkit-scrollbar {
-			display: none;
-		}
-
-		html,
-		body {
-			overflow: hidden;
-			-webkit-user-select: none;
-			-moz-user-select: none;
-			user-select: none;
-		}
-
 		#stage {
 			background-color: #000;
 			width: 80vmin;
@@ -64,13 +52,13 @@
 				<td class="item-left">颜色</td>
 				<td class="item-right">
 					<select id="note" onchange="init('a','a','a','a',this.value)">
-						<option value="51,0,102" selected>RGB</option>
-						<option value="51,102,0">RBG</option>
-						<option value="102,51,0">GBR</option>
-						<option value="0,51,102">GRB</option>
-						<option value="0,102,51">BRG</option>
-						<option value="102,0,51">BGR</option>
-						<option value="0,0,0">Gray</option>
+						<option value="[51,0,102]" selected>RGB</option>
+						<option value="[51,102,0]">RBG</option>
+						<option value="[102,51,0]">GBR</option>
+						<option value="[0,51,102]">GRB</option>
+						<option value="[0,102,51]">BRG</option>
+						<option value="[102,0,51]">BGR</option>
+						<option value="[0,0,0]">Gray</option>
 					</select>
 				</td>
 			</tr>
