@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
+	<base target="_blank">
+	<link rel="stylesheet" href="/style.css">
+	<title>(っ °Д °;)っ</title>
+	<style>
+		table {
+			border-collapse: collapse;
+			margin: auto;
+		}
+
+		th {
+			background: #eff;
+			border: solid 1px #cef;
+			color: #333;
+			width: 124px;
+			padding: 0px;
+			font-size: 12px;
+		}
+
+		td {
+			background: #fff;
+			border: solid 1px #cef;
+			height: 20px;
+			padding: 5px 5px;
+			font-size: 12px;
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="main" style="display:none">
+		<h1 class="title"></h1>
+		<p class="info"></p>
+		<table>
+			<thead>
+				<tr>
+					<th>事件</th>
+					<th class="deadline hide" onclick="showqwq()">截止时间</th>
+					<th class="countdown" onclick="showqwq()">倒计时</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<td colspan="4">
+						<button onclick="addEvt()">添加事件</button>
+					</td>
+				</tr>
+			</tfoot>
+			<tbody id='evt-content'></tbody>
+		</table>
+	</div>
+	<noscript><strong style="color:#f00">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<script src="./script.js"></script>
+	<script src="/script.js"></script>
+</body>
+
+</html>
