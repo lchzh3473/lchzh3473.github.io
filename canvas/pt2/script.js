@@ -43,6 +43,7 @@ pt2Note.forEach(i => table[i] = true);
 //
 let bpm = 70;
 let songName = "小星星";
+let soundfont = "8rock11e";
 let baseBeats;
 let sheet = [];
 let img = {};
@@ -54,24 +55,26 @@ init();
 //初始化
 function init() {
 	//加载本地json谱面
-	let qwq = JSON.parse(window.localStorage.getItem("pt2"));
-	console.log(qwq);
-	if (!qwq) {
+	let localJSON = JSON.parse(window.localStorage.getItem("pt2"));
+	console.log(localJSON);
+	if (!localJSON) {
 		//加载默认json谱面
 		let xhr = new XMLHttpRequest();
 		xhr.open("get", "src/example.json");
 		xhr.send();
 		xhr.onload = () => loadJson(xhr.responseText);
 	} else {
-		songName = qwq.songName;
-		bpm = qwq.bpm;
-		loadJson(qwq.json);
+		songName = localJSON.songName;
+		bpm = localJSON.bpm;
+		soundfont = localJSON.soundfont;
+		loadJson(localJSON.json);
 	}
 	//加载json
 	function loadJson(json) {
 		document.getElementById("cfg-songName").value = songName;
 		document.getElementById("cfg-json").value = json;
 		document.getElementById("cfg-bpm").value = bpm;
+		document.getElementById("cfg-soundfont").value = soundfont;
 		try {
 			const data = JSON.parse(json);
 			console.log(data); //test
@@ -102,7 +105,8 @@ function init() {
 				let realscore = [];
 				for (const j of base) {
 					if (j.type) {
-						let hlen = j.len / i.baseBeats / 32;
+						let hlen = j.len / i.baseBeats;
+						//console.log(j.notes);
 						realscore.push({
 							type: (j.type == 1 && j.notes.flat().length) ? (hlen > 1 ? 6 : 2) : j.type,
 							scores: [j.notes],
@@ -110,7 +114,7 @@ function init() {
 						});
 					} else {
 						realscore[realscore.length - 1].scores.push(j.notes);
-						realscore[realscore.length - 1].hlen += j.len / i.baseBeats / 32;
+						realscore[realscore.length - 1].hlen += j.len / i.baseBeats;
 					}
 				}
 				sheet.push(realscore);
@@ -121,7 +125,8 @@ function init() {
 			window.localStorage.setItem("pt2", JSON.stringify({
 				songName: songName,
 				json: json,
-				bpm: bpm
+				bpm: bpm,
+				soundfont: soundfont
 			}));
 			loadAudio();
 		} catch (err) {
@@ -132,10 +137,15 @@ function init() {
 	}
 	//加载音色
 	function loadAudio() {
+		let size = {
+			app: 1848172,
+			"8rock11e": 3118138,
+			umod: 6580349
+		} //表示文件大小，以后会优化
 		let xhr = new XMLHttpRequest();
-		xhr.open("get", "src/piano.json");
+		xhr.open("get", `src/music/${soundfont}/piano.json`);
 		xhr.send();
-		xhr.onprogress = progress => loading.innerText = `加载音乐资源...(${Math.floor(progress.loaded / 31181.38)}%)`; //显示加载文件进度
+		xhr.onprogress = progress => loading.innerText = `加载音乐资源...(${Math.floor(progress.loaded/size[soundfont]*100)}%)`; //显示加载文件进度
 		xhr.onload = () => {
 			const audData = JSON.parse(xhr.response);
 			for (const i of audData) {
@@ -199,8 +209,8 @@ let tiles = [{
 }];
 let currentScore = 0;
 let currentIdx = 0;
-const key = 4;
-let starthpos = key - 2;
+const key = 4; //轨道数量
+let starthpos = key - 2; //起始纵坐标
 let hpos = 0;
 let level = 1;
 let isStarted = false;
@@ -344,7 +354,7 @@ function draw() {
 			if (!i.played) {
 				let reallen = 0;
 				for (const j of i.scores) {
-					for (const k of j) setTimeout(() => bf(k.note, k.len), (k.start + reallen) * 1875 / bpm);
+					for (const k of j) setTimeout(() => bf(k.note, k.len), (k.start + reallen) * 6e4 / bpm);
 					if (j[0]) reallen += j[0].len;
 				}
 				i.played = true;
@@ -399,7 +409,12 @@ function draw() {
 		tiles[0].played = 0;
 		tiles.shift();
 	}
-	if (isStarted && !isPaused) starthpos = key - 2 + (new Date().getTime() - starttime) * bpm / baseBeats / 6e4;
+	if (isStarted && !isPaused) {
+		let qqq = new Date().getTime();
+		starthpos += (qqq - starttime) * bpm / baseBeats / 6e4;
+		bpm -= -(qqq - starttime) / 1000 * (0); //加速度
+		starttime = qqq;
+	}
 	//绘制开始
 	if (!isStarted) {
 		ctx.font = `${Math.min(canvas.width,canvas.height)/(key*2)}px sans-serif`;
@@ -444,6 +459,19 @@ function draw() {
 	ctx.textBaseline = "middle";
 	ctx.fillText(score, canvas.width * 0.5, canvas.height * .125);
 	if (rabbit > 1) rabbit -= 0.01;
+	//debug文本
+	let ek = 0;
+	for (const i of item) ek += i.vx ** 2 + i.vy ** 2;
+	const px = 16 * window.devicePixelRatio;
+	ctx.font = `${px}px sans-serif`;
+	ctx.strokeStyle = "#fff";
+	ctx.fillStyle = "#000";
+	ctx.textAlign = "start";
+	//ctx.strokeText(`${JSON.stringify(tiles[0])}`, px * 0.6, px * 1.6);
+	//ctx.fillText(`${JSON.stringify(tiles[0])}`, px * 0.6, px * 1.6);
+	ctx.strokeText(`${(bpm/baseBeats/60).toFixed(3)}`, px * 0.6, px * 2.9);
+	ctx.fillText(`${(bpm/baseBeats/60).toFixed(3)}`, px * 0.6, px * 2.9);
+	//for (const i in tiles) ctx.fillText(tiles[i].playing, px * 0.6, px * (4.2 + i * 1.3));
 	requestAnimationFrame(draw);
 }
 
@@ -462,7 +490,8 @@ document.getElementById("cover-dark").onclick = () => {
 	window.localStorage.setItem("pt2", JSON.stringify({
 		songName: document.getElementById("cfg-songName").value,
 		json: document.getElementById("cfg-json").value,
-		bpm: document.getElementById("cfg-bpm").value
+		bpm: document.getElementById("cfg-bpm").value,
+		soundfont: document.getElementById("cfg-soundfont").value
 	}));
 	location.reload();
 }
@@ -547,8 +576,8 @@ function strToTiles(scores) {
 }
 //音频测试
 function bf(str, len) {
-	let ms = len * 1875 / bpm;
-	console.log(ms);
+	let ms = len * 6e4 / bpm;
+	//console.log(ms);
 	//检查有无括号
 	let aa = str.match(/(?<=\().+(?=\))/);
 	if (aa) str = aa[0];
@@ -620,31 +649,31 @@ function lenToNum(len, type) {
 	for (const i of String(len)) {
 		switch (i) {
 			case (type ? 'H' : 'Q'):
-				num += 256;
-				break;
-			case (type ? 'I' : 'R'):
-				num += 128;
-				break;
-			case (type ? 'J' : 'S'):
-				num += 64;
-				break;
-			case (type ? 'K' : 'T'):
-				num += 32;
-				break;
-			case (type ? 'L' : 'U'):
-				num += 16;
-				break;
-			case (type ? 'M' : 'V'):
 				num += 8;
 				break;
-			case (type ? 'N' : 'W'):
+			case (type ? 'I' : 'R'):
 				num += 4;
 				break;
-			case (type ? 'O' : 'X'):
+			case (type ? 'J' : 'S'):
 				num += 2;
 				break;
+			case (type ? 'K' : 'T'):
+				num += 1;
+				break;
+			case (type ? 'L' : 'U'):
+				num += 0.5;
+				break;
+			case (type ? 'M' : 'V'):
+				num += 0.25;
+				break;
+			case (type ? 'N' : 'W'):
+				num += 0.125;
+				break;
+			case (type ? 'O' : 'X'):
+				num += 0.0625;
+				break;
 			case (type ? 'P' : 'Y'):
-				num++;
+				num += 0.03125;
 				break;
 			default:
 				return NaN;

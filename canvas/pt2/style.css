@@ -97,6 +97,14 @@ body {
 	font: 4vmin sans-serif;
 	width: 30vmin;
 }
+.item-right select {
+	font: 4vmin sans-serif;
+	width: 30vmin;
+	border: 1px solid #888;
+	border-radius: 2px;
+	padding: 0.2em;
+	margin: 1px;
+}
 
 @keyframes pause_ani {
 	from {
