@@ -1,5 +1,5 @@
 "use strict";
-const _i = ['钢琴块2', [1, 0, 1], 1614358089, 1614362421];
+const _i = ['钢琴块2模拟器', [1, 0, 1], 1614358089, 1614362421];
 //document.oncontextmenu = e => e.returnValue = false;
 const canvas = document.getElementById("stage");
 window.addEventListener("resize", resize);
