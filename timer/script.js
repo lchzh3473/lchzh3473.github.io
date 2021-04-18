@@ -22,7 +22,7 @@ function showqwq() {
 function addEvt(n, t) {
 	let a = document.createElement("tr");
 	let b = n ? n : `事件${++rows}`;
-	let c = t ? t : new Date(new Date().getTime() - new Date().getTimezoneOffset() * 6e4 + 86400000).toJSON().substring(0, 16);
+	let c = t ? t : new Date(Date.now() - new Date().getTimezoneOffset() * 6e4 + 86400000).toJSON().substring(0, 16);
 	a.innerHTML = `<td contenteditable="true"oninput="cd[this.parentElement.sectionRowIndex][0]=this.innerText;
 	window.localStorage.setItem('cd',JSON.stringify(cd));">${b}</td><td  class='deadline'contenteditable="true"oninput="cd[this.parentElement.sectionRowIndex][1]=this.innerText;
 	window.localStorage.setItem('cd',JSON.stringify(cd));">${c}</td><td class='countdown'></td><td><button onclick="if(confirm('是否删除？')){cd.splice(this.offsetParent.parentElement.sectionRowIndex,1);table.deleteRow(this.offsetParent.parentElement.sectionRowIndex);
@@ -34,7 +34,7 @@ function addEvt(n, t) {
 	showqwq();
 }
 setInterval(() => {
-	let qwq = new Date().getTime();
+	let qwq = Date.now();
 	document.querySelectorAll('td.countdown').forEach((i, idx) => {
 		let c = (((new Date(i.previousElementSibling.innerHTML).getTime() - qwq) / 1e3)) //.toFixed(0)
 		i.innerHTML = (isNaN(c)) ? '请设置截止时间！' : cnTime(c);

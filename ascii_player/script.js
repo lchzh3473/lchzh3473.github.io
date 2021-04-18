@@ -59,8 +59,8 @@ upload.onchange = function() { //上传文件
 		requestAnimationFrame(onFrame);
 		tick++;
 		if (tick % 10 == 0) {
-			fps.innerHTML = `帧率：${Math.round(1e4 / (new Date().getTime() - start))}fps`;
-			start = new Date().getTime();
+			fps.innerHTML = `帧率：${Math.round(1e4 / (Date.now() - start))}fps`;
+			start = Date.now();
 		}
 	}
 

@@ -24,7 +24,7 @@ function convert() {
 	ou.innerHTML = "";
 	var midi = document.getElementById("openfile").files[0];
 	if (midi) {
-		const start = new Date().getTime();
+		const start = Date.now();
 		let files = new FileReader();
 		files.readAsBinaryString(midi);
 		files.onprogress = function(progress) { //显示加载文件进度
@@ -377,7 +377,7 @@ function convert() {
 						j = j.replace(/JJ/g, "I");
 						j = j.replace(/II/g, "H");
 						re.innerHTML = j;
-						const end = (new Date().getTime() - start) / 1000;
+						const end = (Date.now() - start) / 1000;
 						ou.innerHTML = `<strong style="color:#080">转换成功。(${end}s)<br><br>PPQN: ${ppqn} BPM: ${Math.round(q)}</strong>`;
 					} else ou.innerHTML = '<strong style="color:#f00">转换失败或转换结果为空</strong>';
 				}

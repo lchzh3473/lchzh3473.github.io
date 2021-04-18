@@ -88,13 +88,13 @@ const passive = {
 canvas.addEventListener("touchstart", evt => {
 	evt.preventDefault();
 	for (const i of evt.changedTouches) {
-		tmp[i.identifier] = new Date().getTime();
+		tmp[i.identifier] = Date.now();
 	}
 }, passive);
 canvas.addEventListener("touchend", evt => {
 	evt.preventDefault();
 	for (const i of evt.changedTouches) {
-		const tm = new Date().getTime() - tmp[i.identifier];
+		const tm = Date.now() - tmp[i.identifier];
 		const kx = dx + (i.pageX - canvas.offsetLeft - canvas.offsetWidth / 2) * 0.008 * 10 ** -dzoom;
 		const ky = dy + (canvas.offsetHeight / 2 - i.pageY + canvas.offsetTop) * 0.008 * 10 ** -dzoom;
 		init(kx, ky, dzoom += tm > 200 ? -.1 : .1, rowitr * 2 ** dzoom);
