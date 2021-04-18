@@ -57,7 +57,7 @@ function analyse() {
 		err("未选择任何文件");
 		return;
 	}
-	const start = new Date().getTime();
+	const start = Date.now();
 	const reader = new FileReader();
 	reader.readAsArrayBuffer(file);
 	reader.onprogress = progress => { //显示加载文件进度
@@ -178,7 +178,7 @@ function analyse() {
 		}
 		for (const i in trkList) createOption(i);
 		if (drum.length) createOption(-1);
-		const end = new Date().getTime();
+		const end = Date.now();
 		out.className = "accept";
 		out.innerHTML = `分析成功(${(end - start) / 1000}s)：可转换${trkList.length+!!drum.length}条音轨<br>`;
 		out.innerHTML += `Duration:&nbsp;${Math.round(data.dur*1000)/1000}s&emsp;BPM:&nbsp;${Math.round(data.bpm*1000)/1000}`;
@@ -207,7 +207,7 @@ function convert() {
 		err("请先点击“分析”按钮");
 		return;
 	}
-	const start = new Date().getTime();
+	const start = Date.now();
 	const noteMin = document.getElementById("note").value;
 	const trkCur = (trkSet.value > -1) ? trkList[trkSet.value] : drum;
 	const bpm = data.bpm; //以后可能添加自定义bpm
@@ -240,7 +240,7 @@ function convert() {
 		else text += `${numToLen(item.p, 0)},`;
 	});
 	document.getElementById("result").innerText = text;
-	const end = new Date().getTime();
+	const end = Date.now();
 	out.className = "accept";
 	out.innerHTML = `转换成功。(${(end - start) / 1000}s)<br>Duration:&nbsp;${Math.round(data.dur*1000)/1000}s&emsp;BPM:&nbsp;${Math.round(data.bpm*1000)/1000}`;
 

@@ -5,14 +5,14 @@ const canvas = document.getElementById("stage");
 window.addEventListener("resize", resize);
 resize();
 const item = [];
-const tmp = [];
+const clicks = [];
 //适配PC鼠标
 let isMouseDown = false;
 canvas.addEventListener("mousedown", evt => {
 	evt.preventDefault();
 	if (isMouseDown) mouseup();
 	else {
-		tmp[0] = {
+		clicks[0] = {
 			x1: evt.pageX * window.devicePixelRatio / canvas.width,
 			y1: evt.pageY * window.devicePixelRatio / canvas.height
 		};
@@ -22,8 +22,8 @@ canvas.addEventListener("mousedown", evt => {
 canvas.addEventListener("mousemove", evt => {
 	evt.preventDefault();
 	if (isMouseDown) {
-		tmp[0].x2 = evt.pageX * window.devicePixelRatio / canvas.width;
-		tmp[0].y2 = evt.pageY * window.devicePixelRatio / canvas.height;
+		clicks[0].x2 = evt.pageX * window.devicePixelRatio / canvas.width;
+		clicks[0].y2 = evt.pageY * window.devicePixelRatio / canvas.height;
 	}
 });
 canvas.addEventListener("mouseup", evt => {
@@ -32,7 +32,7 @@ canvas.addEventListener("mouseup", evt => {
 });
 
 function mouseup() {
-	console.log(tmp[0]);
+	console.log(clicks[0]);
 	//tmp[0] = {};
 	isMouseDown = false;
 }
@@ -48,7 +48,7 @@ let baseBeats;
 let sheet = [];
 let img = {};
 let aud = {};
-let starttime;
+let startTime;
 const loading = document.getElementById("cover-loading");
 const actx = new AudioContext();
 init();
@@ -130,7 +130,8 @@ function init() {
 			}));
 			loadAudio();
 		} catch (err) {
-			loading.innerHTML = `加载json出错：<br><br>${err}<br><br><button onclick="window.localStorage.removeItem('pt2');location.reload();">点击重置</button>`; //以后换种错误显示
+			loading.innerHTML = `加载json出错：<br><br>${err}<br><br><button onclick="window.localStorage.removeItem('pt2');location.reload();">点击重置</button>`; 
+			//以后换种错误显示
 			canvas.style.display = "none";
 			console.log(err);
 		}
@@ -410,10 +411,10 @@ function draw() {
 		tiles.shift();
 	}
 	if (isStarted && !isPaused) {
-		let qqq = new Date().getTime();
-		starthpos += (qqq - starttime) * bpm / baseBeats / 6e4;
-		bpm -= -(qqq - starttime) / 1000 * (0); //加速度
-		starttime = qqq;
+		let currentTime = Date.now();
+		starthpos += (currentTime - startTime) * bpm / baseBeats / 6e4;
+		bpm -= -(currentTime - startTime) / 1000 * (0); //加速度
+		startTime = currentTime;
 	}
 	//绘制开始
 	if (!isStarted) {
@@ -444,10 +445,10 @@ function draw() {
 		ctx.textAlign = "start";
 		ctx.fillText(`歌曲名：${songName}`, canvas.width * 0.2 / key, canvas.height * (1 - 1 / key / 2));
 		//点击开始
-		if (tmp[0] && tmp[0].x1 * key > stb && tmp[0].x1 * key < stb + 1 && tmp[0].y1 > 1 - 2.5 / key && tmp[0].y1 < 1 - 1 / key) {
+		if (clicks[0] && clicks[0].x1 * key > stb && clicks[0].x1 * key < stb + 1 && clicks[0].y1 > 1 - 2.5 / key && clicks[0].y1 < 1 - 1 / key) {
 			console.log("start"); //test
 			isStarted = true;
-			starttime = new Date().getTime();
+			startTime = Date.now();
 			document.getElementById("btn-config").classList.add("hide");
 			document.getElementById("btn-pause").classList.remove("hide");
 		};
@@ -510,11 +511,11 @@ function gamePause(mod) {
 	document.getElementById("view-pause").classList.toggle("view-pause");
 	if (mod) {
 		isPaused = true;
-		pausetime = new Date().getTime();
+		pausetime = Date.now();
 		bf("c2.c2.c2");
 	} else {
 		isPaused = false;
-		starttime += new Date().getTime() - pausetime;
+		startTime += Date.now() - pausetime;
 	}
 }
 

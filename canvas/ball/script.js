@@ -5,14 +5,14 @@ const canvas = document.getElementById("stage");
 window.addEventListener("resize", resize);
 resize();
 const item = [];
-const tmp = [];
+const clicks = [];
 /*适配PC鼠标*/
 let isMouseDown = false;
 canvas.addEventListener("mousedown", evt => {
 	evt.preventDefault();
 	if (isMouseDown) mouseup();
 	else {
-		tmp[0] = {
+		clicks[0] = {
 			x1: evt.pageX * window.devicePixelRatio,
 			y1: evt.pageY * window.devicePixelRatio
 		};
@@ -22,8 +22,8 @@ canvas.addEventListener("mousedown", evt => {
 canvas.addEventListener("mousemove", evt => {
 	evt.preventDefault();
 	if (isMouseDown) {
-		tmp[0].x2 = evt.pageX * window.devicePixelRatio;
-		tmp[0].y2 = evt.pageY * window.devicePixelRatio;
+		clicks[0].x2 = evt.pageX * window.devicePixelRatio;
+		clicks[0].y2 = evt.pageY * window.devicePixelRatio;
 	}
 });
 canvas.addEventListener("mouseup", evt => {
@@ -32,8 +32,8 @@ canvas.addEventListener("mouseup", evt => {
 });
 
 function mouseup() {
-	item.push(new point(tmp[0].x1, tmp[0].y1, (tmp[0].x1 - tmp[0].x2) / 20, (tmp[0].y1 - tmp[0].y2) / 20, tmp[0].r, tmp[0].color));
-	tmp[0] = {};
+	item.push(new point(clicks[0].x1, clicks[0].y1, (clicks[0].x1 - clicks[0].x2) / 20, (clicks[0].y1 - clicks[0].y2) / 20, clicks[0].r, clicks[0].color));
+	clicks[0] = {};
 	isMouseDown = false;
 }
 /*适配移动设备*/
@@ -43,7 +43,7 @@ const passive = {
 canvas.addEventListener("touchstart", evt => {
 	evt.preventDefault();
 	for (const i of evt.changedTouches) {
-		tmp[i.identifier] = {
+		clicks[i.identifier] = {
 			x1: i.pageX * window.devicePixelRatio,
 			y1: i.pageY * window.devicePixelRatio
 		};
@@ -54,8 +54,8 @@ canvas.addEventListener("touchmove", evt => {
 	for (const i of evt.changedTouches) {
 		const idx = i.identifier;
 		if (idx >= 0) {
-			tmp[idx].x2 = i.pageX * window.devicePixelRatio;
-			tmp[idx].y2 = i.pageY * window.devicePixelRatio;
+			clicks[idx].x2 = i.pageX * window.devicePixelRatio;
+			clicks[idx].y2 = i.pageY * window.devicePixelRatio;
 		}
 	}
 }, passive);
@@ -63,8 +63,8 @@ canvas.addEventListener("touchend", evt => {
 	evt.preventDefault();
 	for (const i of evt.changedTouches) {
 		const idx = i.identifier;
-		item.push(new point(tmp[idx].x1, tmp[idx].y1, (tmp[idx].x1 - tmp[idx].x2) / 20, (tmp[idx].y1 - tmp[idx].y2) / 20, tmp[idx].r, tmp[idx].color));
-		if (idx >= 0) tmp[idx] = {};
+		item.push(new point(clicks[idx].x1, clicks[idx].y1, (clicks[idx].x1 - clicks[idx].x2) / 20, (clicks[idx].y1 - clicks[idx].y2) / 20, clicks[idx].r, clicks[idx].color));
+		if (idx >= 0) clicks[idx] = {};
 	}
 });
 /*定义点类*/
@@ -125,7 +125,7 @@ function draw() {
 	}
 	/*绘制事件*/
 	let tek = [];
-	for (const i of tmp) {
+	for (const i of clicks) {
 		i.color = `rgb(${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)})`;
 		i.r = Math.random() * 35 + 15;
 		ctx.fillStyle = i.color;

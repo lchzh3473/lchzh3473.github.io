@@ -5,7 +5,7 @@ const pMode = ["default", "new-add", "changed", "new-remove", "removed", "re-add
 const pType = "m";
 var panelSort, panelNew;
 document.getElementById("analyse").onclick = function() {
-	let startTime = new Date().getTime();
+	let startTime = Date.now();
 	let input = document.getElementById("input").value;
 	document.getElementById("input").value = "";
 	let output = document.getElementById("output");
@@ -40,7 +40,7 @@ document.getElementById("analyse").onclick = function() {
 		panelNew.mtime = Math.floor(startTime / 1000);
 		document.getElementById("stage").innerHTML = "";
 		output.className = "accept";
-		output.innerHTML = `解析成功。(${(new Date().getTime()-startTime)/1000}s)`;
+		output.innerHTML = `解析成功。(${(Date.now()-startTime)/1000}s)`;
 		document.getElementById("control").classList.remove("hide");
 		document.getElementById("static").classList.add("disabled");
 		document.getElementById("date").innerHTML = cnymd(panelOld.mtime); //test
