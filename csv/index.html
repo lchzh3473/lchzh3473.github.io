@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
+	<base target="_blank">
+	<link rel="stylesheet" href="/style.css">
+	<title>(っ °Д °;)っ</title>
+	<style>
+		.textbox {
+			margin: auto;
+			width: 80vw;
+			min-width: 1.8em;
+			max-width: 27.6em;
+			font: 13.33px sans-serif;
+		}
+
+		.inner {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 3px;
+		}
+
+		.text {
+			display: inline-block;
+			width: 80vw;
+			min-width: 1.8em;
+			max-width: 27.6em;
+			height: calc(40vh - 217px);
+			min-height: 3.8em;
+			max-height: 16.8em;
+			text-align: start;
+			font: 13.33px monospace;
+			background-color: #fff;
+			resize: none;
+			white-space: pre-wrap;
+			overflow: auto;
+			overflow-wrap: break-word;
+			padding: 0.2em;
+			border: 1px solid #888;
+			border-radius: 2px;
+		}
+
+		a.av {
+			color: #fa7298;
+		}
+
+		a.bv {
+			color: #2196f3;
+		}
+
+		a.cv {
+			color: #fec107;
+		}
+
+		a.invalid {
+			color: #cfcfcf;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="main" style="display:none">
+		<h1 class="title"></h1>
+		<p class="info"></p>
+		<p class="profile">
+			在上框输入或粘贴一段包含AV号或BV号的文本，转换结果将在下框显示。<br>
+			点击彩色字可以跳转，点击“复制”按钮将转换结果复制到剪贴板。
+		</p>
+		<div class="textbox">
+			<div class="inner">
+				<div>输入：</div>
+				<div>
+					<input type="checkbox" id="av2bv" onchange="convert()" checked>
+					<label for="av2bv">av转bv</label>
+					<input type="checkbox" id="bv2av" onchange="convert()" checked>
+					<label for="bv2av">bv转av</label>
+				</div>
+			</div>
+		</div>
+		<textarea id="input" class="text" oninput="convert()"></textarea>
+		<div class="textbox">
+			<div class="inner">
+				<div>输出：</div>
+				<div>
+					<button type="button" id="copy">复制</button>
+					<button type="button" id="reset">重置</button>
+				</div>
+			</div>
+		</div>
+		<div id="output" class="text"></div>
+		<div class="textbox">
+			<div class="inner">
+				<div>结果：<strong id="result"></strong></div>
+			</div><br>
+			<div class="inner">
+				<div>不知道什么是bv号？<a href="https://www.bilibili.com/read/cv5167957">点此了解</a></div>
+			</div>
+		</div>
+	</div>
+	<noscript><strong style="color:#f00">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<script src="./script.js"></script>
+	<script src="/script.js"></script>
+</body>
+
+</html>

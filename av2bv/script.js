@@ -1,5 +1,4 @@
 "use strict";
-const _i = ['AV号与BV号转换器', [2, 1], 1585055154, 1611579572];
 const copyEl = document.getElementById("copy");
 const input = document.getElementById("input");
 const output = document.getElementById("output");

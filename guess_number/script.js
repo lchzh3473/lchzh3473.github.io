@@ -1,5 +1,4 @@
 "use strict";
-const _i = ['猜数字', [1, 1, 1], 1601468724, 1609750968];
 var score;
 score = window.localStorage.getItem("score");
 document.getElementById("score").innerHTML = Number(score);
