@@ -1,5 +1,4 @@
 "use strict";
-const _i = ['视频转字符画', [1, 0, 5], 1592263658, 1612132624];
 const upload = document.getElementById("upload");
 //let videoHeight = 105; //自行设置
 upload.onchange = function() { //上传文件

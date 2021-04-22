@@ -1,5 +1,4 @@
 "use strict";
-const _i = ['b站表情图获取工具', [1, 1, 2], 1610790787, 1612046850];
 const pName = ["packages", "statics", "dynamics"];
 const pMode = ["default", "new-add", "changed", "new-remove", "removed", "re-add"];
 const pType = "m";
@@ -13,16 +12,14 @@ document.getElementById("analyse").onclick = function() {
 		let str = window.localStorage.getItem("panel");
 		if (str) analyseInput(str);
 		else {
-			let request = new XMLHttpRequest();
-			request.open("get", "panel.json");
-			request.send(null);
-			request.onload = function() {
-				if (request.status == 200) {
-					str = request.responseText;
-					window.localStorage.setItem("panel", str);
-					analyseInput(str);
-				}
+			const xhr = new XMLHttpRequest();
+			xhr.open("get", "panel.json");
+			xhr.onload = function() {
+				str = xhr.responseText;
+				window.localStorage.setItem("panel", str);
+				analyseInput(str);
 			}
+			xhr.send();
 		}
 	} catch (err) {
 		if (err == 2) {

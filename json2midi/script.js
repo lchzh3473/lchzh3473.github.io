@@ -1,5 +1,4 @@
 "use strict";
-const _i = ['JSON转MIDI', [1, 0], 0, 0];
 const input = document.getElementById("input");
 const result = document.getElementById("result");
 

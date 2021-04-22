@@ -1,6 +1,5 @@
 "use strict";
-const _i = ['钢琴块2模拟器', [1, 0, 1], 1614358089, 1614362421];
-//document.oncontextmenu = e => e.returnValue = false;
+document.oncontextmenu = e => e.returnValue = false;
 const canvas = document.getElementById("stage");
 window.addEventListener("resize", resize);
 resize();
@@ -59,10 +58,10 @@ function init() {
 	console.log(localJSON);
 	if (!localJSON) {
 		//加载默认json谱面
-		let xhr = new XMLHttpRequest();
+		const xhr = new XMLHttpRequest();
 		xhr.open("get", "src/example.json");
-		xhr.send();
 		xhr.onload = () => loadJson(xhr.responseText);
+		xhr.send();
 	} else {
 		songName = localJSON.songName;
 		bpm = localJSON.bpm;
@@ -143,9 +142,8 @@ function init() {
 			"8rock11e": 3118138,
 			umod: 6580349
 		} //表示文件大小，以后会优化
-		let xhr = new XMLHttpRequest();
+		const xhr = new XMLHttpRequest();
 		xhr.open("get", `src/music/${soundfont}/piano.json`);
-		xhr.send();
 		xhr.onprogress = progress => loading.innerText = `加载音乐资源...(${Math.floor(progress.loaded/size[soundfont]*100)}%)`; //显示加载文件进度
 		xhr.onload = () => {
 			const audData = JSON.parse(xhr.response);
@@ -157,6 +155,7 @@ function init() {
 			}
 			loadImage();
 		}
+		xhr.send();
 	}
 	//base64转arraybuffer
 	function base64ToArrayBuffer(base64) {
