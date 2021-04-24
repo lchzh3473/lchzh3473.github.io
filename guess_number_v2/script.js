@@ -53,6 +53,7 @@ function guess() {
 function plguess() {
 	sysout(`当前范围：[${range[0]}-${range[1]}]，请玩家输入数字。<br>`);
 	input.classList.remove("disabled");
+	ok.classList.add("disabled");
 }
 
 function aiguess() {
