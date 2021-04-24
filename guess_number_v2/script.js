@@ -8,7 +8,8 @@ let score = window.localStorage.getItem("guess_number_score");
 document.getElementById("score").innerText = Number(score);
 let range = [1, 1000];
 const Rand = Math.floor(Math.random() * (range[1] - range[0] + 1)) + range[0];
-console.log(Rand);
+const fsqwq = Rand == 0 ? 114514 : Rand.toString(2).match(/1/g).length;
+//console.log(Rand);
 sysout(`游戏开始！<br>`);
 plguess();
 //监听键盘回车键
@@ -19,6 +20,8 @@ window.addEventListener("keydown", evt => {
 		guess();
 	}
 }, false);
+//窗口变化时自动下滑
+window.addEventListener("resize", () => output.scrollTop = output.scrollHeight);
 
 function analyse(value) {
 	if (/^0$|^[1-9]\d*$/.test(value) && value >= range[0] && value <= range[1]) ok.classList.remove("disabled");
@@ -40,11 +43,11 @@ function guess() {
 		} else {
 			sysout(`，猜中了！<br>`);
 			setTimeout(() => {
-				sysout(`玩家胜利，积分+10（点击重置以更新积分）`);
+				sysout(`玩家胜利，积分+${fsqwq}（点击重置以更新积分）`);
 				input.classList.remove("disabled");
 				number.classList.add("disabled");
 				ok.classList.add("disabled");
-				window.localStorage.setItem("guess_number_score", Number(score) + 10);
+				window.localStorage.setItem("guess_number_score", Number(score) + fsqwq);
 			}, 1e3);
 		}
 	}, 1e3);
@@ -76,11 +79,11 @@ function aiguess() {
 			} else {
 				sysout(`，猜中了！<br>`);
 				setTimeout(() => {
-					sysout(`玩家失败，积分-10（点击重置以更新积分）`);
+					sysout(`玩家失败，积分-${fsqwq}（点击重置以更新积分）`);
 					input.classList.remove("disabled");
 					number.classList.add("disabled");
 					ok.classList.add("disabled");
-					window.localStorage.setItem("guess_number_score", Number(score) - 10);
+					window.localStorage.setItem("guess_number_score", Number(score) - fsqwq);
 				}, 1e3);
 			}
 		}, 1e3);

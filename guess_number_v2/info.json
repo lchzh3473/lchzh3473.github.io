@@ -2,9 +2,14 @@
 	"data": {
 		"title": "猜数字",
 		"pubdate": 1601468724,
-		"version": [2, 0, 1],
-		"update": 1619277806,
+		"version": [2, 0, 2],
+		"update": 1619280046,
 		"changelog": [{
+			"version": [2, 0, 2],
+			"date": 1619280046,
+			"type": 4,
+			"desc": "优化移动端，改变窗口大小时自动下滑"
+		},{
 			"version": [2, 0, 1],
 			"date": 1619277806,
 			"type": 2,
