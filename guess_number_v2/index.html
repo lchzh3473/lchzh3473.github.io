@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="stylesheet" href="/style.css">
+	<title>(っ °Д °;)っ</title>
+	<style>
+		.text {
+			display: inline-block;
+			width: 80vw;
+			min-width: 1.8em;
+			max-width: 27.6em;
+			height: calc(40vh - 217px);
+			min-height: 3.8em;
+			max-height: 16.8em;
+			text-align: start;
+			font: 13.33px monospace;
+			background-color: #fff;
+			resize: none;
+			white-space: pre-wrap;
+			overflow: auto;
+			overflow-wrap: break-word;
+			padding: 0.2em;
+			border: 1px solid #888;
+			border-radius: 2px;
+		}
+		.textbox {
+			display: flex;
+			justify-content: space-around;
+			margin: auto;
+			width: 80vw;
+			min-width: 1.8em;
+			max-width: 27.6em;
+			font: 13.33px sans-serif;
+		}
+		.input{
+			flex-grow: 1;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="main" style="display: none">
+		<h1 class="title"></h1>
+		<p class="info"></p>
+		<p class="profile">
+			玩家和AI轮流猜数字，若玩家先猜中数字则获胜，并获得相应积分。
+		</p>
+		<div>当前积分：<span id="score"></span>
+		</div><br>
+		<div id="output" class="text"></div>
+		<div id="input" class="textbox">
+			<input id="number" class="input" placeholder="输入要猜的数字" oninput="analyse(this.value)">
+			<input id="ok" class="disabled" type="button" onclick="guess()" value="确定">
+			<input type="button" value="重置" onclick="location.reload()">
+		</div>
+	</div>
+	<noscript><strong style="color:#f00">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<script src="./script.js"></script>
+	<script src="/script.js"></script>
+</body>
+
+</html>

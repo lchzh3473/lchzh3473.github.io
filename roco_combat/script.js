@@ -15,8 +15,8 @@ if (a) {
 }
 if (iFlash) {
 	flashInfo.className = 'accept';
-	flashInfo.innerHTML = `当前Flash版本：${vFlash}`;
+	flashInfo.innerText = `当前Flash版本：${vFlash}`;
 } else {
 	flashInfo.className = 'error';
-	flashInfo.innerHTML = `此浏览器不支持Flash，该脚本无法运行。`;
+	flashInfo.innerText = `此浏览器不支持Flash，该脚本无法运行。`;
 }

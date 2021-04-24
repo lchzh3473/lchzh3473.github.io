@@ -28,7 +28,7 @@
 						j.add("invalid");
 					} else i.title = data.data.title;
 					apiNum++;
-					document.getElementById("api").innerHTML = apiNum;
+					document.getElementById("api").innerText = apiNum;
 					window.localStorage.setItem("api", apiNum);
 				}
 				script.onerror = function() {
@@ -42,7 +42,7 @@
 		}
 		this.classList.add("disabled");
 	}
-	e3.innerHTML = "检查";
+	e3.innerText = "检查";
 	e2.insertBefore(e3, e1);
 	e2.insertBefore(document.createTextNode("\n"), e1);
 	document.getElementById("input").addEventListener("input", function() {
