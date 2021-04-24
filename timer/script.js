@@ -35,8 +35,8 @@ function addEvt(n, t) {
 setInterval(() => {
 	let qwq = Date.now();
 	document.querySelectorAll('td.countdown').forEach((i, idx) => {
-		let c = (((new Date(i.previousElementSibling.innerHTML).getTime() - qwq) / 1e3)) //.toFixed(0)
-		i.innerHTML = (isNaN(c)) ? '请设置截止时间！' : cnTime(c);
+		let c = (((new Date(i.previousElementSibling.innerText).getTime() - qwq) / 1e3)) //.toFixed(0)
+		i.innerText = (isNaN(c)) ? '请设置截止时间！' : cnTime(c);
 	});
 }, 500);
 

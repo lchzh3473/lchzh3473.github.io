@@ -1,0 +1,14 @@
+{
+	"data": {
+		"title": "猜数字",
+		"pubdate": 1601468724,
+		"version": [2, 0],
+		"update": 1619276336,
+		"changelog": [{
+			"version": [2, 0],
+			"date": 1619276336,
+			"type": 1,
+			"desc": "全新AI对战玩法，等你来战（划掉"
+		}]
+	}
+}

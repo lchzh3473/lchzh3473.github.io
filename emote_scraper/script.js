@@ -24,10 +24,10 @@ document.getElementById("analyse").onclick = function() {
 	} catch (err) {
 		if (err == 2) {
 			output.className = "warning";
-			output.innerHTML = "请登录b站账号。";
+			output.innerText = "请登录b站账号。";
 		} else {
 			output.className = "error";
-			output.innerHTML = "输入有误。" + err;
+			output.innerText = "输入有误。" + err;
 		}
 	}
 
@@ -35,12 +35,12 @@ document.getElementById("analyse").onclick = function() {
 		let panelOld = JSON.parse(str);
 		panelNew = input ? inputToPanel(panelOld) : panelOld;
 		panelNew.mtime = Math.floor(startTime / 1000);
-		document.getElementById("stage").innerHTML = "";
+		document.getElementById("stage").innerText = "";
 		output.className = "accept";
-		output.innerHTML = `解析成功。(${(Date.now()-startTime)/1000}s)`;
+		output.innerText = `解析成功。(${(Date.now()-startTime)/1000}s)`;
 		document.getElementById("control").classList.remove("hide");
 		document.getElementById("static").classList.add("disabled");
-		document.getElementById("date").innerHTML = cnymd(panelOld.mtime); //test
+		document.getElementById("date").innerText = time2cnymd(panelOld.mtime); //test
 		for (const i of pName) document.getElementById(i).checked = false;
 		resizeStage();
 
@@ -109,7 +109,7 @@ for (const i of document.querySelectorAll("input")) {
 }
 
 function addToStage(str) {
-	document.getElementById("stage").innerHTML = "";
+	document.getElementById("stage").innerText = "";
 	if (str == pName[0]) {
 		document.getElementById("static").classList.remove("disabled");
 		for (const i of panelSort[str]) {
@@ -138,7 +138,7 @@ function addToStage(str) {
 			let img = document.createElement((i.type == 4) ? "textarea" : "img");
 			img.classList.add("img", pMode[i[pType]]);
 			img.title = `${(`0000${i.id}`).slice(-4)}${i.text}`;
-			if (i.type == 4) img.innerHTML = i.url;
+			if (i.type == 4) img.innerText = i.url;
 			else {
 				img.src = `${i.url}@56w_56h.webp`;
 				img.onclick = function() {
@@ -153,7 +153,7 @@ function addToStage(str) {
 			let img = document.createElement((i.type == 4) ? "textarea" : "img");
 			img.classList.add("img", pMode[i[pType]]);
 			img.title = `${(`0000${i.id}`).slice(-4)}${i.text}`;
-			if (i.type == 4) img.innerHTML = i.url;
+			if (i.type == 4) img.innerText = i.url;
 			else {
 				img.src = `${i.url}@56w_56h.webp`;
 				img.onclick = function() {

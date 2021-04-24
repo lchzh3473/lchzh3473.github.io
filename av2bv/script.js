@@ -60,18 +60,18 @@ const convert = () => {
 	});
 	if (av[0] + bv[0] == 0) {
 		result.className = 'error';
-		result.innerHTML = `未检测到av号或bv号`;
+		result.innerText = `未检测到av号或bv号`;
 	} else if (av[0] + bv[0] != av[1] + bv[1]) {
 		result.className = 'warning';
-		result.innerHTML = `已部分转换（av:${av[1]}/${av[0]}&ensp;bv:${bv[1]}/${bv[0]}）`;
+		result.innerText = `已部分转换（av:${av[1]}/${av[0]}\u2002bv:${bv[1]}/${bv[0]}）`;
 	} else {
 		result.className = 'accept';
-		result.innerHTML = `已全部转换（av:${av[1]}/${av[0]}&ensp;bv:${bv[1]}/${bv[0]}）`;
+		result.innerText = `已全部转换（av:${av[1]}/${av[0]}\u2002bv:${bv[1]}/${bv[0]}）`;
 	}
-	copyEl.innerHTML = '复制';
+	copyEl.innerText = '复制';
 }
 convert();
-copyEl.onclick = () => copyEl.innerHTML = copy(output) ? '复制成功' : '复制失败';
+copyEl.onclick = () => copyEl.innerText = copy(output) ? '复制成功' : '复制失败';
 reset.onclick = () => {
 	input.value = "";
 	convert();

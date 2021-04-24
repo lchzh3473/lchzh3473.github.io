@@ -17,7 +17,7 @@ upload.onchange = function() { //上传文件
 	const video = document.createElement("video");
 	video.src = URL.createObjectURL(this.files[0]);
 	video.onloadedmetadata = function() {
-		document.getElementById("info").innerHTML = `时长：${video.duration}s，尺寸：${video.videoWidth}x${video.videoHeight}，`;
+		document.getElementById("info").innerText = `时长：${video.duration}s，尺寸：${video.videoWidth}x${video.videoHeight}，`;
 		canvas.width = videoWidth;
 		videoHeight = Math.round(videoWidth / video.videoWidth * video.videoHeight / 1.8);
 		canvas.height = videoHeight;
@@ -54,11 +54,11 @@ upload.onchange = function() { //上传文件
 			}
 			rowString += "\n";
 		}
-		stage.innerHTML = rowString;
+		stage.innerText = rowString;
 		requestAnimationFrame(onFrame);
 		tick++;
 		if (tick % 10 == 0) {
-			fps.innerHTML = `帧率：${Math.round(1e4 / (Date.now() - start))}fps`;
+			fps.innerText = `帧率：${Math.round(1e4 / (Date.now() - start))}fps`;
 			start = Date.now();
 		}
 	}
