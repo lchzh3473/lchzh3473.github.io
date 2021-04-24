@@ -2,9 +2,14 @@
 	"data": {
 		"title": "猜数字",
 		"pubdate": 1601468724,
-		"version": [2, 0],
-		"update": 1619276336,
+		"version": [2, 0, 1],
+		"update": 1619277806,
 		"changelog": [{
+			"version": [2, 0, 1],
+			"date": 1619277806,
+			"type": 2,
+			"desc": "1.修复AI输入偶尔大于范围的问题\n2.修复结算后确认按钮可以点击的问题"
+		}, {
 			"version": [2, 0],
 			"date": 1619276336,
 			"type": 1,

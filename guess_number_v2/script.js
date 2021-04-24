@@ -43,7 +43,7 @@ function guess() {
 				sysout(`玩家胜利，积分+10（点击重置以更新积分）`);
 				input.classList.remove("disabled");
 				number.classList.add("disabled");
-				number.classList.add("disabled");
+				ok.classList.add("disabled");
 				window.localStorage.setItem("guess_number_score", Number(score) + 10);
 			}, 1e3);
 		}
@@ -60,7 +60,7 @@ function aiguess() {
 	let qwq = range[1] - range[0];
 	let aigs;
 	if (qwq % 2 == 1) aigs = Math.floor(Math.random() * (qwq + 1)) + range[0];
-	else aigs = Math.floor(Math.random() * qwq / 2 + 1) * 2 + range[0];
+	else aigs = Math.floor(Math.random() * qwq / 2) * 2 + range[0];
 	setTimeout(() => {
 		sysout(`AI输入了[${aigs}]`);
 		setTimeout(() => {
@@ -78,7 +78,7 @@ function aiguess() {
 					sysout(`玩家失败，积分-10（点击重置以更新积分）`);
 					input.classList.remove("disabled");
 					number.classList.add("disabled");
-					number.classList.add("disabled");
+					ok.classList.add("disabled");
 					window.localStorage.setItem("guess_number_score", Number(score) - 10);
 				}, 1e3);
 			}
