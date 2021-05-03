@@ -60,8 +60,8 @@ function init() {
 		//加载默认json谱面
 		const xhr = new XMLHttpRequest();
 		xhr.open("get", "src/example.json");
-		xhr.onload = () => loadJson(xhr.responseText);
 		xhr.send();
+		xhr.onload = () => loadJson(xhr.responseText);
 	} else {
 		songName = localJSON.songName;
 		bpm = localJSON.bpm;
@@ -144,6 +144,7 @@ function init() {
 		} //表示文件大小，以后会优化
 		const xhr = new XMLHttpRequest();
 		xhr.open("get", `src/music/${soundfont}/piano.json`);
+		xhr.send();
 		xhr.onprogress = progress => loading.innerText = `加载音乐资源...(${Math.floor(progress.loaded/size[soundfont]*100)}%)`; //显示加载文件进度
 		xhr.onload = () => {
 			const audData = JSON.parse(xhr.response);
@@ -155,7 +156,6 @@ function init() {
 			}
 			loadImage();
 		}
-		xhr.send();
 	}
 	//base64转arraybuffer
 	function base64ToArrayBuffer(base64) {

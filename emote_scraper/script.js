@@ -14,12 +14,12 @@ document.getElementById("analyse").onclick = function() {
 		else {
 			const xhr = new XMLHttpRequest();
 			xhr.open("get", "panel.json");
+			xhr.send();
 			xhr.onload = function() {
 				str = xhr.responseText;
 				window.localStorage.setItem("panel", str);
 				analyseInput(str);
 			}
-			xhr.send();
 		}
 	} catch (err) {
 		if (err == 2) {
