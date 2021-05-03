@@ -3,6 +3,7 @@ window.onload = function() {
 	if (!location.search) location.search = Date.now();
 	const xhr = new XMLHttpRequest();
 	xhr.open("get", "info.json");
+	xhr.send();
 	xhr.onload = () => {
 		try {
 			const data = JSON.parse(xhr.responseText).data;
@@ -25,17 +26,16 @@ window.onload = function() {
 			throw "Fatal Error"
 		}
 	}
-	xhr.send();
 };
 
-function time2cnymd(time) {
-	let d = new Date(time * 1000);
+const time2cnymd = time => {
+	const d = new Date(time * 1e3);
 	return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
 }
 
-function copy(element) {
-	let selection = window.getSelection();
-	let range = document.createRange();
+const copy = element => {
+	const selection = window.getSelection();
+	const range = document.createRange();
 	range.selectNodeContents(element);
 	selection.removeAllRanges();
 	selection.addRange(range);
