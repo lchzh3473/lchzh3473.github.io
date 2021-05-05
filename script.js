@@ -23,9 +23,10 @@ window.onload = function() {
 			6.删除（Removed）：已删除的功能。
 			*/
 		} catch {
-			throw "Fatal Error"
+			document.write();
 		}
 	}
+	xhr.onerror = () => document.write();
 };
 
 const time2cnymd = time => {
