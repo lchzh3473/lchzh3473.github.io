@@ -1,4 +1,5 @@
 "use strict";
+const _i = ['b站表情图获取工具', [1, 1, 2], 1610790787, 1612046850];
 const pName = ["packages", "statics", "dynamics"];
 const pMode = ["default", "new-add", "changed", "new-remove", "removed", "re-add"];
 const pType = "m";
@@ -93,6 +94,11 @@ document.getElementById("analyse").onclick = function() {
 				if (j && i[pType] != 0 && i[pType] != 4 && j[pType] == 0) j[pType] = 2;
 			}
 			return panelNew;
+		}
+
+		function time2cnymd(time) {
+			const d = new Date(time * 1e3);
+			return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
 		}
 	}
 }
