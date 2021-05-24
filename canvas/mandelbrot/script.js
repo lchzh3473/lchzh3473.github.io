@@ -1,4 +1,5 @@
 "use strict";
+const _i = ['Mandelbrot Set', [1, 0, 2], 1614954857, 1615280661];
 const canvas = document.getElementById("stage");
 const size = 500;
 const size2 = size / 2;

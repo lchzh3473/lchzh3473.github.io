@@ -1,4 +1,5 @@
 "use strict";
+const _i = ['AV号与BV号转换器', [2, 1], 1585055154, 1611579572];
 const copyEl = document.getElementById("copy");
 const input = document.getElementById("input");
 const output = document.getElementById("output");
@@ -71,6 +72,15 @@ const convert = () => {
 	copyEl.innerText = '复制';
 }
 convert();
+const copy = element => {
+	const selection = window.getSelection();
+	const range = document.createRange();
+	range.selectNodeContents(element);
+	selection.removeAllRanges();
+	selection.addRange(range);
+	if (document.execCommand("copy")) return true;
+	return false;
+}
 copyEl.onclick = () => copyEl.innerText = copy(output) ? '复制成功' : '复制失败';
 reset.onclick = () => {
 	input.value = "";

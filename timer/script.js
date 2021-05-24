@@ -1,4 +1,5 @@
 "use strict";
+const _i = ['倒计时', [1, 0], 1616519472, 1616519472];
 let isqwq = false;
 let table = document.getElementById("evt-content");
 let rows = 0;

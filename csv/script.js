@@ -1,4 +1,5 @@
 "use strict";
+const _i = ['CSV钢琴块2模拟器', [1, 0], 1616081874, 1616081874];
 const copyEl = document.getElementById("copy");
 const input = document.getElementById("input");
 const output = document.getElementById("output");

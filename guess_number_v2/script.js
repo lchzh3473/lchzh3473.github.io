@@ -1,4 +1,5 @@
 "use strict";
+const _i = ['猜数字', [2, 0, 2], 1601468724, 1619280046];
 const result = document.getElementById("result");
 const input = document.getElementById("input");
 const output = document.getElementById("output");

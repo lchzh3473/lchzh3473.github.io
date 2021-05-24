@@ -1,4 +1,5 @@
 "use strict";
+const _i = ['小球碰撞', [1, 0], 1612411902, 1612411902];
 document.oncontextmenu = e => e.returnValue = false;
 const canvas = document.getElementById("stage");
 window.addEventListener("resize", resize);
