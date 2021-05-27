@@ -3,6 +3,8 @@
 
 <head>
 	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
+	<!--防止b站403-->
+	<meta name="referrer" content="no-referrer">
 	<base target="_blank">
 	<title>(っ °Д °;)っ</title>
 	<link rel="stylesheet" href="/style.css">
@@ -14,10 +16,7 @@
 		<h1 class="title"></h1>
 		<p class="info"></p>
 		<p class="profile">
-			请按照提示进行操作(点击链接可以复制)：<br>
-			首先登录：<a id="website1" onclick="copy(document.getElementById('website1'))">https://passport.bilibili.com/login</a><br>
-			然后打开以下链接，将页面内全部内容复制粘贴至文本框：<br>
-			<a id="website2" onclick="copy(document.getElementById('website2'))">https://api.bilibili.com/x/emote/setting/panel?business=reply</a><br>
+			点击<a id="website1" href="https://passport.bilibili.com/login">登录</a>，然后点击<a id="website2" href="https://api.bilibili.com/x/emote/setting/panel?business=reply">跳转</a>，将页面内全部内容复制粘贴至文本框，<br>
 			最后点击“解析”按钮。留空以调用最近一次记录。
 		</p>
 		<div style="display:flex;justify-content:center">

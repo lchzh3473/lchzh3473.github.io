@@ -1,17 +1,8 @@
 "use strict";
-const _i = ['b站表情图获取工具', [1, 1, 2], 1610790787, 1612046850];
+const _i = ['b站表情图获取工具', [1, 1, 3], 1610790787, 1622112873];
 const pName = ["packages", "statics", "dynamics"];
 const pMode = ["default", "new-add", "changed", "new-remove", "removed", "re-add"];
 const pType = "m";
-const copy = element => {
-	const selection = window.getSelection();
-	const range = document.createRange();
-	range.selectNodeContents(element);
-	selection.removeAllRanges();
-	selection.addRange(range);
-	if (document.execCommand("copy")) return true;
-	return false;
-}
 var panelSort, panelNew;
 document.getElementById("analyse").onclick = function() {
 	let startTime = Date.now();
