@@ -1,5 +1,5 @@
 "use strict";
-const _i = ['b站表情图获取工具', [1, 1, 3], 1610790787, 1622112873];
+const _i = ['b站表情图获取工具', [1, 1, 4], 1610790787, 1624550421];
 const pName = ["packages", "statics", "dynamics"];
 const pMode = ["default", "new-add", "changed", "new-remove", "removed", "re-add"];
 const pType = "m";
@@ -57,21 +57,24 @@ document.getElementById("analyse").onclick = function() {
 				packageNew.type = i.type;
 				packageNew.url = i.url;
 				packageNew[pType] = 1;
-				for (const j of i.emote) {
-					let emoteNew = {};
-					emoteNew.id = j.id;
-					emoteNew.pid = j.package_id;
-					emoteNew.text = j.text;
-					emoteNew.type = j.type;
-					emoteNew.url = j.url;
-					emoteNew[pType] = 1;
-					panelNew[pName[1]].push(emoteNew);
-					if (j.gif_url) {
-						let gifNew = JSON.parse(JSON.stringify(emoteNew));
-						gifNew.url = j.gif_url;
-						panelNew[pName[2]].push(gifNew);
+				if (i.emote) {
+					for (const j of i.emote) {
+						let emoteNew = {};
+						emoteNew.id = j.id;
+						emoteNew.pid = j.package_id;
+						emoteNew.text = j.text;
+						emoteNew.type = j.type;
+						emoteNew.url = j.url;
+						emoteNew[pType] = 1;
+						panelNew[pName[1]].push(emoteNew);
+						if (j.gif_url) {
+							let gifNew = JSON.parse(JSON.stringify(emoteNew));
+							gifNew.url = j.gif_url;
+							panelNew[pName[2]].push(gifNew);
+						}
 					}
 				}
+
 				panelNew[pName[0]].push(packageNew);
 			}
 			let panelArray = {};
@@ -126,7 +129,7 @@ function addToStage(str) {
 			img.id = `img${i.id}`;
 			img.classList.add("img", pMode[i[pType]]);
 			img.title = `${(`000${i.id}`).slice(-3)}_${i.text}`;
-			img.src = `${i.url}@56w_56h.webp`;
+			img.src = `${i.url.split("@")[0]}@56w_56h.webp`;
 			pack.onclick = function() {
 				document.getElementById(`pack${i.id}`).classList.toggle("fold");
 				document.getElementById(`pack${i.id}`).classList.toggle("unfold");
@@ -146,7 +149,7 @@ function addToStage(str) {
 			img.title = `${(`0000${i.id}`).slice(-4)}${i.text}`;
 			if (i.type == 4) img.innerText = i.url;
 			else {
-				img.src = `${i.url}@56w_56h.webp`;
+				img.src = `${i.url.split("@")[0]}@56w_56h.webp`;
 				img.onclick = function() {
 					window.open(i.url);
 				};
@@ -161,7 +164,7 @@ function addToStage(str) {
 			img.title = `${(`0000${i.id}`).slice(-4)}${i.text}`;
 			if (i.type == 4) img.innerText = i.url;
 			else {
-				img.src = `${i.url}@56w_56h.webp`;
+				img.src = `${i.url.split("@")[0]}@56w_56h.webp`;
 				img.onclick = function() {
 					window.open(i.url);
 				};
