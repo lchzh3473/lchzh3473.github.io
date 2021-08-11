@@ -155,5 +155,6 @@ strong.accept {
 }
 
 .fade {
+	opacity: 0;
 	visibility: hidden;
 }
