@@ -101,7 +101,7 @@ input.addEventListener("input", function() {
 				window.localStorage.setItem("enableAPI", !enableAPI);
 				alert(`已经${str}实验性功能。`);
 			}
-			location.reload();
+			location.reload(true);
 		}
 	}, 1e3);
 })

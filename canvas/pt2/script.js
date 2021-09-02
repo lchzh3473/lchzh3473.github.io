@@ -130,7 +130,7 @@ function init() {
 			}));
 			loadAudio();
 		} catch (err) {
-			loading.innerHTML = `加载json出错：<br><br>${err}<br><br><button onclick="window.localStorage.removeItem('pt2');location.reload();">点击重置</button>`; 
+			loading.innerHTML = `加载json出错：<br><br>${err}<br><br><button onclick="window.localStorage.removeItem('pt2');location.reload(true);">点击重置</button>`; 
 			//以后换种错误显示
 			canvas.style.display = "none";
 			console.log(err);
@@ -494,10 +494,10 @@ document.getElementById("cover-dark").onclick = () => {
 		bpm: document.getElementById("cfg-bpm").value,
 		soundfont: document.getElementById("cfg-soundfont").value
 	}));
-	location.reload();
+	location.reload(true);
 }
 document.getElementById("btn-pause").onclick = () => gamePause(1);
-document.getElementById("gameover").onclick = () => location.reload();
+document.getElementById("gameover").onclick = () => location.reload(true);
 document.getElementById("continue").onclick = () => gamePause(0);
 document.addEventListener("visibilitychange", () => {
 	if (isStarted && !isPaused) gamePause(1);
