@@ -43,7 +43,7 @@ input[type="file"]+label {
 	color: #fff;
 	border: none;
 	border-radius: 2px;
-	font: 0.9em sans-serif;
+	font-size: 0.9em;
 	padding: 0.1em 0.6em;
 	margin: 0.1em;
 }
@@ -131,21 +131,18 @@ strong.accept {
 .index {
 	width: 60vw;
 	max-width: 270px;
-	display: flex;
 	margin: auto;
-	flex-direction: column;
-	justify-content: center;
-	align-items: stretch;
 }
 
 .index a {
+	display: block;
 	border: 2px solid #37723a;
 	border-radius: 5px;
 	padding: 10px;
 }
 
 .profile {
-	font: 13.33px sans-serif;
+	font-size: 13.33px;
 	line-height: 1.5;
 }
 
