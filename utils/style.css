@@ -24,6 +24,7 @@ a {
 	text-decoration: none;
 	color: #f00;
 	border-radius: 2px;
+	cursor: pointer;
 }
 
 a:hover,
@@ -109,6 +110,10 @@ input[type="text"] {
 	border-radius: 2px;
 	padding: 0.2em;
 	margin: 1px;
+}
+
+.main {
+	display: none;
 }
 
 .title {
