@@ -79,7 +79,7 @@ canvas.addEventListener("mousedown", e => {
 	const ky = dy + (canvas.offsetHeight / 2 - e.offsetY) * 0.008 * 10 ** -dzoom;
 	init(kx, ky, dzoom += e.button ? -.1 : .1, rowitr * 2 ** dzoom);
 });
-document.oncontextmenu = e => e.returnValue = false;
+document.oncontextmenu = e => e.preventDefault();
 //适配移动设备
 const tmp = [];
 const passive = {
