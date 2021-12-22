@@ -1,0 +1,10 @@
+@font-face {
+	font-family: 'FuturaPTWebCondMedium';
+	src: url('Futura-PT_Cond-Medium.eot');
+	src: url('Futura-PT_Cond-Medium.eot?#iefix') format('embedded-opentype'),
+		url('Futura-PT_Cond-Medium.woff2') format('woff2'),
+		url('Futura-PT_Cond-Medium.woff') format('woff'),
+		url('Futura-PT_Cond-Medium.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}

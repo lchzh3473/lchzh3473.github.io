@@ -149,7 +149,7 @@ function draw() {
 	ctx.fillText(`动能：${ek ? Math.round(Math.sqrt(ek)*10) : 0}`, px * 0.6, px * 2.9);
 	for (const i in tek) ctx.fillText(tek[i], px * 0.6, px * (4.2 + i * 1.3));
 	ctx.textAlign = "end";
-	ctx.fillText("lch\zh3473制作", canvas.width - px * 0.6, canvas.height - px * 0.6);
+	ctx.fillText("lch\x7ah3473制作", canvas.width - px * 0.6, canvas.height - px * 0.6);
 	/*计算下一帧*/
 	for (const i of item) {
 		for (const j of item) i.collide(j);
