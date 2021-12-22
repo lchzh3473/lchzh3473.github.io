@@ -1,7 +1,4 @@
-@font-face{
-	font-family: Futura;
-	src:url('src/Futura\ condensed.ttf');
-}
+@import url('/fonts/Futura-PT_Cond-Medium.css');
 
 ::-webkit-scrollbar {
 	display: none;
@@ -98,6 +95,7 @@ body {
 	font: 4vmin sans-serif;
 	width: 30vmin;
 }
+
 .item-right select {
 	font: 4vmin sans-serif;
 	width: 30vmin;

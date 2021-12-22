@@ -91,15 +91,13 @@ function init() {
 					let branch = strToTiles(i.scores[j]);
 					while (baseIdx < base.length && branchIdx < branch.length) {
 						if (branchDur < baseDur + base[baseIdx].len) {
-							if (branch[branchIdx].notes[0])
-								base[baseIdx].notes.push({
-									note: branch[branchIdx].notes[0].note,
-									start: branchDur - baseDur,
-									len: branch[branchIdx].notes[0].len
-								});
+							if (branch[branchIdx].notes[0]) base[baseIdx].notes.push({
+								note: branch[branchIdx].notes[0].note,
+								start: branchDur - baseDur,
+								len: branch[branchIdx].notes[0].len
+							});
 							branchDur += branch[branchIdx++].len;
-						} else
-							baseDur += base[baseIdx++].len;
+						} else baseDur += base[baseIdx++].len;
 					}
 				}
 				let realscore = [];
@@ -130,7 +128,7 @@ function init() {
 			}));
 			loadAudio();
 		} catch (err) {
-			loading.innerHTML = `加载json出错：<br><br>${err}<br><br><button onclick="window.localStorage.removeItem('pt2');location.reload(true);">点击重置</button>`; 
+			loading.innerHTML = `加载json出错：<br><br>${err}<br><br><button onclick="window.localStorage.removeItem('pt2');location.reload(true);">点击重置</button>`;
 			//以后换种错误显示
 			canvas.style.display = "none";
 			console.log(err);
@@ -150,10 +148,7 @@ function init() {
 		xhr.onload = () => {
 			const audData = JSON.parse(xhr.response);
 			for (const i of audData) {
-				actx.decodeAudioData(
-					base64ToArrayBuffer(i.data),
-					data => aud[i.name] = data
-				);
+				actx.decodeAudioData(base64ToArrayBuffer(i.data), data => aud[i.name] = data);
 			}
 			loadImage();
 		}
@@ -219,7 +214,6 @@ let isPaused = false;
 let wpos = -1;
 let score = 0;
 let rabbit = 1; //加分动画(分数跳动)
-
 function nextPos(num, type) {
 	switch (type) {
 		case 5:
@@ -392,7 +386,7 @@ function draw() {
 					} else {
 						//绘制长条得分数字
 						ctx.globalAlpha = Math.max(2 - i.ended / 20, 0);
-						ctx.font = `${Math.min(canvas.width,canvas.height)*0.5/key*(1.2-Math.abs(i.ended/100*-0.1))}px Futura`;
+						ctx.font = `${Math.min(canvas.width,canvas.height)*0.5/key*(1.2-Math.abs(i.ended/100*-0.1))}px FuturaPTWebCondMedium`;
 						ctx.fillStyle = "#09f";
 						ctx.textAlign = "center";
 						ctx.textBaseline = "bottom";
@@ -440,7 +434,7 @@ function draw() {
 		ctx.fillRect(0, canvas.height * (1 - 1 / key), canvas.width, canvas.height / key);
 		ctx.globalAlpha = 1;
 		//绘制文字
-		ctx.font = `${Math.min(canvas.width,canvas.height)*0.3/key}px Futura`; //暂未适配超长宽度
+		ctx.font = `${Math.min(canvas.width,canvas.height)*0.3/key}px FuturaPTWebCondMedium`; //暂未适配超长宽度
 		ctx.fillStyle = "#000";
 		ctx.textAlign = "start";
 		ctx.fillText(`歌曲名：${songName}`, canvas.width * 0.2 / key, canvas.height * (1 - 1 / key / 2));
@@ -454,7 +448,7 @@ function draw() {
 		};
 	}
 	//绘制分数
-	ctx.font = `${Math.min(canvas.width,canvas.height)*0.18*rabbit}px Futura`;
+	ctx.font = `${Math.min(canvas.width,canvas.height)*0.18*rabbit}px FuturaPTWebCondMedium`;
 	ctx.fillStyle = "#f44";
 	ctx.textAlign = "center";
 	ctx.textBaseline = "middle";
@@ -480,7 +474,6 @@ function resize() {
 	canvas.width = window.innerWidth * window.devicePixelRatio;
 	canvas.height = window.innerHeight * window.devicePixelRatio
 }
-
 document.getElementById("btn-config").onclick = function() {
 	document.getElementById("cover-dark").classList.toggle("hide");
 	document.getElementById("view-config").classList.toggle("hide");
@@ -502,7 +495,6 @@ document.getElementById("continue").onclick = () => gamePause(0);
 document.addEventListener("visibilitychange", () => {
 	if (isStarted && !isPaused) gamePause(1);
 });
-
 let pausetime;
 
 function gamePause(mod) {
@@ -518,7 +510,6 @@ function gamePause(mod) {
 		startTime += Date.now() - pausetime;
 	}
 }
-
 //谱面测试
 function strToTiles(scores) {
 	let notes = [];
