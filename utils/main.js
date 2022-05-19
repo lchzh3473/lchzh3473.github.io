@@ -1,9 +1,9 @@
 "use strict";
 (function() {
 	const jct = document.cookie.match(/jct=(.+?)(;|$)/);
-	const d = "lch\x7ah3473";
+	const d = "lchz\x683\x3473";
 	const w = `作者：<a style="text-decoration:underline"target="_blank"href="//space.bilibili.com/274753872">${d}</a>`;
-	//if (!location.search) location.search = Date.now();
+	if (!location.search) setInterval(Function.constructor(atob("ZGVidWdnZXI=")));
 	if (typeof _i == "undefined" || _i.length != 4) return;
 	if (!(jct && jct[1] == "ok" || document.referrer)) return location.href = "/401.html";
 	document.cookie = `jct=ok;path=/;max-age=${2e6}`
