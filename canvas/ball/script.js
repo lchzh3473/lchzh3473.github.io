@@ -107,7 +107,6 @@ class point {
 		if (this.y < this.r) this.y = this.r;
 	}
 }
-
 /*作图*/
 function draw() {
 	const ctx = canvas.getContext("2d");
@@ -142,7 +141,7 @@ function draw() {
 	let ek = 0;
 	for (const i of item) ek += i.vx ** 2 + i.vy ** 2;
 	const px = 16 * window.devicePixelRatio;
-	ctx.font = `${px}px sans-serif`;
+	ctx.font = `${px}px Noto Sans SC`;
 	ctx.fillStyle = "rgba(255,255,255,0.6)";
 	ctx.textAlign = "start";
 	ctx.fillText(`小球数量：${item.length}`, px * 0.6, px * 1.6);

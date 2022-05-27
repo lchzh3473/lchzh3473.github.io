@@ -74,12 +74,12 @@ body {
 }
 
 .config-title {
-	font: 6vmin sans-serif;
+	font-size: 6vmin;
 	margin: 0px;
 }
 
 .config-table {
-	font: 4vmin sans-serif;
+	font-size: 4vmin;
 	margin: 0px auto;
 }
 
@@ -92,12 +92,12 @@ body {
 }
 
 .item-right input[type="text"] {
-	font: 4vmin sans-serif;
+	font-size: 4vmin;
 	width: 30vmin;
 }
 
 .item-right select {
-	font: 4vmin sans-serif;
+	font-size: 4vmin;
 	width: 30vmin;
 	border: 1px solid #888;
 	border-radius: 2px;
@@ -139,7 +139,7 @@ body {
 }
 
 .pause-title {
-	font: 10vmin sans-serif;
+	font-size: 10vmin;
 	margin: 0px;
 }
 
@@ -150,7 +150,7 @@ body {
 }
 
 .pause-config a {
-	font: 8vmin sans-serif;
+	font-size: 8vmin;
 	background-color: #359dc2;
 	padding: 4vmin 12vmin;
 	border-radius: 12vmin;

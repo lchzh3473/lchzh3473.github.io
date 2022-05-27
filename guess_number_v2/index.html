@@ -17,7 +17,8 @@
 			min-height: 3.8em;
 			max-height: 16.8em;
 			text-align: start;
-			font: 13.33px monospace;
+			font-family: Consolas, monospace;
+			font-size: 13.33px;
 			background-color: #fff;
 			resize: none;
 			white-space: pre-wrap;
@@ -27,6 +28,7 @@
 			border: 1px solid #888;
 			border-radius: 2px;
 		}
+
 		.textbox {
 			display: flex;
 			justify-content: space-around;
@@ -34,9 +36,10 @@
 			width: 80vw;
 			min-width: 1.8em;
 			max-width: 27.6em;
-			font: 13.33px sans-serif;
+			font-size: 13.33px;
 		}
-		.input{
+
+		.input {
 			flex-grow: 1;
 		}
 	</style>
@@ -46,9 +49,7 @@
 	<div class="main">
 		<h1 class="title"></h1>
 		<p class="info"></p>
-		<p class="profile">
-			玩家和AI轮流猜数字，若玩家先猜中数字则获胜，并获得一定积分。
-		</p>
+		<p class="profile">玩家和AI轮流猜数字，若玩家先猜中数字则获胜，并获得一定积分。</p>
 		<div>当前积分：<span id="score"></span>
 		</div><br>
 		<div id="output" class="text"></div>

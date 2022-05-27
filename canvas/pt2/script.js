@@ -412,7 +412,7 @@ function draw() {
 	}
 	//绘制开始
 	if (!isStarted) {
-		ctx.font = `${Math.min(canvas.width,canvas.height)/(key*2)}px sans-serif`;
+		ctx.font = `${Math.min(canvas.width,canvas.height)/(key*2)}px Noto Sans SC`;
 		ctx.fillStyle = "#fff";
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
@@ -434,7 +434,7 @@ function draw() {
 		ctx.fillRect(0, canvas.height * (1 - 1 / key), canvas.width, canvas.height / key);
 		ctx.globalAlpha = 1;
 		//绘制文字
-		ctx.font = `${Math.min(canvas.width,canvas.height)*0.3/key}px FuturaPTWebCondMedium`; //暂未适配超长宽度
+		ctx.font = `${Math.min(canvas.width,canvas.height)*0.3/key}px FuturaPTWebCondMedium,Noto Sans SC`; //暂未适配超长宽度
 		ctx.fillStyle = "#000";
 		ctx.textAlign = "start";
 		ctx.fillText(`歌曲名：${songName}`, canvas.width * 0.2 / key, canvas.height * (1 - 1 / key / 2));
@@ -458,7 +458,7 @@ function draw() {
 	let ek = 0;
 	for (const i of item) ek += i.vx ** 2 + i.vy ** 2;
 	const px = 16 * window.devicePixelRatio;
-	ctx.font = `${px}px sans-serif`;
+	ctx.font = `${px}px Noto Sans SC`;
 	ctx.strokeStyle = "#fff";
 	ctx.fillStyle = "#000";
 	ctx.textAlign = "start";
