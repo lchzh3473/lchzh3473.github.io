@@ -1,6 +1,6 @@
 "use strict";
-const _i = ['AV号与BV号转换器', [2, 1, 0], 1585055154, 1611579572];
-const copyEl = document.getElementById("copy");
+const _i = ['AV号与BV号转换器', [2, 1, 1], 1585055154, 1654211197];
+const copy = document.getElementById("copy");
 const input = document.getElementById("input");
 const output = document.getElementById("output");
 const result = document.getElementById("result");
@@ -69,19 +69,10 @@ const convert = () => {
 		result.className = 'accept';
 		result.innerText = `已全部转换（av:${av[1]}/${av[0]}\u2002bv:${bv[1]}/${bv[0]}）`;
 	}
-	copyEl.innerText = '复制';
 }
 convert();
-const copy = element => {
-	const selection = window.getSelection();
-	const range = document.createRange();
-	range.selectNodeContents(element);
-	selection.removeAllRanges();
-	selection.addRange(range);
-	if (document.execCommand("copy")) return true;
-	return false;
-}
-copyEl.onclick = () => copyEl.innerText = copy(output) ? '复制成功' : '复制失败';
+copy.onclick = () => Utils.copyText.call(output).then(Utils.setText.bind(copy, "复制成功"), Utils.setText.bind(copy, "复制失败"));
+copy.onblur = Utils.setText.bind(copy, "复制");
 reset.onclick = () => {
 	input.value = "";
 	convert();
@@ -91,7 +82,7 @@ const enableAPI = window.localStorage.getItem("enableAPI") == "true";
 if (enableAPI) {
 	const script = document.createElement("script");
 	script.src = "./api.js";
-	document.body.appendChild(script);
+	document.head.appendChild(script);
 }
 input.addEventListener("input", function() {
 	if (this.value == "/test\n") setTimeout(() => {
@@ -104,4 +95,4 @@ input.addEventListener("input", function() {
 			location.reload(true);
 		}
 	}, 1e3);
-})
+});
