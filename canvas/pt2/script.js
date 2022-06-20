@@ -1,14 +1,14 @@
-"use strict";
+'use strict';
 const _i = ['钢琴块2模拟器', [1, 0, 1], 1614358089, 1614362421];
 document.oncontextmenu = e => e.preventDefault();
-const canvas = document.getElementById("stage");
-window.addEventListener("resize", resize);
+const canvas = document.getElementById('stage');
+window.addEventListener('resize', resize);
 resize();
 const item = [];
 const clicks = [];
 //适配PC鼠标
 let isMouseDown = false;
-canvas.addEventListener("mousedown", evt => {
+canvas.addEventListener('mousedown', evt => {
 	evt.preventDefault();
 	if (isMouseDown) mouseup();
 	else {
@@ -19,14 +19,14 @@ canvas.addEventListener("mousedown", evt => {
 		isMouseDown = true;
 	}
 });
-canvas.addEventListener("mousemove", evt => {
+canvas.addEventListener('mousemove', evt => {
 	evt.preventDefault();
 	if (isMouseDown) {
 		clicks[0].x2 = evt.pageX * window.devicePixelRatio / canvas.width;
 		clicks[0].y2 = evt.pageY * window.devicePixelRatio / canvas.height;
 	}
 });
-canvas.addEventListener("mouseup", evt => {
+canvas.addEventListener('mouseup', evt => {
 	evt.preventDefault();
 	if (isMouseDown) mouseup();
 });
@@ -37,30 +37,30 @@ function mouseup() {
 	isMouseDown = false;
 }
 //
-const pt2Note = ["A-3", "#A-3", "B-3", "C-2", "#C-2", "D-2", "#D-2", "E-2", "F-2", "#F-2", "G-2", "#G-2", "A-2", "#A-2", "B-2", "C-1", "#C-1", "D-1", "#D-1", "E-1", "F-1", "#F-1", "G-1", "#G-1", "A-1", "#A-1", "B-1", "c", "#c", "d", "#d", "e", "f", "#f", "g", "#g", "a", "#a", "b", "c1", "#c1", "d1", "#d1", "e1", "f1", "#f1", "g1", "#g1", "a1", "#a1", "b1", "c2", "#c2", "d2", "#d2", "e2", "f2", "#f2", "g2", "#g2", "a2", "#a2", "b2", "c3", "#c3", "d3", "#d3", "e3", "f3", "#f3", "g3", "#g3", "a3", "#a3", "b3", "c4", "#c4", "d4", "#d4", "e4", "f4", "#f4", "g4", "#g4", "a4", "#a4", "b4", "c5", "mute"];
+const pt2Note = ['A-3', '#A-3', 'B-3', 'C-2', '#C-2', 'D-2', '#D-2', 'E-2', 'F-2', '#F-2', 'G-2', '#G-2', 'A-2', '#A-2', 'B-2', 'C-1', '#C-1', 'D-1', '#D-1', 'E-1', 'F-1', '#F-1', 'G-1', '#G-1', 'A-1', '#A-1', 'B-1', 'c', '#c', 'd', '#d', 'e', 'f', '#f', 'g', '#g', 'a', '#a', 'b', 'c1', '#c1', 'd1', '#d1', 'e1', 'f1', '#f1', 'g1', '#g1', 'a1', '#a1', 'b1', 'c2', '#c2', 'd2', '#d2', 'e2', 'f2', '#f2', 'g2', '#g2', 'a2', '#a2', 'b2', 'c3', '#c3', 'd3', '#d3', 'e3', 'f3', '#f3', 'g3', '#g3', 'a3', '#a3', 'b3', 'c4', '#c4', 'd4', '#d4', 'e4', 'f4', '#f4', 'g4', '#g4', 'a4', '#a4', 'b4', 'c5', 'mute'];
 const table = {};
 pt2Note.forEach(i => table[i] = true);
 //
 let bpm = 70;
-let songName = "小星星";
-let soundfont = "8rock11e";
+let songName = '小星星';
+let soundfont = '8rock11e';
 let baseBeats;
 let sheet = [];
 let img = {};
 let aud = {};
 let startTime;
-const loading = document.getElementById("cover-loading");
+const loading = document.getElementById('cover-loading');
 const actx = new AudioContext();
 init();
 //初始化
 function init() {
 	//加载本地json谱面
-	let localJSON = JSON.parse(window.localStorage.getItem("pt2"));
+	let localJSON = JSON.parse(window.localStorage.getItem('pt2'));
 	console.log(localJSON);
 	if (!localJSON) {
 		//加载默认json谱面
 		const xhr = new XMLHttpRequest();
-		xhr.open("get", "src/example.json");
+		xhr.open('get', 'src/example.json');
 		xhr.send();
 		xhr.onload = () => loadJson(xhr.responseText);
 	} else {
@@ -71,10 +71,10 @@ function init() {
 	}
 	//加载json
 	function loadJson(json) {
-		document.getElementById("cfg-songName").value = songName;
-		document.getElementById("cfg-json").value = json;
-		document.getElementById("cfg-bpm").value = bpm;
-		document.getElementById("cfg-soundfont").value = soundfont;
+		document.getElementById('cfg-songName').value = songName;
+		document.getElementById('cfg-json').value = json;
+		document.getElementById('cfg-bpm').value = bpm;
+		document.getElementById('cfg-soundfont').value = soundfont;
 		try {
 			const data = JSON.parse(json);
 			console.log(data); //test
@@ -120,17 +120,12 @@ function init() {
 				baseBeats = i.baseBeats;
 			}
 			console.log(sheet); //完整谱面
-			window.localStorage.setItem("pt2", JSON.stringify({
-				songName: songName,
-				json: json,
-				bpm: bpm,
-				soundfont: soundfont
-			}));
+			window.localStorage.setItem('pt2', JSON.stringify({ songName, json, bpm, soundfont }));
 			loadAudio();
 		} catch (err) {
 			loading.innerHTML = `加载json出错：<br><br>${err}<br><br><button onclick="window.localStorage.removeItem('pt2');location.reload(true);">点击重置</button>`;
 			//以后换种错误显示
-			canvas.style.display = "none";
+			canvas.style.display = 'none';
 			console.log(err);
 		}
 	}
@@ -138,11 +133,11 @@ function init() {
 	function loadAudio() {
 		let size = {
 			app: 1848172,
-			"8rock11e": 3118138,
+			'8rock11e': 3118138,
 			umod: 6580349
 		} //表示文件大小，以后会优化
 		const xhr = new XMLHttpRequest();
-		xhr.open("get", `src/music/${soundfont}/piano.json`);
+		xhr.open('get', `src/music/${soundfont}/piano.json`);
 		xhr.send();
 		xhr.onprogress = progress => loading.innerText = `加载音乐资源...(${Math.floor(progress.loaded/size[soundfont]*100)}%)`; //显示加载文件进度
 		xhr.onload = () => {
@@ -163,20 +158,20 @@ function init() {
 	//加载图片
 	function loadImage() {
 		const imgsrc = {
-			bg1: "src/loop1_bg_1.jpg",
-			bg2: "src/loop1_bg_2.jpg",
-			bg3: "src/loop1_bg_3.jpg",
-			tile_start: "src/gameImage/tile_start.png",
-			tile_black: "src/gameImage/tile_black.png",
-			finish1: "src/gameImage/1.png",
-			finish2: "src/gameImage/2.png",
-			finish3: "src/gameImage/3.png",
-			finish4: "src/gameImage/4.png",
-			long_head: "src/gameImage/long_head.png",
-			long_tap2: "src/gameImage/long_tap2.png",
-			long_light: "src/gameImage/long_light.png",
-			long_tilelight: "src/gameImage/long_tilelight.png",
-			long_finish: "src/gameImage/long_finish.png"
+			bg1: 'src/loop1_bg_1.jpg',
+			bg2: 'src/loop1_bg_2.jpg',
+			bg3: 'src/loop1_bg_3.jpg',
+			tile_start: 'src/gameImage/tile_start.png',
+			tile_black: 'src/gameImage/tile_black.png',
+			finish1: 'src/gameImage/1.png',
+			finish2: 'src/gameImage/2.png',
+			finish3: 'src/gameImage/3.png',
+			finish4: 'src/gameImage/4.png',
+			long_head: 'src/gameImage/long_head.png',
+			long_tap2: 'src/gameImage/long_tap2.png',
+			long_light: 'src/gameImage/long_light.png',
+			long_tilelight: 'src/gameImage/long_tilelight.png',
+			long_finish: 'src/gameImage/long_finish.png'
 		};
 		let imgNum = 0;
 		for ({} in imgsrc) imgNum++;
@@ -186,7 +181,7 @@ function init() {
 			img[i].onload = () => {
 				loading.innerText = `加载图片资源...(还剩${imgNum}个文件)`;
 				if (--imgNum <= 0) {
-					document.getElementById("btn-config").classList.remove("hide");
+					document.getElementById('btn-config').classList.remove('hide');
 					draw();
 				}
 			}
@@ -195,7 +190,7 @@ function init() {
 }
 //作图
 const stb = Math.floor(Math.random() * 3);
-const ctx = canvas.getContext("2d");
+const ctx = canvas.getContext('2d');
 let tiles = [{
 	type: -1,
 	hlen: 1,
@@ -228,7 +223,7 @@ function nextPos(num, type) {
 
 function draw() {
 	//绘制背景
-	ctx.fillStyle = "#000";
+	ctx.fillStyle = '#000';
 	switch (level) {
 		case 1:
 			ctx.drawImage(img.bg1, 0, 0, canvas.width, canvas.height);
@@ -387,9 +382,9 @@ function draw() {
 						//绘制长条得分数字
 						ctx.globalAlpha = Math.max(2 - i.ended / 20, 0);
 						ctx.font = `${Math.min(canvas.width,canvas.height)*0.5/key*(1.2-Math.abs(i.ended/100*-0.1))}px FuturaPTWebCondMedium`;
-						ctx.fillStyle = "#09f";
-						ctx.textAlign = "center";
-						ctx.textBaseline = "bottom";
+						ctx.fillStyle = '#09f';
+						ctx.textAlign = 'center';
+						ctx.textBaseline = 'bottom';
 						ctx.fillText(`+${Math.floor(i.hlen) + 1}`, canvas.width * (i.wpos + .5) / key, canvas.height * (starthpos - i.hpos - i.hlen) / key);
 						ctx.globalAlpha = 1;
 						i.ended++;
@@ -413,13 +408,13 @@ function draw() {
 	//绘制开始
 	if (!isStarted) {
 		ctx.font = `${Math.min(canvas.width,canvas.height)/(key*2)}px Noto Sans SC`;
-		ctx.fillStyle = "#fff";
-		ctx.textAlign = "center";
-		ctx.textBaseline = "middle";
+		ctx.fillStyle = '#fff';
+		ctx.textAlign = 'center';
+		ctx.textBaseline = 'middle';
 		ctx.fillText(`开始`, canvas.width * (stb + 0.5) / key, canvas.height * (1 - 1.5 / key));
 	}
 	//绘制垂直线
-	ctx.strokeStyle = "#fff";
+	ctx.strokeStyle = '#fff';
 	ctx.lineWidth = 2;
 	for (let i = 1; i < key; i++) {
 		ctx.beginPath();
@@ -430,28 +425,28 @@ function draw() {
 	//绘制开始界面
 	if (!isStarted) {
 		ctx.globalAlpha = 0.95;
-		ctx.fillStyle = "#fff";
+		ctx.fillStyle = '#fff';
 		ctx.fillRect(0, canvas.height * (1 - 1 / key), canvas.width, canvas.height / key);
 		ctx.globalAlpha = 1;
 		//绘制文字
 		ctx.font = `${Math.min(canvas.width,canvas.height)*0.3/key}px FuturaPTWebCondMedium,Noto Sans SC`; //暂未适配超长宽度
-		ctx.fillStyle = "#000";
-		ctx.textAlign = "start";
+		ctx.fillStyle = '#000';
+		ctx.textAlign = 'start';
 		ctx.fillText(`歌曲名：${songName}`, canvas.width * 0.2 / key, canvas.height * (1 - 1 / key / 2));
 		//点击开始
 		if (clicks[0] && clicks[0].x1 * key > stb && clicks[0].x1 * key < stb + 1 && clicks[0].y1 > 1 - 2.5 / key && clicks[0].y1 < 1 - 1 / key) {
-			console.log("start"); //test
+			console.log('start'); //test
 			isStarted = true;
 			startTime = Date.now();
-			document.getElementById("btn-config").classList.add("hide");
-			document.getElementById("btn-pause").classList.remove("hide");
+			document.getElementById('btn-config').classList.add('hide');
+			document.getElementById('btn-pause').classList.remove('hide');
 		};
 	}
 	//绘制分数
 	ctx.font = `${Math.min(canvas.width,canvas.height)*0.18*rabbit}px FuturaPTWebCondMedium`;
-	ctx.fillStyle = "#f44";
-	ctx.textAlign = "center";
-	ctx.textBaseline = "middle";
+	ctx.fillStyle = '#f44';
+	ctx.textAlign = 'center';
+	ctx.textBaseline = 'middle';
 	ctx.fillText(score, canvas.width * 0.5, canvas.height * .125);
 	if (rabbit > 1) rabbit -= 0.01;
 	//debug文本
@@ -459,9 +454,9 @@ function draw() {
 	for (const i of item) ek += i.vx ** 2 + i.vy ** 2;
 	const px = 16 * window.devicePixelRatio;
 	ctx.font = `${px}px Noto Sans SC`;
-	ctx.strokeStyle = "#fff";
-	ctx.fillStyle = "#000";
-	ctx.textAlign = "start";
+	ctx.strokeStyle = '#fff';
+	ctx.fillStyle = '#000';
+	ctx.textAlign = 'start';
 	//ctx.strokeText(`${JSON.stringify(tiles[0])}`, px * 0.6, px * 1.6);
 	//ctx.fillText(`${JSON.stringify(tiles[0])}`, px * 0.6, px * 1.6);
 	ctx.strokeText(`${(bpm/baseBeats/60).toFixed(3)}`, px * 0.6, px * 2.9);
@@ -474,37 +469,37 @@ function resize() {
 	canvas.width = window.innerWidth * window.devicePixelRatio;
 	canvas.height = window.innerHeight * window.devicePixelRatio
 }
-document.getElementById("btn-config").onclick = function() {
-	document.getElementById("cover-dark").classList.toggle("hide");
-	document.getElementById("view-config").classList.toggle("hide");
-	document.getElementById("view-config").classList.toggle("view-config");
-	bf("c.e.g", 64);
+document.getElementById('btn-config').onclick = function() {
+	document.getElementById('cover-dark').classList.toggle('hide');
+	document.getElementById('view-config').classList.toggle('hide');
+	document.getElementById('view-config').classList.toggle('view-config');
+	bf('c.e.g', 64);
 }
-document.getElementById("cover-dark").onclick = () => {
-	window.localStorage.setItem("pt2", JSON.stringify({
-		songName: document.getElementById("cfg-songName").value,
-		json: document.getElementById("cfg-json").value,
-		bpm: document.getElementById("cfg-bpm").value,
-		soundfont: document.getElementById("cfg-soundfont").value
+document.getElementById('cover-dark').onclick = () => {
+	window.localStorage.setItem('pt2', JSON.stringify({
+		songName: document.getElementById('cfg-songName').value,
+		json: document.getElementById('cfg-json').value,
+		bpm: document.getElementById('cfg-bpm').value,
+		soundfont: document.getElementById('cfg-soundfont').value
 	}));
 	location.reload(true);
 }
-document.getElementById("btn-pause").onclick = () => gamePause(1);
-document.getElementById("gameover").onclick = () => location.reload(true);
-document.getElementById("continue").onclick = () => gamePause(0);
-document.addEventListener("visibilitychange", () => {
+document.getElementById('btn-pause').onclick = () => gamePause(1);
+document.getElementById('gameover').onclick = () => location.reload(true);
+document.getElementById('continue').onclick = () => gamePause(0);
+document.addEventListener('visibilitychange', () => {
 	if (isStarted && !isPaused) gamePause(1);
 });
 let pausetime;
 
 function gamePause(mod) {
-	document.getElementById("cover-light").classList.toggle("hide");
-	document.getElementById("view-pause").classList.toggle("hide");
-	document.getElementById("view-pause").classList.toggle("view-pause");
+	document.getElementById('cover-light').classList.toggle('hide');
+	document.getElementById('view-pause').classList.toggle('hide');
+	document.getElementById('view-pause').classList.toggle('view-pause');
 	if (mod) {
 		isPaused = true;
 		pausetime = Date.now();
-		bf("c2.c2.c2");
+		bf('c2.c2.c2');
 	} else {
 		isPaused = false;
 		startTime += Date.now() - pausetime;
@@ -515,7 +510,7 @@ function strToTiles(scores) {
 	let notes = [];
 	let score = scores.replace(/(\d+<.+?>|[Q-Y]+|.*?\[[H-P]*\]|)[,;]/g, tile => {
 		let type = 1;
-		if (tile.startsWith(">", tile.length - 2)) {
+		if (tile.startsWith('>', tile.length - 2)) {
 			type = Number(tile.slice(0, tile.search(/</)));
 			tile = tile.slice(tile.search(/</) + 1, tile.length - 2);
 		} else tile = tile.slice(0, tile.length - 1);
@@ -561,7 +556,7 @@ function strToTiles(scores) {
 			}
 			if (type != 1) type = 0;
 		}
-		return "";
+		return '';
 	});
 	if (score) throw `多出来的：${score}`;
 	return notes;

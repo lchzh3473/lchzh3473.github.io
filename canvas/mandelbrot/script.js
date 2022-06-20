@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 const _i = ['Mandelbrot Set', [1, 0, 2], 1614954857, 1615280661];
-const canvas = document.getElementById("stage");
+const canvas = document.getElementById('stage');
 const size = 500;
 const size2 = size / 2;
-const ctx = canvas.getContext("2d");
-window.addEventListener("resize", resize);
+const ctx = canvas.getContext('2d');
+window.addEventListener('resize', resize);
 resize();
 const imgData = new ImageData(size, size);
 let dx = 0;
@@ -12,7 +12,7 @@ let dy = 0;
 let dzoom = 0;
 let rowitr = 255;
 let cr, cg, cb;
-init(0, 0, 0, 'a', "[51,0,102]");
+init(0, 0, 0, 'a', '[51,0,102]');
 //作图
 function init(x, y, zoom, maxitr, colorstr) {
 	if (!isNaN(x)) dx = x;
@@ -50,10 +50,10 @@ function init(x, y, zoom, maxitr, colorstr) {
 			if (limitr < itr) limitr = itr;
 		}
 	}
-	document.getElementById("x").innerText = dx.toFixed(14);
-	document.getElementById("y").innerText = dy.toFixed(14);
-	document.getElementById("px").innerText = `10^${dzoom.toFixed(1)}`;
-	document.getElementById("ts").innerText = `${Math.floor(avgitr/size**2)}/${Math.floor(limitr)}`;
+	document.getElementById('x').innerText = dx.toFixed(14);
+	document.getElementById('y').innerText = dy.toFixed(14);
+	document.getElementById('px').innerText = `10^${dzoom.toFixed(1)}`;
+	document.getElementById('ts').innerText = `${Math.floor(avgitr/size**2)}/${Math.floor(limitr)}`;
 
 	function color(num) {
 		let hsl = num % 1530 * 10;
@@ -67,13 +67,13 @@ function draw() {
 }
 draw();
 //适配PC
-document.getElementById("download").onclick = () => {
-	const download = document.createElement("a");
-	download.href = canvas.toDataURL("image/png", 1.0);
-	download.download = "mandelbrot";
+document.getElementById('download').onclick = () => {
+	const download = document.createElement('a');
+	download.href = canvas.toDataURL('image/png', 1.0);
+	download.download = 'mandelbrot';
 	download.click();
 }
-canvas.addEventListener("mousedown", e => {
+canvas.addEventListener('mousedown', e => {
 	e.preventDefault();
 	const kx = dx + (e.offsetX - canvas.offsetWidth / 2) * 0.008 * 10 ** -dzoom;
 	const ky = dy + (canvas.offsetHeight / 2 - e.offsetY) * 0.008 * 10 ** -dzoom;
@@ -85,13 +85,13 @@ const tmp = [];
 const passive = {
 	passive: false
 };
-canvas.addEventListener("touchstart", evt => {
+canvas.addEventListener('touchstart', evt => {
 	evt.preventDefault();
 	for (const i of evt.changedTouches) {
 		tmp[i.identifier] = Date.now();
 	}
 }, passive);
-canvas.addEventListener("touchend", evt => {
+canvas.addEventListener('touchend', evt => {
 	evt.preventDefault();
 	for (const i of evt.changedTouches) {
 		const tm = Date.now() - tmp[i.identifier];

@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 const _i = ['倒计时', [1, 0], 1616519472, 1616519472];
 let isqwq = false;
-let table = document.getElementById("evt-content");
+let table = document.getElementById('evt-content');
 let rows = 0;
 let cd = JSON.parse(window.localStorage.getItem('cd'));
 if (!cd) cd = [];
@@ -10,17 +10,17 @@ rows = cd.length;
 
 function showqwq() {
 	if (isqwq) {
-		for (const i of document.querySelectorAll(".deadline")) i.classList.add("hide");
-		for (const i of document.querySelectorAll(".countdown")) i.classList.remove("hide");
+		for (const i of document.querySelectorAll('.deadline')) i.classList.add('hide');
+		for (const i of document.querySelectorAll('.countdown')) i.classList.remove('hide');
 	} else {
-		for (const i of document.querySelectorAll(".deadline")) i.classList.remove("hide");
-		for (const i of document.querySelectorAll(".countdown")) i.classList.add("hide");
+		for (const i of document.querySelectorAll('.deadline')) i.classList.remove('hide');
+		for (const i of document.querySelectorAll('.countdown')) i.classList.add('hide');
 	}
 	isqwq = !isqwq;
 }
 
 function addEvt(n, t) {
-	let a = document.createElement("tr");
+	let a = document.createElement('tr');
 	let b = n ? n : `事件${++rows}`;
 	let c = t ? t : new Date(Date.now() - new Date().getTimezoneOffset() * 6e4 + 86400000).toJSON().substring(0, 16);
 	a.innerHTML = `<td contenteditable="true"oninput="cd[this.parentElement.sectionRowIndex][0]=this.innerText;

@@ -6,7 +6,7 @@
 		try {
 			const url = new URL(str);
 			script.src = url.href;
-			script.crossOrigin = "anonymous";
+			script.crossOrigin = 'anonymous';
 		} catch (_) {
 			script.textContent = String(str);
 		}
@@ -23,7 +23,7 @@
 		})();
 	`);
 	/* Global site tag (gtag.js) - Google Analytics */
-	loadJS("https://www.googletagmanager.com/gtag/js?id=G-K98WR056RJ").then(
+	loadJS('https://www.googletagmanager.com/gtag/js?id=G-K98WR056RJ').then(
 		() => loadJS(`
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}

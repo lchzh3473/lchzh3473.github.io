@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 const _i = ['斗地主', [1, 0], 1616218180, 1616218180];
 //黑桃0，红桃1，方块2，梅花3//暂时不考虑花色
 //const paistr = ['[3]', '[4]', '[5]', '[6]', '[7]', '[8]', '[9]', '[10]', '[J]', '[Q]', '[K]', '[A]', '[2]']; //牌显示
@@ -22,10 +22,10 @@ for (let i = 0; i < paiarr.length; i++) {
 	paiz[(i + 2) % 3][paiarr[i]]++; //记牌
 }
 let str = `<br>${showpai(paix[0])}<br>${showpai(paix[1])}<br>${showpai(paix[2])}`;
-document.getElementById("result").innerHTML = str;
+document.getElementById('result').innerHTML = str;
 
 function showpai(arr) {
-	let str = "";
+	let str = '';
 	for (const i in paistr) str += paistr[i].repeat(arr[i]);
 	return str;
 }

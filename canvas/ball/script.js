@@ -1,14 +1,14 @@
-"use strict";
+'use strict';
 const _i = ['小球碰撞', [1, 0], 1612411902, 1612411902];
 document.oncontextmenu = e => e.preventDefault();
-const canvas = document.getElementById("stage");
-window.addEventListener("resize", resize);
+const canvas = document.getElementById('stage');
+window.addEventListener('resize', resize);
 resize();
 const item = [];
 const clicks = [];
 /*适配PC鼠标*/
 let isMouseDown = false;
-canvas.addEventListener("mousedown", evt => {
+canvas.addEventListener('mousedown', evt => {
 	evt.preventDefault();
 	if (isMouseDown) mouseup();
 	else {
@@ -19,14 +19,14 @@ canvas.addEventListener("mousedown", evt => {
 		isMouseDown = true;
 	}
 });
-canvas.addEventListener("mousemove", evt => {
+canvas.addEventListener('mousemove', evt => {
 	evt.preventDefault();
 	if (isMouseDown) {
 		clicks[0].x2 = evt.pageX * window.devicePixelRatio;
 		clicks[0].y2 = evt.pageY * window.devicePixelRatio;
 	}
 });
-canvas.addEventListener("mouseup", evt => {
+canvas.addEventListener('mouseup', evt => {
 	evt.preventDefault();
 	if (isMouseDown) mouseup();
 });
@@ -40,7 +40,7 @@ function mouseup() {
 const passive = {
 	passive: false
 };
-canvas.addEventListener("touchstart", evt => {
+canvas.addEventListener('touchstart', evt => {
 	evt.preventDefault();
 	for (const i of evt.changedTouches) {
 		clicks[i.identifier] = {
@@ -49,7 +49,7 @@ canvas.addEventListener("touchstart", evt => {
 		};
 	}
 }, passive);
-canvas.addEventListener("touchmove", evt => {
+canvas.addEventListener('touchmove', evt => {
 	evt.preventDefault();
 	for (const i of evt.changedTouches) {
 		const idx = i.identifier;
@@ -59,7 +59,7 @@ canvas.addEventListener("touchmove", evt => {
 		}
 	}
 }, passive);
-canvas.addEventListener("touchend", evt => {
+canvas.addEventListener('touchend', evt => {
 	evt.preventDefault();
 	for (const i of evt.changedTouches) {
 		const idx = i.identifier;
@@ -109,11 +109,11 @@ class point {
 }
 /*作图*/
 function draw() {
-	const ctx = canvas.getContext("2d");
-	ctx.fillStyle = "#000";
+	const ctx = canvas.getContext('2d');
+	ctx.fillStyle = '#000';
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 	/*绘制图形*/
-	ctx.strokeStyle = "#fff";
+	ctx.strokeStyle = '#fff';
 	for (const i of item) {
 		const color = i.color;
 		ctx.fillStyle = color;
@@ -142,13 +142,13 @@ function draw() {
 	for (const i of item) ek += i.vx ** 2 + i.vy ** 2;
 	const px = 16 * window.devicePixelRatio;
 	ctx.font = `${px}px Noto Sans SC`;
-	ctx.fillStyle = "rgba(255,255,255,0.6)";
-	ctx.textAlign = "start";
+	ctx.fillStyle = 'rgba(255,255,255,0.6)';
+	ctx.textAlign = 'start';
 	ctx.fillText(`小球数量：${item.length}`, px * 0.6, px * 1.6);
 	ctx.fillText(`动能：${ek ? Math.round(Math.sqrt(ek)*10) : 0}`, px * 0.6, px * 2.9);
 	for (const i in tek) ctx.fillText(tek[i], px * 0.6, px * (4.2 + i * 1.3));
-	ctx.textAlign = "end";
-	ctx.fillText("lchz\x683\x3473制作", canvas.width - px * 0.6, canvas.height - px * 0.6);
+	ctx.textAlign = 'end';
+	ctx.fillText('lchz\x683\x3473制作', canvas.width - px * 0.6, canvas.height - px * 0.6);
 	/*计算下一帧*/
 	for (const i of item) {
 		for (const j of item) i.collide(j);

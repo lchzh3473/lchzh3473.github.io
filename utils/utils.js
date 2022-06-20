@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 const Utils = {
 	/**@this {HTMLElement} */
 	copyText() {
@@ -6,7 +6,7 @@ const Utils = {
 		const isHTMLElement = _this instanceof HTMLElement;
 		const isHTMLInputElement = _this instanceof HTMLInputElement;
 		const isHTMLTextAreaElement = _this instanceof HTMLTextAreaElement;
-		let data = "";
+		let data = '';
 		if (isHTMLInputElement || isHTMLTextAreaElement) {
 			_this.focus();
 			_this.select();
@@ -20,10 +20,10 @@ const Utils = {
 			data = _this.textContent;
 		} else return Promise.reject();
 		if (navigator.clipboard) return navigator.clipboard.writeText(data);
-		return Promise[document.execCommand("copy") ? "resolve" : "reject"]();
+		return Promise[document.execCommand('copy') ? 'resolve' : 'reject']();
 	},
 	/**@this {HTMLElement} */
-	setText(str = "") {
+	setText(str = '') {
 		const _this = this;
 		const isHTMLElement = _this instanceof HTMLElement;
 		const isHTMLInputElement = _this instanceof HTMLInputElement;
