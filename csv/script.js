@@ -1,6 +1,6 @@
 'use strict';
 const _i = ['CSV转换器', [1, 0], 1616081874, 1616081874];
-const copyEl = document.getElementById('copy');
+const copy = document.getElementById('copy');
 const input = document.getElementById('input');
 const output = document.getElementById('output');
 const result = document.getElementById('result');
@@ -15,7 +15,6 @@ const convert = () => {
 	try {
 		qwq = csv2array(inValue ? inValue : example);
 		output.innerHTML = JSON.stringify(qwq);
-		copyEl.innerHTML = '复制';
 		result.className = 'accept';
 		result.innerHTML = '转换成功。';
 	} catch (err) {
@@ -24,7 +23,8 @@ const convert = () => {
 	}
 }
 convert();
-copyEl.onclick = () => copyEl.innerHTML = copy(output) ? '复制成功' : '复制失败';
+copy.onclick = () => Utils.copyText.call(output).then(Utils.setText.bind(copy, '复制成功'), Utils.setText.bind(copy, '复制失败'));
+copy.onblur = Utils.setText.bind(copy, '复制');
 reset.onclick = () => {
 	input.value = '';
 	convert();

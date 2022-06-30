@@ -24,9 +24,7 @@ function addEvt(n, t) {
 	let b = n ? n : `事件${++rows}`;
 	let c = t ? t : new Date(Date.now() - new Date().getTimezoneOffset() * 6e4 + 86400000).toJSON().substring(0, 16);
 	a.innerHTML = `<td contenteditable="true"oninput="cd[this.parentElement.sectionRowIndex][0]=this.innerText;
-	window.localStorage.setItem('cd',JSON.stringify(cd));">${b}</td><td  class='deadline'contenteditable="true"oninput="cd[this.parentElement.sectionRowIndex][1]=this.innerText;
-	window.localStorage.setItem('cd',JSON.stringify(cd));">${c}</td><td class='countdown'></td><td><button onclick="if(confirm('是否删除？')){cd.splice(this.offsetParent.parentElement.sectionRowIndex,1);table.deleteRow(this.offsetParent.parentElement.sectionRowIndex);
-	window.localStorage.setItem('cd',JSON.stringify(cd));}">删除</button></td>`;
+	window.localStorage.setItem('cd',JSON.stringify(cd));">${b}</td><td class='deadline'contenteditable="true"oninput="cd[this.parentElement.sectionRowIndex][1]=this.innerText;window.localStorage.setItem('cd',JSON.stringify(cd));">${c}</td><td class='countdown'></td><td><input type="button"onclick="if(confirm('是否删除？')){cd.splice(this.offsetParent.parentElement.sectionRowIndex,1);table.deleteRow(this.offsetParent.parentElement.sectionRowIndex);window.localStorage.setItem('cd',JSON.stringify(cd));}" value="删除"></td>`;
 	document.getElementById('evt-content').appendChild(a);
 	cd[a.sectionRowIndex] = [b, c];
 	window.localStorage.setItem('cd', JSON.stringify(cd));

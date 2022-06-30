@@ -123,7 +123,7 @@ function init() {
 			window.localStorage.setItem('pt2', JSON.stringify({ songName, json, bpm, soundfont }));
 			loadAudio();
 		} catch (err) {
-			loading.innerHTML = `加载json出错：<br><br>${err}<br><br><button onclick="window.localStorage.removeItem('pt2');location.reload(true);">点击重置</button>`;
+			loading.innerHTML = `加载json出错：<br><br>${err}<br><br><input type="button" onclick="window.localStorage.removeItem('pt2');location.reload(true);" value="点击重置">`;
 			//以后换种错误显示
 			canvas.style.display = 'none';
 			console.log(err);
