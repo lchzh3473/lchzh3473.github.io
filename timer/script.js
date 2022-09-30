@@ -3,7 +3,7 @@ const _i = ['倒计时', [1, 0], 1616519472, 1616519472];
 let isqwq = false;
 let table = document.getElementById('evt-content');
 let rows = 0;
-let cd = JSON.parse(window.localStorage.getItem('cd'));
+let cd = JSON.parse(self.localStorage.getItem('cd'));
 if (!cd) cd = [];
 else cd.forEach(i => addEvt(...i));
 rows = cd.length;
@@ -24,10 +24,10 @@ function addEvt(n, t) {
 	let b = n ? n : `事件${++rows}`;
 	let c = t ? t : new Date(Date.now() - new Date().getTimezoneOffset() * 6e4 + 86400000).toJSON().substring(0, 16);
 	a.innerHTML = `<td contenteditable="true"oninput="cd[this.parentElement.sectionRowIndex][0]=this.innerText;
-	window.localStorage.setItem('cd',JSON.stringify(cd));">${b}</td><td class='deadline'contenteditable="true"oninput="cd[this.parentElement.sectionRowIndex][1]=this.innerText;window.localStorage.setItem('cd',JSON.stringify(cd));">${c}</td><td class='countdown'></td><td><input type="button"onclick="if(confirm('是否删除？')){cd.splice(this.offsetParent.parentElement.sectionRowIndex,1);table.deleteRow(this.offsetParent.parentElement.sectionRowIndex);window.localStorage.setItem('cd',JSON.stringify(cd));}" value="删除"></td>`;
+	self.localStorage.setItem('cd',JSON.stringify(cd));">${b}</td><td class='deadline'contenteditable="true"oninput="cd[this.parentElement.sectionRowIndex][1]=this.innerText;self.localStorage.setItem('cd',JSON.stringify(cd));">${c}</td><td class='countdown'></td><td><input type="button"onclick="if(confirm('是否删除？')){cd.splice(this.offsetParent.parentElement.sectionRowIndex,1);table.deleteRow(this.offsetParent.parentElement.sectionRowIndex);self.localStorage.setItem('cd',JSON.stringify(cd));}" value="删除"></td>`;
 	document.getElementById('evt-content').appendChild(a);
 	cd[a.sectionRowIndex] = [b, c];
-	window.localStorage.setItem('cd', JSON.stringify(cd));
+	self.localStorage.setItem('cd', JSON.stringify(cd));
 	isqwq = !isqwq;
 	showqwq();
 }

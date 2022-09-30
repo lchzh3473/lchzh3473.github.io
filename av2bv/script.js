@@ -78,7 +78,7 @@ reset.onclick = () => {
 	convert();
 }
 //api test
-const enableAPI = window.localStorage.getItem('enableAPI') == 'true';
+const enableAPI = self.localStorage.getItem('enableAPI') == 'true';
 if (enableAPI) {
 	const script = document.createElement('script');
 	script.src = './api.js';
@@ -89,7 +89,7 @@ input.addEventListener('input', function() {
 		if (this.value == '/test\n') {
 			const str = enableAPI ? '关闭' : '开启';
 			if (confirm(`是否${str}实验性功能(b站api)?`)) {
-				window.localStorage.setItem('enableAPI', !enableAPI);
+				self.localStorage.setItem('enableAPI', !enableAPI);
 				alert(`已经${str}实验性功能。`);
 			}
 			location.reload(true);

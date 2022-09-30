@@ -4,7 +4,7 @@ const canvas = document.getElementById('stage');
 const size = 500;
 const size2 = size / 2;
 const ctx = canvas.getContext('2d');
-window.addEventListener('resize', resize);
+self.addEventListener('resize', resize);
 resize();
 const imgData = new ImageData(size, size);
 let dx = 0;

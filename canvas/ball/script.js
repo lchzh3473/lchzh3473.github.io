@@ -2,7 +2,7 @@
 const _i = ['小球碰撞', [1, 0], 1612411902, 1612411902];
 document.oncontextmenu = e => e.preventDefault();
 const canvas = document.getElementById('stage');
-window.addEventListener('resize', resize);
+self.addEventListener('resize', resize);
 resize();
 const item = [];
 const clicks = [];
@@ -13,8 +13,8 @@ canvas.addEventListener('mousedown', evt => {
 	if (isMouseDown) mouseup();
 	else {
 		clicks[0] = {
-			x1: evt.pageX * window.devicePixelRatio,
-			y1: evt.pageY * window.devicePixelRatio
+			x1: evt.pageX * self.devicePixelRatio,
+			y1: evt.pageY * self.devicePixelRatio
 		};
 		isMouseDown = true;
 	}
@@ -22,8 +22,8 @@ canvas.addEventListener('mousedown', evt => {
 canvas.addEventListener('mousemove', evt => {
 	evt.preventDefault();
 	if (isMouseDown) {
-		clicks[0].x2 = evt.pageX * window.devicePixelRatio;
-		clicks[0].y2 = evt.pageY * window.devicePixelRatio;
+		clicks[0].x2 = evt.pageX * self.devicePixelRatio;
+		clicks[0].y2 = evt.pageY * self.devicePixelRatio;
 	}
 });
 canvas.addEventListener('mouseup', evt => {
@@ -44,8 +44,8 @@ canvas.addEventListener('touchstart', evt => {
 	evt.preventDefault();
 	for (const i of evt.changedTouches) {
 		clicks[i.identifier] = {
-			x1: i.pageX * window.devicePixelRatio,
-			y1: i.pageY * window.devicePixelRatio
+			x1: i.pageX * self.devicePixelRatio,
+			y1: i.pageY * self.devicePixelRatio
 		};
 	}
 }, passive);
@@ -54,8 +54,8 @@ canvas.addEventListener('touchmove', evt => {
 	for (const i of evt.changedTouches) {
 		const idx = i.identifier;
 		if (idx >= 0) {
-			clicks[idx].x2 = i.pageX * window.devicePixelRatio;
-			clicks[idx].y2 = i.pageY * window.devicePixelRatio;
+			clicks[idx].x2 = i.pageX * self.devicePixelRatio;
+			clicks[idx].y2 = i.pageY * self.devicePixelRatio;
 		}
 	}
 }, passive);
@@ -140,7 +140,7 @@ function draw() {
 	/*绘制文本*/
 	let ek = 0;
 	for (const i of item) ek += i.vx ** 2 + i.vy ** 2;
-	const px = 16 * window.devicePixelRatio;
+	const px = 16 * self.devicePixelRatio;
 	ctx.font = `${px}px Noto Sans SC`;
 	ctx.fillStyle = 'rgba(255,255,255,0.6)';
 	ctx.textAlign = 'start';
@@ -168,6 +168,6 @@ function draw() {
 draw();
 
 function resize() {
-	canvas.width = window.innerWidth * window.devicePixelRatio;
-	canvas.height = window.innerHeight * window.devicePixelRatio
+	canvas.width = self.innerWidth * self.devicePixelRatio;
+	canvas.height = self.innerHeight * self.devicePixelRatio
 }

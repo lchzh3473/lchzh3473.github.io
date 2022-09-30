@@ -12,7 +12,7 @@ const Utils = {
 			_this.select();
 			data = _this.value;
 		} else if (isHTMLElement) {
-			const selection = window.getSelection();
+			const selection = self.getSelection();
 			const range = document.createRange();
 			range.selectNodeContents(_this);
 			selection.removeAllRanges();

@@ -10,7 +10,7 @@ document.getElementById('analyse').onclick = function() {
 	document.getElementById('input').value = '';
 	let output = document.getElementById('output');
 	try {
-		let str = window.localStorage.getItem('panel');
+		let str = self.localStorage.getItem('panel');
 		if (str) analyseInput(str);
 		else {
 			const xhr = new XMLHttpRequest();
@@ -18,7 +18,7 @@ document.getElementById('analyse').onclick = function() {
 			xhr.send();
 			xhr.onload = function() {
 				str = xhr.responseText;
-				window.localStorage.setItem('panel', str);
+				self.localStorage.setItem('panel', str);
 				analyseInput(str);
 			}
 		}
@@ -151,7 +151,7 @@ function addToStage(str) {
 			else {
 				img.src = `${i.url.split('@')[0]}@56w_56h.webp`;
 				img.onclick = function() {
-					window.open(i.url);
+					self.open(i.url);
 				};
 			}
 			document.getElementById(`emote${i.pid}`).appendChild(img);
@@ -166,7 +166,7 @@ function addToStage(str) {
 			else {
 				img.src = `${i.url.split('@')[0]}@56w_56h.webp`;
 				img.onclick = function() {
-					window.open(i.url);
+					self.open(i.url);
 				};
 			}
 			document.getElementById('stage').appendChild(img);
@@ -209,9 +209,9 @@ function resizeStage() {
 }
 
 function saveHistory() {
-	window.localStorage.setItem('panel', JSON.stringify(panelNew));
+	self.localStorage.setItem('panel', JSON.stringify(panelNew));
 }
-window.addEventListener('resize', resizeStage);
+self.addEventListener('resize', resizeStage);
 document.addEventListener('error', function(err) {
 	let img = err.target;
 	if (img.tagName.toLowerCase() == 'img') {

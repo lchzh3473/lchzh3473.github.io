@@ -1,7 +1,7 @@
 'use strict';
 const _i = ['猜数字', [1, 1, 1], 1601468724, 1609750968];
 var score;
-score = window.localStorage.getItem('score');
+score = self.localStorage.getItem('score');
 document.getElementById('score').innerHTML = Number(score);
 var pNum = 0;
 var sNum = 0;
@@ -19,7 +19,7 @@ while (sMid != Rand) {
 	else sMin = sMid;
 	sNum++;
 }
-window.addEventListener('keydown', function(event) {
+self.addEventListener('keydown', function(event) {
 	if (event.key == 'Enter' && document.getElementById('ok').disabled == false) {
 		event.preventDefault();
 		guess();
@@ -37,7 +37,7 @@ function guess() {
 		if (sNum >= pNum) result.innerHTML = `恭喜，猜中了！(+${sNum - pNum}分)`;
 		else result.innerHTML = `终于猜中了，但猜的次数过多(${sNum - pNum}分)`;
 		document.getElementById('score').innerHTML = score = Number(score) + sNum - pNum;
-		window.localStorage.setItem('score', score);
+		self.localStorage.setItem('score', score);
 	} else if (Rand < Num && pMax > Num) {
 		result.innerHTML = '猜大了';
 		max.innerHTML = Num;

@@ -2,7 +2,7 @@
 const _i = ['钢琴块2模拟器', [1, 0, 1], 1614358089, 1614362421];
 document.oncontextmenu = e => e.preventDefault();
 const canvas = document.getElementById('stage');
-window.addEventListener('resize', resize);
+self.addEventListener('resize', resize);
 resize();
 const item = [];
 const clicks = [];
@@ -13,8 +13,8 @@ canvas.addEventListener('mousedown', evt => {
 	if (isMouseDown) mouseup();
 	else {
 		clicks[0] = {
-			x1: evt.pageX * window.devicePixelRatio / canvas.width,
-			y1: evt.pageY * window.devicePixelRatio / canvas.height
+			x1: evt.pageX * self.devicePixelRatio / canvas.width,
+			y1: evt.pageY * self.devicePixelRatio / canvas.height
 		};
 		isMouseDown = true;
 	}
@@ -22,8 +22,8 @@ canvas.addEventListener('mousedown', evt => {
 canvas.addEventListener('mousemove', evt => {
 	evt.preventDefault();
 	if (isMouseDown) {
-		clicks[0].x2 = evt.pageX * window.devicePixelRatio / canvas.width;
-		clicks[0].y2 = evt.pageY * window.devicePixelRatio / canvas.height;
+		clicks[0].x2 = evt.pageX * self.devicePixelRatio / canvas.width;
+		clicks[0].y2 = evt.pageY * self.devicePixelRatio / canvas.height;
 	}
 });
 canvas.addEventListener('mouseup', evt => {
@@ -55,7 +55,7 @@ init();
 //初始化
 function init() {
 	//加载本地json谱面
-	let localJSON = JSON.parse(window.localStorage.getItem('pt2'));
+	let localJSON = JSON.parse(self.localStorage.getItem('pt2'));
 	console.log(localJSON);
 	if (!localJSON) {
 		//加载默认json谱面
@@ -120,10 +120,10 @@ function init() {
 				baseBeats = i.baseBeats;
 			}
 			console.log(sheet); //完整谱面
-			window.localStorage.setItem('pt2', JSON.stringify({ songName, json, bpm, soundfont }));
+			self.localStorage.setItem('pt2', JSON.stringify({ songName, json, bpm, soundfont }));
 			loadAudio();
 		} catch (err) {
-			loading.innerHTML = `加载json出错：<br><br>${err}<br><br><input type="button" onclick="window.localStorage.removeItem('pt2');location.reload(true);" value="点击重置">`;
+			loading.innerHTML = `加载json出错：<br><br>${err}<br><br><input type="button" onclick="self.localStorage.removeItem('pt2');location.reload(true);" value="点击重置">`;
 			//以后换种错误显示
 			canvas.style.display = 'none';
 			console.log(err);
@@ -452,7 +452,7 @@ function draw() {
 	//debug文本
 	let ek = 0;
 	for (const i of item) ek += i.vx ** 2 + i.vy ** 2;
-	const px = 16 * window.devicePixelRatio;
+	const px = 16 * self.devicePixelRatio;
 	ctx.font = `${px}px Noto Sans SC`;
 	ctx.strokeStyle = '#fff';
 	ctx.fillStyle = '#000';
@@ -466,8 +466,8 @@ function draw() {
 }
 
 function resize() {
-	canvas.width = window.innerWidth * window.devicePixelRatio;
-	canvas.height = window.innerHeight * window.devicePixelRatio
+	canvas.width = self.innerWidth * self.devicePixelRatio;
+	canvas.height = self.innerHeight * self.devicePixelRatio
 }
 document.getElementById('btn-config').onclick = function() {
 	document.getElementById('cover-dark').classList.toggle('hide');
@@ -476,7 +476,7 @@ document.getElementById('btn-config').onclick = function() {
 	bf('c.e.g', 64);
 }
 document.getElementById('cover-dark').onclick = () => {
-	window.localStorage.setItem('pt2', JSON.stringify({
+	self.localStorage.setItem('pt2', JSON.stringify({
 		songName: document.getElementById('cfg-songName').value,
 		json: document.getElementById('cfg-json').value,
 		bpm: document.getElementById('cfg-bpm').value,

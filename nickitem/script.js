@@ -122,8 +122,8 @@ class Preset {
  * @typedef {{id:number,name:string}} em_item
  * @typedef {{id:number,name:string,items:em_item[]}} em_package 
  */
-window.onload = function() {
-	window.onload = null;
+self.onload = function() {
+	self.onload = null;
 	//color
 	{
 		document.getElementById('color-input').addEventListener('input', function(evt) {

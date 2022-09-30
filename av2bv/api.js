@@ -29,7 +29,7 @@
 					} else i.title = data.data.title;
 					apiNum++;
 					document.getElementById('api').innerText = apiNum;
-					window.localStorage.setItem('api', apiNum);
+					self.localStorage.setItem('api', apiNum);
 				}
 				script.onerror = function() {
 					document.body.removeChild(document.body.lastChild);
@@ -50,5 +50,5 @@
 	});
 })();
 var apiNum, data;
-apiNum = window.localStorage.getItem('api');
+apiNum = self.localStorage.getItem('api');
 document.getElementById('api').innerHTML = Number(apiNum);

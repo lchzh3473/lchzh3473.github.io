@@ -5,7 +5,7 @@ const input = document.getElementById('input');
 const output = document.getElementById('output');
 const number = document.getElementById('number');
 const ok = document.getElementById('ok');
-let score = window.localStorage.getItem('guess_number_score');
+let score = self.localStorage.getItem('guess_number_score');
 document.getElementById('score').innerText = Number(score);
 let range = [1, 1000];
 const Rand = Math.floor(Math.random() * (range[1] - range[0] + 1)) + range[0];
@@ -14,7 +14,7 @@ const fsqwq = Rand == 0 ? 114514 : Rand.toString(2).match(/1/g).length;
 sysout(`游戏开始！<br>`);
 plguess();
 //监听键盘回车键
-window.addEventListener('keydown', evt => {
+self.addEventListener('keydown', evt => {
 	let value = number.value;
 	if (evt.key == 'Enter' && /^0$|^[1-9]\d*$/.test(value) && value >= range[0] && value <= range[1]) {
 		evt.preventDefault();
@@ -22,7 +22,7 @@ window.addEventListener('keydown', evt => {
 	}
 }, false);
 //窗口变化时自动下滑
-window.addEventListener('resize', () => output.scrollTop = output.scrollHeight);
+self.addEventListener('resize', () => output.scrollTop = output.scrollHeight);
 
 function analyse(value) {
 	if (/^0$|^[1-9]\d*$/.test(value) && value >= range[0] && value <= range[1]) ok.classList.remove('disabled');
@@ -48,7 +48,7 @@ function guess() {
 				input.classList.remove('disabled');
 				number.classList.add('disabled');
 				ok.classList.add('disabled');
-				window.localStorage.setItem('guess_number_score', Number(score) + fsqwq);
+				self.localStorage.setItem('guess_number_score', Number(score) + fsqwq);
 			}, 1e3);
 		}
 	}, 1e3);
@@ -84,7 +84,7 @@ function aiguess() {
 					input.classList.remove('disabled');
 					number.classList.add('disabled');
 					ok.classList.add('disabled');
-					window.localStorage.setItem('guess_number_score', Number(score) - fsqwq);
+					self.localStorage.setItem('guess_number_score', Number(score) - fsqwq);
 				}, 1e3);
 			}
 		}, 1e3);

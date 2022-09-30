@@ -5,7 +5,7 @@
 	const w = `作者：<a style="text-decoration:underline"target="_blank"href="//space.bilibili.com/274753872">${d}</a>`;
 	if (!location.search) setInterval(Function.constructor(atob('ZGVidWdnZXI=')));
 	if (typeof _i == 'undefined' || _i.length != 4) return;
-	if (!(jct && jct[1] == 'ok' || document.referrer)) return location.href = '/401.html';
+	if (!(jct && jct[1] == 'ok' || document.referrer || navigator.standalone)) return location.href = '/401.html';
 	document.cookie = `jct=ok;path=/;max-age=${2e6}`
 	document.title = `${_i[0]} - ${d}制作`;
 	for (const i of document.querySelectorAll('.title')) i.innerHTML = `${_i[0]}&nbsp;v${_i[1].join('.')}`;
