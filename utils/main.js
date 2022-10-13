@@ -63,9 +63,9 @@ const Utils = {
 	},
 	/**@param {string} str */
 	escapeHTML(str) {
-		return str.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 	},
-	/**@type {(familyName:string)=>Promise<void>} */
+	/**@type {(familyName:string,{...options}?:{})=>Promise<void>} */
 	addFont() {}
 };
 //font
@@ -115,7 +115,7 @@ const Utils = {
 					const u0 = `//fonts.googleapis.com/css?family=${f3}:${w1}${s1 === 'italic' ? 'i' : ''}`;
 					// const u1 = `//fonts.googleapis.com/css2?family=${f3}&display=swap`;
 					const text = await fetch(u0).then(a => a.text(), _ => '');
-					const rg0 = text.match(/(?<={).+?(?=})/gs);
+					const rg0 = (text.match(/{.+?}/gs) || []).map(a => a.slice(1, -1)); //Safari不支持(?<=)
 					const rg = rg0.map(a => Object.fromEntries(a.split(';').filter(a => a.trim()).map(a => a.split(': ').map(a => a.trim()))));
 					return rg.map(a => new FontFace(alt || a['font-family'], a.src, {
 						style: a['font-style'],
@@ -144,9 +144,9 @@ const Utils = {
 			}
 		}
 	};
-	Utils.addFont = async name => {
+	Utils.addFont = async (...args) => {
 		try {
-			const i = await fontLoader.load(name);
+			const i = await fontLoader.load(...args);
 			i.forEach(a => document.fonts.add(a));
 		} catch (e) {
 			throw e;

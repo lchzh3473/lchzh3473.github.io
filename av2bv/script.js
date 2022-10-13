@@ -31,7 +31,7 @@ const convert = () => {
 	const bv = [0, 0];
 	const inValue = input.value;
 	reset.classList[inValue ? 'remove' : 'add']('disabled');
-	output.innerHTML = (inValue ? inValue : example).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/av[1-9]\d*|bv1[1-9a-z]{9}|cv\d+/gi, code => {
+	output.innerHTML = Utils.escapeHTML(inValue ? inValue : example).replace(/av[1-9]\d*|bv1[1-9a-z]{9}|cv\d+/gi, code => {
 		const enc = code.substring(2);
 		let dec;
 		switch (code[0]) {
