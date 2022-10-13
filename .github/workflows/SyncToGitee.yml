@@ -1,0 +1,20 @@
+name: Sync Github Repos To Gitee
+on:
+  push:
+    branches:
+      - main
+jobs:
+  repo-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mirror the Github organization repos to Gitee.
+        uses: Yikun/hub-mirror-action@v1.2
+        with:
+          src: github/lchzh3473
+          dst: gitee/lchzh3473
+          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+          dst_token:  ${{ secrets.GITEE_TOKEN }}
+          mappings: "lchzh3473.github.io=>lchzh3473"
+          static_list: lchzh3473.github.io
+          # force_update: true
+          # debug: true
