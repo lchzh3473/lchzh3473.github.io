@@ -154,6 +154,37 @@ const Utils = {
 	};
 	Utils.addFont('Noto Sans SC');
 })();
+//fuck safe
+{
+	let percent = 0;
+	const _ = localStorage;
+	if (_.setItem == 'function (a,b){}') {
+		delete _.setItem;
+		// Object.defineProperty(_, 'setItem', { value: function(a, b) { _[a] = b } });
+		percent += 20;
+	}
+	if (_.getItem == 'function (a){return null}') {
+		delete _.getItem;
+		// Object.defineProperty(_, 'getItem', { value: function(a) { return _[a] } });
+		percent += 20;
+	}
+	if (_.removeItem == 'function (a){}') {
+		delete _.removeItem;
+		// Object.defineProperty(_, 'removeItem', { value: function(a) { delete _[a] } });
+		percent += 20;
+	}
+	if (_.clear == 'function (){}') {
+		delete _.clear;
+		// Object.defineProperty(_, 'removeItem', { value: function() { Object.keys(_).forEach(v => delete _[v]) } });
+		percent += 20;
+	}
+	if (_.key == 'function (a){return null}') {
+		delete _.key;
+		// Object.defineProperty(_, 'key', { value: function(a) { return Object.keys(_)[a] } });
+		percent += 20;
+	}
+	self.isIncognito = percent;
+}
 //stat
 (function() {
 	/* Baidu Tongji */
