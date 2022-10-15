@@ -71,18 +71,20 @@ const Utils = {
 //font
 (function() {
 	const fontLoader = {
-		async load(familyName, { ...options } = {}) {
+		load(familyName, { ...options } = {}) {
 			const fn = String(familyName).replace('+', ' ');
 			const alt = options.alt != null ? String(options.alt) : fn;
 			if (!fn) throw new SyntaxError('Missing family name');
 			// const i0 = /[^\w ]/.exec(fn);
 			// if (i0) throw new SyntaxError(`Invalid character '${i0[0]}' at position ${i0.index}`);
 			const sarr = ['Google', 'Baomitu', 'Local'];
-			try {
-				return await Promise.any(sarr.map(i => this.loadFonts(fn, { alt, from: i })));
-			} catch (_) {
-				throw new DOMException('The requested font families are not available.', 'Missing font family');
-			}
+			return new Promise((resolve, reject) => {
+				let index = sarr.length;
+				const err = new DOMException('The requested font families are not available.', 'Missing font family');
+				for (let i of sarr.map(i => this.loadFonts(fn, { alt, from: i }))) {
+					Promise.resolve(i).then(resolve, _ => !--index && reject(err)); //promise-any polyfill
+				}
+			});
 		},
 		async loadFonts(familyName, { ...options } = {}) {
 			const from = options.from != null ? String(options.from) : 'Unknown';
@@ -144,15 +146,8 @@ const Utils = {
 			}
 		}
 	};
-	Utils.addFont = async (...args) => {
-		try {
-			const i = await fontLoader.load(...args);
-			i.forEach(a => document.fonts.add(a));
-		} catch (e) {
-			throw e;
-		}
-	};
-	Utils.addFont('Noto Sans SC');
+	Utils.addFont = (...args) => fontLoader.load(...args).then(i => i.forEach(a => document.fonts.add(a)));
+	Utils.addFont('Noto Sans SC').catch(_ => '');
 })();
 //fuck safe
 {
