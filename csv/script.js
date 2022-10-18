@@ -1,5 +1,5 @@
 'use strict';
-const _i = ['CSV转换器', [1, 0], 1616081874, 1616081874];
+const _i = ['CSV转换器', [1, 0, 0], 1616081874, 1616081874];
 const copy = document.getElementById('copy');
 const input = document.getElementById('input');
 const output = document.getElementById('output');

@@ -1,0 +1,67 @@
+/* noto-sans-sc-regular */
+@font-face {
+	font-family: 'Noto Sans SC';
+	font-style: normal;
+	font-weight: regular;
+	src: url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.eot');
+	src: local('Noto Sans SC'), local('NotoSans SC-Normal'),
+		url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.eot?#iefix') format('embedded-opentype'),
+		url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.woff2') format('woff2'),
+		url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.woff') format('woff'),
+		url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.ttf') format('truetype'),
+		url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.svg#NotoSans SC') format('svg');
+}
+
+::selection {
+	background-color: rgba(147, 107, 255, 0.286);
+}
+
+::-moz-selection {
+	background-color: rgba(147, 107, 255, 0.286);
+}
+
+:root {
+	text-align: center;
+	font-family: Noto Sans SC;
+}
+
+body {
+	background-color: #f1eff6;
+}
+
+a {
+	text-decoration: none;
+	color: #f00;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+a:hover {
+	background-color: rgba(60, 251, 76, 0.286);
+}
+
+a:active {
+	background-color: rgba(25, 240, 43, 0.427);
+}
+
+.main {
+	display: none;
+}
+
+.index {
+	width: 60vw;
+	max-width: 270px;
+	margin: auto;
+}
+
+.index a {
+	display: block;
+	border: 2px solid #37723a;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.disabled {
+	opacity: 0.2;
+	pointer-events: none;
+}

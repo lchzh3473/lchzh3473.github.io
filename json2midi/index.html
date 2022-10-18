@@ -3,8 +3,9 @@
 
 <head>
 	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
-	<link rel="stylesheet" href="/utils/style.css">
 	<title>(っ °Д °;)っ</title>
+	<link rel="stylesheet" href="/utils/style.css">
+	<script>if (!window.Promise) location.href = '/412.html';</script>
 	<script src="/utils/main.js"></script>
 	<style>
 		.textbox {
@@ -18,19 +19,20 @@
 </head>
 
 <body>
-	<div class="main">
-		<h1 class="title"></h1>
-		<p class="info"></p>
-		<p class="profile">
-			输入或粘贴一段json文本，然后点击“转换”按钮。
-		</p>
-		<textarea id="input" class="textbox" placeholder="将JSON文本粘贴至此..."></textarea>
-		<p style="line-height:2">
-			<input type="button" value="转换" onclick="convert()"><br>
-			<strong id="result"></strong>
-		</p>
-	</div>
 	<noscript><strong style="color:#f00">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<div class="index">
+		<div class="main">
+			<h1 class="title"></h1>
+			<p class="info"></p>
+			<p class="profile"> 输入或粘贴一段json文本，然后点击“转换”按钮。 </p>
+			<textarea id="input" class="textbox" placeholder="将JSON文本粘贴至此..."></textarea>
+			<p style="line-height:2">
+				<input type="button" value="转换" onclick="convert()"><br>
+				<strong id="result"></strong>
+			</p>
+		</div>
+		<p class="footer">&copy;&nbsp;2020-2022&nbsp;lchz&#104;3473</p>
+	</div>
 	<script src="./script.js?v1"></script>
 </body>
 

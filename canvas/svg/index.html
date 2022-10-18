@@ -9,11 +9,18 @@
 	<script src="/utils/main.js"></script>
 	<style>
 		#stage {
-			background-color: #fff;
-			width: 96vw;
-			max-width: 960px;
-			height: 56vw;
-			max-height: 560px;
+			background-color: #000;
+			width: 80vmin;
+			max-width: 500px;
+			height: 80vmin;
+			max-height: 500px;
+		}
+
+		.config-table,
+		td {
+			font-size: 1em;
+			margin: auto;
+			border: 1px solid #888;
 		}
 	</style>
 </head>
@@ -24,12 +31,14 @@
 		<div class="main">
 			<h1 class="title"></h1>
 			<p class="info"></p>
-			<embed id="stage" src="./combat.swf"></embed>
-			<div><strong id="flashInfo"></strong></div>
+			<p class="profile"> 操作说明：输入SVG路径文本，在下方绘制图像。<br>
+			</p>
+			<canvas id="stage"></canvas><br>
+			<textarea id="input" cols="100" rows="10"></textarea>
 		</div>
 		<p class="footer">&copy;&nbsp;2020-2022&nbsp;lchz&#104;3473</p>
 	</div>
-	<script src="./script.js?v1"></script>
+	<script src="./script.js"></script>
 </body>
 
 </html>

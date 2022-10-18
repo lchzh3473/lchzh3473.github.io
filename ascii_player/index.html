@@ -6,6 +6,7 @@
 	<base target="_blank">
 	<title>(っ °Д °;)っ</title>
 	<link rel="stylesheet" href="/utils/style.css">
+	<script>if (!window.Promise) location.href = '/412.html';</script>
 	<script src="/utils/main.js"></script>
 	<style>
 		html,
@@ -34,31 +35,34 @@
 </head>
 
 <body>
-	<div class="main">
-		<h1 class="title"></h1>
-		<p class="info"></p>
-		<div class="upload">
-			<input id="upload" type="file" accept="video/*">
-			<label id="control" for="upload">选择视频</label>
-			<input type="text" style="width:0;flex-grow:1;flex-shrink:1;pointer-events:none" id="filename">
-			<input type="button" value="重置" onclick="location.reload(true)">
-		</div>
-		<p>视频信息：<strong id="info" class="accept"></strong><strong id="fps" class="accept"></strong></p>
-		<div id="hide" class="hide">
-			<p>字符画参数设置：<input id="show" type="button"></p>
-			<div id="inf">
-				<p>
-					<input type="checkbox" id="inverse">
-					<label for="inverse">反色</label>
-					<input type="checkbox" id="flash">
-					<label for="flash">频闪(反色时不可用)</label>
-				</p>
-			</div>
-			<input id="play" type="button" value="播放">
-			<div id="stage"></div>
-		</div>
-	</div>
 	<noscript><strong style="color:#f00">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<div class="index">
+		<div class="main">
+			<h1 class="title"></h1>
+			<p class="info"></p>
+			<div class="upload">
+				<input id="upload" type="file" accept="video/*">
+				<label id="control" for="upload">选择视频</label>
+				<input type="text" style="width:0;flex-grow:1;flex-shrink:1;pointer-events:none" id="filename">
+				<input type="button" value="重置" onclick="location.reload(true)">
+			</div>
+			<p>视频信息：<strong id="info" class="accept"></strong><strong id="fps" class="accept"></strong></p>
+			<div id="hide" class="hide">
+				<p>字符画参数设置：<input id="show" type="button"></p>
+				<div id="inf">
+					<p>
+						<input type="checkbox" id="inverse">
+						<label for="inverse">反色</label>
+						<input type="checkbox" id="flash">
+						<label for="flash">频闪(反色时不可用)</label>
+					</p>
+				</div>
+				<input id="play" type="button" value="播放">
+				<div id="stage"></div>
+			</div>
+		</div>
+		<p class="footer">&copy;&nbsp;2020-2022&nbsp;lchz&#104;3473</p>
+	</div>
 	<script src="./script.js?v1"></script>
 </body>
 
