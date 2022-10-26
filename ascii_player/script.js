@@ -1,9 +1,10 @@
 'use strict';
-const _i = ['视频转字符画', [1, 0, 5], 1592263658, 1612132624];
+const _i = ['视频转字符画', [1, 0, 6], 1592263658, 1666768457];
 const upload = document.getElementById('upload');
 //let videoHeight = 105; //自行设置
 upload.onchange = function() { //上传文件
-	const stage = document.getElementById('stage'); //test
+	const stage = document.getElementById('stage');
+	const text = document.getElementById('text'); //test
 	const inverse = document.getElementById('inverse');
 	const flash = document.getElementById('flash');
 	const fps = document.getElementById('fps');
@@ -13,16 +14,28 @@ upload.onchange = function() { //上传文件
 	let videoHeight = 1;
 	document.getElementById('filename').value = this.files[0] ? this.files[0].name : '';
 	document.getElementById('control').classList.add('disabled'); //按钮变灰
-	document.getElementById('hide').classList.remove('hide'); //显示播放器
 	const canvas = document.createElement('canvas');
 	const video = document.createElement('video');
+	const ctx = canvas.getContext('2d', { willReadFrequently: true }); //warning
+	ctx.font = '1em Consolas,monospace';
+	const charWidth = ctx.measureText('W'.repeat(140)).width; //计算字符宽度
 	video.src = URL.createObjectURL(this.files[0]);
 	video.onloadedmetadata = function() {
-		document.getElementById('info').innerText = `时长：${video.duration}s，尺寸：${video.videoWidth}x${video.videoHeight}，`;
+		const isUnknown = video.videoWidth === 0 || video.videoHeight === 0;
+		if (isUnknown) {
+			document.getElementById('info').innerText = `时长：${video.duration}s，尺寸：未知，`;
+			videoHeight = Math.round(videoWidth / 1920 * 1080 / 1.8);
+			alert('视频尺寸未知，可能无法正常播放');
+		} else {
+			document.getElementById('info').innerText = `时长：${video.duration}s，尺寸：${video.videoWidth}x${video.videoHeight}，`;
+			videoHeight = Math.round(videoWidth / video.videoWidth * video.videoHeight / 1.8);
+		}
 		canvas.width = videoWidth;
-		videoHeight = Math.round(videoWidth / video.videoWidth * video.videoHeight / 1.8);
 		canvas.height = videoHeight;
+		document.getElementById('hide').classList.remove('hide'); //显示播放器
+		resize();
 	}
+	self.onresize = resize;
 	video.onended = function() {
 		alert('播放结束');
 	}
@@ -38,8 +51,13 @@ upload.onchange = function() { //上传文件
 	document.getElementById('show').click();
 	onFrame();
 
+	function resize() {
+		const transformString = ';transform:translate(-50%, -50%)scale(' + stage.offsetWidth / charWidth * 0.623 + ')translate(50%, 50%)';
+		stage.style.cssText += ';height:' + stage.offsetWidth / video.videoWidth * video.videoHeight + 'px';
+		text.style.cssText += transformString;
+	}
+
 	function onFrame() {
-		const ctx = canvas.getContext('2d');
 		ctx.clearRect(0, 0, videoWidth, videoHeight);
 		ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
 		const imgData = ctx.getImageData(0, 0, videoWidth, videoHeight);
@@ -55,7 +73,7 @@ upload.onchange = function() { //上传文件
 			}
 			rowString += '\n';
 		}
-		stage.innerText = rowString;
+		text.innerText = rowString;
 		requestAnimationFrame(onFrame);
 		tick++;
 		if (tick % 10 == 0) {
