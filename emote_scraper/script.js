@@ -1,5 +1,5 @@
 'use strict';
-const _i = ['b站表情图获取工具', [1, 1, 4], 1610790787, 1624550421];
+const _i = ['b站表情图获取工具', [1, 1, 5], 1610790787, 1667310230];
 const pName = ['packages', 'statics', 'dynamics'];
 const pMode = ['default', 'new-add', 'changed', 'new-remove', 'removed', 're-add'];
 const pType = 'm';
@@ -74,7 +74,6 @@ document.getElementById('analyse').onclick = function() {
 						}
 					}
 				}
-
 				panelNew[pName[0]].push(packageNew);
 			}
 			let panelArray = {};
@@ -128,7 +127,7 @@ function addToStage(str) {
 			let img = document.createElement('img');
 			img.id = `img${i.id}`;
 			img.classList.add('img', pMode[i[pType]]);
-			img.title = `${(`000${i.id}`).slice(-3)}_${i.text}`;
+			img.title = `${String(i.id).padStart(3,'0')}_${i.text}`;
 			img.src = `${i.url.split('@')[0]}@56w_56h.webp`;
 			pack.onclick = function() {
 				document.getElementById(`pack${i.id}`).classList.toggle('fold');
@@ -146,7 +145,7 @@ function addToStage(str) {
 		for (const i of panelSort[pName[1]]) {
 			let img = document.createElement((i.type == 4) ? 'textarea' : 'img');
 			img.classList.add('img', pMode[i[pType]]);
-			img.title = `${(`0000${i.id}`).slice(-4)}${i.text}`;
+			img.title = `${String(i.id).padStart(4,'0')}${i.text}`;
 			if (i.type == 4) img.innerText = i.url;
 			else {
 				img.src = `${i.url.split('@')[0]}@56w_56h.webp`;
@@ -161,7 +160,7 @@ function addToStage(str) {
 		for (const i of panelSort[str]) {
 			let img = document.createElement((i.type == 4) ? 'textarea' : 'img');
 			img.classList.add('img', pMode[i[pType]]);
-			img.title = `${(`0000${i.id}`).slice(-4)}${i.text}`;
+			img.title = `${String(i.id).padStart(4,'0')}${i.text}`;
 			if (i.type == 4) img.innerText = i.url;
 			else {
 				img.src = `${i.url.split('@')[0]}@56w_56h.webp`;
