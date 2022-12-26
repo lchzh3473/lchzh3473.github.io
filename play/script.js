@@ -30,11 +30,7 @@ loadPreset();
 function playNote(detune, gain) {
 	const oscillator = actx.createOscillator();
 	const gainNode = actx.createGain();
-	const filter = actx.createBiquadFilter();
-	filter.type = 'highpass';
-	filter.frequency.value = 1000;
-	oscillator.connect(filter);
-	filter.connect(gainNode);
+	oscillator.connect(gainNode);
 	gainNode.connect(actx.destination);
 	oscillator.type = 'sine';
 	gainNode.gain.value = gain;
@@ -51,11 +47,10 @@ document.getElementById('play').addEventListener('click', function() {
 			else {
 				const arr = note.match(/[a-gA-G]\d?/g);
 				for (const n of arr) {
-					const pitch = pitches.indexOf(n.match(/[a-gA-G]/)[0]);
 					const octave = n.match(/\d/);
 					const octaveNumber = octave ? parseInt(octave[0]) : 0;
-					const detune = octaveNumber * 1200 + pitch * 100 - 900;
-					stops.push(setTimeout(() => playNote(detune, 1 / arr.length), offset));
+					const pitch = octaveNumber * 12 + pitches.indexOf(n.match(/[a-gA-G]/)[0]) - 9;
+					stops.push(setTimeout(() => playNote(pitch * 100, 1 / arr.length), offset));
 				}
 				stops.push(setTimeout(() => console.log('play', note), offset));
 			}
