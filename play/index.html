@@ -24,18 +24,19 @@
 		<div class="main">
 			<h1 class="title"></h1>
 			<p class="info"></p>
+			<p class="profile">在下框输入谱面文本，然后点击“播放”按钮。<br>格式说明：大写字母代表音高，小写字母代表#(升调记号)，<br>紧跟其后的数字代表升多少八度，短横线"-"代表休止符。</p>
 			<p style="line-height:2">
-				<span>速度：<input type="number" style="width:5em" id="speed" value="0.25"></span>
+				<span id="preset"></span>
+				<span>音符时值(s)：<input type="number" style="width:5em" id="duration" value="0.25"></span>
 				<!-- <span>基准音符：<input type="text" style="width:3em" id="base" value="C"></span> -->
-				<input type="button" id="play" value="播放">
-				<input type="button" id="stop" value="停止"><br>
+				<input type="button" id="play" value="播放"><br>
 				<strong id="output"></strong>
 			</p>
-			<textarea id="input" class="textbox" placeholder="在此键入谱面...">C1--C1--G1--G1--A1--A1--G1----F1--F1--E1--E1--D1--D1--C1----</textarea>
+			<textarea id="input" class="textbox" placeholder="在此键入谱面文本...">C1--C1--G1--G1--A1--A1--G1----F1--F1--E1--E1--D1--D1--C1----</textarea>
 		</div>
 		<p class="footer">&copy;&nbsp;2020-2022&nbsp;lchz&#104;3473</p>
 	</div>
-	<script src="./script.js?v1"></script>
+	<script src="./script.js?v101"></script>
 </body>
 
 </html>

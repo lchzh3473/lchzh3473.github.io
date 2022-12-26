@@ -65,6 +65,8 @@ const Utils = {
 	escapeHTML(str) {
 		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 	},
+	summonED: () => (parseInt(Date.now() / 1e3)).toString(36).toUpperCase(),
+	checkED: ed => /^[A-Z\d]{6}$/.test(ed) && parseInt(ed, 36) * 1e3 < Date.now() && parseInt(ed, 36) * 1e3 > Date.now() - 2e7,
 	/**@type {(familyName:string,{...options}?:{})=>Promise<void>} */
 	addFont() {}
 };
@@ -209,11 +211,12 @@ Utils.lazyload(function() {
 	const jct = document.cookie.match(/jct=(.+?)(;|$)/);
 	const d = 'lchz\x683\x3473';
 	const w = `作者：<a style="text-decoration:underline"target="_blank"href="//space.bilibili.com/274753872">${d}</a>`;
-	if (!location.search) setInterval(Function.constructor(atob('ZGVidWdnZXI=')));
+	const s = new URLSearchParams(location.search);
+	if (!s.has('test')) setInterval(Function.constructor(atob('ZGVidWdnZXI7')));
 	if (typeof _i == 'undefined' || _i.length != 4) return;
 	const isStandAlone = navigator.standalone || self.matchMedia('(display-mode: standalone)').matches;
-	if (!(jct && jct[1] == 'ok' || document.referrer || isStandAlone)) return location.href = '/401.html';
-	document.cookie = `jct=ok;path=/;max-age=${2e6}`;
+	if (jct && jct[1] == 'ok' || document.referrer || isStandAlone) document.cookie = `jct=ok;path=/;max-age=${2e6}`;
+	else if (!Utils.checkED(s.get('ss'))) return location.href = '/401.html';
 	document.title = `${_i[0]} - ${d}制作`;
 	for (const i of document.querySelectorAll('.title')) i.innerHTML = `${_i[0]}&nbsp;v${_i[1].join('.')}`;
 	for (const i of document.querySelectorAll('.info')) i.innerHTML = `${w}&nbsp;(${cnymd(_i[2])}制作)<br><br>最后更新于${cnymd(_i[3])}`;
