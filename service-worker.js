@@ -17,7 +17,7 @@ self.addEventListener('fetch', (event) => {
 				event.waitUntil(cache.add(request));
 				return cachedResponse;
 			} else {
-				const reg = /assets|jsdelivr|baomitu|googleapis|loli/;
+				const reg = /data|jsdelivr|baomitu|googleapis|loli/;
 				// If we didn't find a match in the cache, use the network.
 				const response = await fetch(request);
 				if (response.ok && reg.test(request.url)) event.waitUntil(cache.put(request, response.clone()));
