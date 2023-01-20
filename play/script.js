@@ -19,6 +19,7 @@ async function loadPreset() {
 	preset.add(new Option('预设', ''));
 	data.forEach((item, index) => preset.add(new Option(item.name, index)));
 	preset.addEventListener('change', function() {
+		if (!this.value) return;
 		config.input = data[this.value].input;
 		config.duration = data[this.value].duration;
 		getOutput();
@@ -40,7 +41,7 @@ function playNote(detune, gain) {
 }
 document.getElementById('play').addEventListener('click', function() {
 	if (document.getElementById('play').value === '播放') {
-		console.log('play');
+		console.debug('play');
 		let offset = 0;
 		for (const note of config.input.match(/([a-gA-G]\d?)+|-/g)) {
 			if (note === '-') offset += config.duration * 1e3;
@@ -52,12 +53,12 @@ document.getElementById('play').addEventListener('click', function() {
 					const pitch = octaveNumber * 12 + pitches.indexOf(n.match(/[a-gA-G]/)[0]) - 9;
 					stops.push(setTimeout(() => playNote(pitch * 100, 1 / arr.length), offset));
 				}
-				stops.push(setTimeout(() => console.log('play', note), offset));
+				stops.push(setTimeout(() => console.debug('play', note), offset));
 			}
 		};
 		document.getElementById('play').value = '停止';
 	} else {
-		console.log('stop');
+		console.debug('stop');
 		for (const stop of stops) clearTimeout(stop);
 		stops.length = 0;
 		document.getElementById('play').value = '播放';
