@@ -184,6 +184,7 @@ const Utils = {
 }
 //stat
 (function() {
+	if (!!location.port) return;
 	/* Baidu Tongji */
 	Utils.loadJS(`
 		var _hmt = _hmt || [];
@@ -204,6 +205,7 @@ const Utils = {
 	`));
 	/* sdk.51.la */
 	Utils.loadJS('!function(p){"use strict";!function(t){var s=window,e=document,i=p,c="".concat("https:"===e.location.protocol?"https://":"http://","sdk.51.la/js-sdk-pro.min.js"),n=e.createElement("script"),r=e.getElementsByTagName("script")[0];n.type="text/javascript",n.setAttribute("charset","UTF-8"),n.async=!0,n.src=c,n.id="LA_COLLECT",i.d=n;var o=function(){s.LA.ids.push(i)};s.LA?s.LA.ids&&o():(s.LA=p,s.LA.ids=[],o()),r.parentNode.insertBefore(n,r)}()}({id:"Jj67QM9XKxdyBUKP",ck:"Jj67QM9XKxdyBUKP"});');
+	Utils.loadJS('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8369333813205733');
 })();
 //cookie
 Utils.lazyload(function() {

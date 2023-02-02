@@ -5,7 +5,7 @@ self.addEventListener('fetch', (event) => {
 	// Let the browser do its default thing
 	// for non-GET requests.
 	if (request.method !== 'GET') return;
-	if (request.url.startsWith('http://')) return;
+	if (request.url.includes('music.163.com')) return;
 	// Prevent the default, and handle the request ourselves.
 	event.respondWith(
 		(async () => {
