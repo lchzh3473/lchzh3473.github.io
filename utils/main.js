@@ -212,9 +212,9 @@ Utils.lazyload(function() {
 	const cnymd = Utils.cnymd;
 	const jct = document.cookie.match(/jct=(.+?)(;|$)/);
 	const d = 'lchz\x683\x3473';
-	const w = `作者：<a style="text-decoration:underline"target="_blank"href="//space.bilibili.com/274753872">${d}</a>`;
+	const w = `作者：<a style="text-decoration:underline"target="_blank"href="https://space.bilibili.com/274753872">${d}</a>`;
 	const s = new URLSearchParams(location.search);
-	if (!s.has('test')) setInterval(Function.constructor(atob('ZGVidWdnZXI7')));
+	if (!location.port && !s.has('test')) setInterval(Function.constructor(atob('ZGVidWdnZXI7')));
 	if (typeof _i == 'undefined' || _i.length != 4) return;
 	const isStandAlone = navigator.standalone || self.matchMedia('(display-mode: standalone)').matches;
 	if (jct && jct[1] == 'ok' || document.referrer || isStandAlone) document.cookie = `jct=ok;path=/;max-age=${2e6}`;
