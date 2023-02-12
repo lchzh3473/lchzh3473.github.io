@@ -1,3 +1,11 @@
+/**
+ * @typedef {Object} AudioParamOptions
+ * @property {boolean} [loop=false]
+ * @property {boolean} [isOut=true] 
+ * @property {number} [offset=0] 
+ * @property {number} [playbackrate=1] 
+ * @property {number} [gainrate=1] 
+ */
 const audio = {
 	/** @type {AudioContext} */
 	_actx: null,
@@ -23,13 +31,6 @@ const audio = {
 		return actx.createBuffer(2, 44100 * length, 44100);
 	},
 	/**
-	 * @typedef {Object} AudioParamOptions
-	 * @property {boolean} [loop=false]
-	 * @property {boolean} [isOut=true] 
-	 * @property {number} [offset=0] 
-	 * @property {number} [playbackrate=1] 
-	 * @property {number} [gainrate=1] 
-	 * 
 	 * @param {AudioBuffer} res
 	 * @param {AudioParamOptions} options 
 	 */
@@ -43,15 +44,11 @@ const audio = {
 		const actx = this.actx;
 		const bfs = this._bfs;
 		const gain = actx.createGain();
-		const bufferSource = actx.createBufferSource();
-		bufferSource.buffer = res;
-		bufferSource.loop = loop; //循环播放
-		bufferSource.connect(gain);
+		const innerBufferSource = new IntervalBufferSource(res, { loop, isOut, offset, playbackrate, gainrate });
 		gain.gain.value = gainrate;
-		bufferSource.playbackRate.value = playbackrate;
 		if (isOut) gain.connect(actx.destination);
-		bufferSource.start(0, offset);
-		bfs[bfs.length] = bufferSource;
+		innerBufferSource.start();
+		bfs[bfs.length] = innerBufferSource;
 	},
 	stop() {
 		const bfs = this._bfs;
@@ -63,6 +60,54 @@ const audio = {
 		return this._actx;
 	}
 };
+const interval = 1.00;
+class IntervalBufferSource {
+	/**
+	 * @param {AudioBuffer} res
+	 * @param {AudioParamOptions} options 
+	 */
+	constructor(res, {
+		loop = false,
+		isOut = true, //qwq
+		offset = 0,
+		playbackrate = 1,
+		gainrate = 1
+	} = {}) {
+		this.res = res;
+		this.loop = loop;
+		this.isOut = isOut;
+		this.offset = offset;
+		this.playbackrate = playbackrate;
+		this.gainrate = gainrate;
+		this.actx = audio.actx;
+	}
+	start() {
+		this.startTime = performance.now() / 1000; //使用actx.currentTime会有迷之延迟
+		this._gain = this.actx.createGain();
+		this._gain.gain.value = this.gainrate;
+		if (this.isOut) this._gain.connect(this.actx.destination);
+		this._loop();
+	}
+	stop() {
+		this._bfs.onended = null;
+		this._bfs.stop();
+	}
+	_loop() {
+		this._bfs = this.actx.createBufferSource();
+		const bfs = this._bfs;
+		bfs.buffer = this.res;
+		bfs.loop = this.loop; //循环播放
+		bfs.connect(this._gain);
+		bfs.playbackRate.value = this.playbackrate;
+		const currentOffset = (this.offset + (performance.now() / 1000 - this.startTime) * this.playbackrate) % this.res.duration;
+		bfs.start(this.actx.currentTime, currentOffset, interval);
+		bfs.onended = _ => {
+			bfs.onended = null;
+			if (currentOffset + interval > this.res.duration && !this.loop) return;
+			this._loop();
+		}
+	}
+}
 class AudioURLParam {
 	constructor() {
 		const map = JSON.parse(localStorage.getItem('URLMap'));

@@ -22,9 +22,9 @@ async function qwq(event) {
 		return cachedResponse;
 	} else {
 		// If we didn't find a match in the cache, use the network.
-		const response = await fetch(request).catch(function() {
+		const response = await fetch(request)/* .catch(function() {
 			return fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(request.url));
-		}).catch(function() {
+		}) */.catch(function() {
 			return new Response('', { status: 521, statusText: 'Web Server Is Down' });
 		});
 		const reg = /data|jsdelivr|baomitu|googleapis|loli/;
