@@ -5,6 +5,7 @@
  * @property {number} [offset=0] 
  * @property {number} [playbackrate=1] 
  * @property {number} [gainrate=1] 
+ * @property {number} [interval=0]
  */
 const audio = {
 	/** @type {AudioContext} */
@@ -39,16 +40,30 @@ const audio = {
 		isOut = true,
 		offset = 0,
 		playbackrate = 1,
-		gainrate = 1
+		gainrate = 1,
+		interval = 0,
 	} = {}) {
 		const actx = this.actx;
 		const bfs = this._bfs;
 		const gain = actx.createGain();
-		const innerBufferSource = new IntervalBufferSource(res, { loop, isOut, offset, playbackrate, gainrate });
-		gain.gain.value = gainrate;
-		if (isOut) gain.connect(actx.destination);
-		innerBufferSource.start();
-		bfs[bfs.length] = innerBufferSource;
+		if (isFinite(interval) && interval > 0) {
+			const options = { loop, isOut, offset, playbackrate, gainrate, interval };
+			const bufferSource = new IntervalBufferSource(res, options);
+			gain.gain.value = gainrate;
+			if (isOut) gain.connect(actx.destination);
+			bufferSource.start();
+			bfs[bfs.length] = bufferSource;
+		} else {
+			const bufferSource = actx.createBufferSource();
+			bufferSource.buffer = res;
+			bufferSource.loop = loop; //循环播放
+			bufferSource.connect(gain);
+			gain.gain.value = gainrate;
+			bufferSource.playbackRate.value = playbackrate;
+			if (isOut) gain.connect(actx.destination);
+			bufferSource.start(0, offset);
+			bfs[bfs.length] = bufferSource;
+		}
 	},
 	stop() {
 		const bfs = this._bfs;
@@ -60,7 +75,31 @@ const audio = {
 		return this._actx;
 	}
 };
-const interval = 1.00;
+// (function() {
+// 	let minOffset = Infinity;
+// 	let maxOffset = -Infinity;
+// 	let lastOffset = 0;
+// 	const getOffset = () => performance.now() / 1000 - audio?._actx.currentTime;
+// 	const setOffset = (offset) => {
+// 		if (offset < minOffset) minOffset = offset;
+// 		if (offset > maxOffset) maxOffset = offset;
+// 		const offset2 = maxOffset - minOffset;
+// 		if (offset2 > lastOffset) {
+// 			lastOffset = offset2;
+// 			console.log('offset:', offset2);
+// 		}
+// 	};
+// 	setInterval(() => {
+// 		setOffset(getOffset());
+// 		if (maxOffset - minOffset > 0.15) {
+// 			alert('offset erruption!');
+// 			console.log('erruption!');
+// 			minOffset = Infinity;
+// 			maxOffset = -Infinity;
+// 			lastOffset = 0;
+// 		}
+// 	}, 100);
+// }());
 class IntervalBufferSource {
 	/**
 	 * @param {AudioBuffer} res
@@ -71,7 +110,8 @@ class IntervalBufferSource {
 		isOut = true, //qwq
 		offset = 0,
 		playbackrate = 1,
-		gainrate = 1
+		gainrate = 1,
+		interval = 0,
 	} = {}) {
 		this.res = res;
 		this.loop = loop;
@@ -79,6 +119,7 @@ class IntervalBufferSource {
 		this.offset = offset;
 		this.playbackrate = playbackrate;
 		this.gainrate = gainrate;
+		this.interval = interval;
 		this.actx = audio.actx;
 	}
 	start() {
@@ -100,10 +141,10 @@ class IntervalBufferSource {
 		bfs.connect(this._gain);
 		bfs.playbackRate.value = this.playbackrate;
 		const currentOffset = (this.offset + (performance.now() / 1000 - this.startTime) * this.playbackrate) % this.res.duration;
-		bfs.start(this.actx.currentTime, currentOffset, interval);
+		bfs.start(this.actx.currentTime, currentOffset, this.interval);
 		bfs.onended = _ => {
 			bfs.onended = null;
-			if (currentOffset + interval > this.res.duration && !this.loop) return;
+			if (currentOffset + this.interval > this.res.duration && !this.loop) return;
 			this._loop();
 		}
 	}
