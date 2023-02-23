@@ -1,5 +1,5 @@
 'use strict';
-const _i = ['视频转字符画', [1, 0, 6], 1592263658, 1666768457];
+const _i = ['视频转字符画', [1, 0, 7], 1592263658, 1677138548];
 const upload = document.getElementById('upload');
 //let videoHeight = 105; //自行设置
 upload.onchange = function() { //上传文件
@@ -17,7 +17,7 @@ upload.onchange = function() { //上传文件
 	const canvas = document.createElement('canvas');
 	const video = document.createElement('video');
 	const ctx = canvas.getContext('2d', { willReadFrequently: true }); //warning
-	ctx.font = '1em Consolas,monospace';
+	ctx.font = '1rem Consolas,monospace';
 	const charWidth = ctx.measureText('W'.repeat(140)).width; //计算字符宽度
 	video.src = URL.createObjectURL(this.files[0]);
 	video.onloadedmetadata = function() {
@@ -52,7 +52,7 @@ upload.onchange = function() { //上传文件
 	onFrame();
 
 	function resize() {
-		const transformString = ';transform:translate(-50%, -50%)scale(' + stage.offsetWidth / charWidth * 0.623 + ')translate(50%, 50%)';
+		const transformString = ';transform:translate(-50%, -50%)scale(' + stage.offsetWidth / charWidth + ')translate(50%, 50%)';
 		stage.style.cssText += ';height:' + stage.offsetWidth / video.videoWidth * video.videoHeight + 'px';
 		text.style.cssText += transformString;
 	}

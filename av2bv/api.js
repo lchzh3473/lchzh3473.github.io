@@ -18,11 +18,7 @@
 				let isav = j.contains('av');
 				let code = i.innerText;
 				if (isav) code = code.substring(2);
-				let script = document.createElement('script');
-				script.src = `https://api.bilibili.com/x/web-interface/view?${isav?'aid':'bvid'}=${code}&jsonp=jsonp&callback=data=`;
-				document.body.appendChild(script);
-				script.onload = function() {
-					document.body.removeChild(document.body.lastChild);
+				jsonp(`https://api.bilibili.com/x/web-interface/view?${isav?'aid':'bvid'}=${code}&jsonp=jsonp`).then(function(data) {
 					if (data.code) {
 						j.remove('av', 'bv');
 						j.add('invalid');
@@ -30,14 +26,12 @@
 					apiNum++;
 					document.getElementById('api').innerText = apiNum;
 					self.localStorage.setItem('api', apiNum);
-				}
-				script.onerror = function() {
-					document.body.removeChild(document.body.lastChild);
+				}).catch(function() {
 					if (!isError) {
 						alert('调用api过于频繁，已被b站暂时封禁，请30分钟后重试');
 						isError = true;
 					}
-				}
+				});
 			}
 		}
 		this.classList.add('disabled');
@@ -48,6 +42,29 @@
 	document.getElementById('input').addEventListener('input', function() {
 		e3.classList.remove('disabled');
 	});
+
+	function jsonp(src) {
+		const cr = () => {
+			const rm = URL.createObjectURL(new Blob);
+			URL.revokeObjectURL(rm);
+			return '_' + rm.slice(-12);
+		}
+		return new Promise((resolve, reject) => {
+			const cstr = cr();
+			const a = document.createElement('script');
+			a.src = `${src}&callback=${cstr}`;
+			a.onload = () => a.remove();
+			a.onerror = err => {
+				reject(err);
+				delete self[cstr];
+			};
+			self[cstr] = obj => {
+				resolve(obj);
+				delete self[cstr];
+			}
+			document.head.append(a);
+		});
+	}
 })();
 var apiNum, data;
 apiNum = self.localStorage.getItem('api');
