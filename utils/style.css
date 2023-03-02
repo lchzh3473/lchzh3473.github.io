@@ -217,6 +217,7 @@ strong.accept {
 
 .index>.content legend {
 	padding-inline: 1em;
+	margin-inline: auto;
 }
 
 .index>.content a {
