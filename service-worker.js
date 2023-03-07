@@ -25,7 +25,7 @@ async function qwq(event) {
 		const response = await fetch(request).catch(function() {
 			return new Response('', { status: 521, statusText: 'Web Server Is Down' });
 		});
-		const reg = /data|jsdelivr|baomitu|googleapis|loli|res\.phi\.zone/;
+		const reg = /unpkg|data|jsdelivr|baomitu|googleapis|loli|res\.phi\.zone/;
 		if (response.ok && reg.test(request.url)) event.waitUntil(cache.put(request, response.clone()));
 		return response;
 	}

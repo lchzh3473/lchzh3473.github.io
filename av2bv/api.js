@@ -44,13 +44,8 @@
 	});
 
 	function jsonp(src) {
-		const cr = () => {
-			const rm = URL.createObjectURL(new Blob);
-			URL.revokeObjectURL(rm);
-			return '_' + rm.slice(-12);
-		}
 		return new Promise((resolve, reject) => {
-			const cstr = cr();
+			const cstr = '_' + Utils.randomUUID('');
 			const a = document.createElement('script');
 			a.src = `${src}&callback=${cstr}`;
 			a.onload = () => a.remove();

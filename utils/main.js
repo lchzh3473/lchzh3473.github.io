@@ -68,7 +68,17 @@ const Utils = {
 	summonED: () => (parseInt(Date.now() / 1e3)).toString(36).toUpperCase(),
 	checkED: ed => /^[A-Z\d]{6}$/.test(ed) && parseInt(ed, 36) * 1e3 < Date.now() && parseInt(ed, 36) * 1e3 > Date.now() - 2e7,
 	/**@type {(familyName:string,{...options}?:{})=>Promise<void>} */
-	addFont() {}
+	addFont() {},
+	randomUUID(separator = '-') {
+		if (typeof crypto.randomUUID === 'function') {
+			var uuid = crypto.randomUUID();
+		} else {
+			const url = URL.createObjectURL(new Blob);
+			var uuid = url.slice(url.lastIndexOf('/') + 1);
+			URL.revokeObjectURL(url);
+		}
+		return uuid.replace(/-/g, separator);
+	}
 };
 //font
 (function() {
