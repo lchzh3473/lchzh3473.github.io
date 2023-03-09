@@ -1,5 +1,5 @@
 'use strict';
-const _i = ['钢琴块2模拟器', [1, 0, 1], 1614358089, 1614362421];
+const _i = ['钢琴块2模拟器', [1, 0, 2], 1614358089, 1678289943];
 document.oncontextmenu = e => e.preventDefault();
 const canvas = document.getElementById('stage');
 self.addEventListener('resize', resize);
@@ -132,18 +132,24 @@ function init() {
 	//加载音色
 	function loadAudio() {
 		let size = {
-			app: 1848172,
-			'8rock11e': 3118138,
-			umod: 6580349
+			'app': 2700975,
+			'8rock11e': 3300100,
+			'umod': 6511396
 		} //表示文件大小，以后会优化
 		const xhr = new XMLHttpRequest();
-		xhr.open('get', `src/music/${soundfont}/piano.json`);
+		xhr.open('get', `src/music/${soundfont}/piano.dat`);
+		xhr.responseType = 'arraybuffer';
 		xhr.send();
 		xhr.onprogress = progress => loading.innerText = `加载音乐资源...(${Math.floor(progress.loaded/size[soundfont]*100)}%)`; //显示加载文件进度
 		xhr.onload = () => {
-			const audData = JSON.parse(xhr.response);
-			for (const i of audData) {
-				actx.decodeAudioData(base64ToArrayBuffer(i.data), data => aud[i.name] = data);
+			const dataView = new DataView(xhr.response);
+			const size = dataView.getUint32(8, true);
+			for (let i = 0; i < size; i++) {
+				const idx = dataView.getUint32(12 + i * 16, true);
+				const offset = dataView.getUint32(16 + i * 16, true);
+				const length = dataView.getUint32(20 + i * 16, true);
+				const data = xhr.response.slice(offset, offset + length);
+				actx.decodeAudioData(data, data => aud[pt2Note[idx - 21]] = data);
 			}
 			loadImage();
 		}
