@@ -44,6 +44,7 @@ input,
 select,
 button {
 	font-family: Noto Sans SC;
+	line-height: 1.2;
 }
 
 body {
@@ -80,6 +81,7 @@ input[type="file"]+label {
 	padding: 0.1em 0.6em;
 	margin: 0.1em;
 	cursor: pointer;
+	line-height: normal;
 }
 
 button:hover,
@@ -153,6 +155,7 @@ input[type="text"] {
 	border-radius: 2px;
 	padding: 0.2em;
 	margin: 1px;
+	line-height: 1.2;
 }
 
 .main {
@@ -161,6 +164,11 @@ input[type="text"] {
 
 .title {
 	color: #00f;
+	word-break: break-all;
+}
+
+small {
+	font-size: 70%;
 }
 
 .info,
@@ -202,22 +210,22 @@ strong.accept {
 	flex-grow: 1;
 	width: 90%;
 	max-width: 480px;
-	margin-inline: auto;
+	margin: 0 auto;
 }
 
 .index>.content fieldset {
 	margin: auto;
 	border: none;
-	border-block-start: 1px dashed gray;
-	padding-inline: 0;
+	border-top: 1px dashed gray;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 }
 
 .index>.content legend {
-	padding-inline: 1em;
-	margin-inline: auto;
+	padding-left: 1em;
+	padding-right: 1em;
+	margin: 0 auto;
 }
 
 .index>.content a {

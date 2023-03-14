@@ -3,6 +3,8 @@
 	width: 80vw;
 	min-width: 24px;
 	max-width: 252px;
+	min-height: 19px;
+	line-height: normal;
 }
 
 .inner {
@@ -47,7 +49,6 @@ input.outer {
 	padding: 0.2em;
 	text-align: start;
 	cursor: text;
-	min-height: 19px;
 	clear: both;
 	font-size: 13.33px;
 	white-space: nowrap;
