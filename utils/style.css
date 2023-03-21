@@ -124,29 +124,25 @@ input[type="radio"],
 input[type="checkbox"]+label::before {
 	font: 0.9em icomoon;
 	content: "\e907";
-	margin-left: 0.2em;
-	margin-right: 0.2em;
+	margin: 0 0.2em;
 }
 
 input[type="checkbox"]:checked+label::before {
 	font: 0.9em icomoon;
 	content: "\e906";
-	margin-left: 0.2em;
-	margin-right: 0.2em;
+	margin: 0 0.2em;
 }
 
 input[type="radio"]+label::before {
 	font: 0.9em icomoon;
 	content: "\e903";
-	margin-left: 0.2em;
-	margin-right: 0.2em;
+	margin: 0 0.2em;
 }
 
 input[type="radio"]:checked+label::before {
 	font: 0.9em icomoon;
 	content: "\e908";
-	margin-left: 0.2em;
-	margin-right: 0.2em;
+	margin: 0 0.2em;
 }
 
 textarea,
@@ -223,8 +219,7 @@ strong.accept {
 }
 
 .index>.content legend {
-	padding-left: 1em;
-	padding-right: 1em;
+	padding: 0 1em;
 	margin: 0 auto;
 }
 
