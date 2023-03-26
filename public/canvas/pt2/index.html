@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
+	<title>(っ °Д °;)っ</title>
+	<link rel="stylesheet" href="/utils/style.css">
+	<link rel="stylesheet" href="style.css">
+	<script>if (!window.Promise) location.href = '/412.html';</script>
+	<script src="/utils/main.js"></script>
+</head>
+
+<body>
+	<noscript><strong style="color:#f00">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<div class="index">
+		<div class="main">
+			<canvas id="stage"></canvas>
+			<div id="cover-loading">加载json...</div>
+			<div id="btn-config" class="btn hide i-settings"></div>
+			<div id="btn-pause" class="btn hide i-pause"></div>
+			<div id="cover-dark" class="hide"></div>
+			<div id="view-config" class="hide">
+				<p class="config-title">设置</p>
+				<hr>
+				<table class="config-table">
+					<tr>
+						<td class="item-left"><a>歌曲名称：</a></td>
+						<td class="item-right"><input type="text" id="cfg-songName"></td>
+					</tr>
+					<tr>
+						<td class="item-left"><a>谱面JSON：</a></td>
+						<td class="item-right"><input type="text" id="cfg-json"></td>
+					</tr>
+					<tr>
+						<td class="item-left"><a>默认BPM：</a></td>
+						<td class="item-right"><input type="text" id="cfg-bpm"></td>
+					</tr>
+					<tr>
+						<td class="item-left"><a>选择音色：</a></td>
+						<td class="item-right"><select id="cfg-soundfont">
+								<option value="app">官方APP</option>
+								<!--<option>QQ小程序</option>-->
+								<option value="8rock11e" selected>8rock11e</option>
+								<option value="umod">UMod 1.8</option>
+								<!--<option>自定义...</option>-->
+							</select></td>
+					</tr>
+				</table>
+				<hr>
+			</div>
+			<div id="cover-light" class="hide"></div>
+			<div id="view-pause" class="hide">
+				<p class="pause-title">游戏暂停</p>
+				<p class="pause-config">
+					<a id="gameover">终止</a>
+					<a id="continue">继续</a>
+				</p>
+			</div>
+		</div>
+		<p class="footer">&copy;&nbsp;2020-2023&nbsp;lchz&#104;3473</p>
+	</div>
+	<script src="./script.js?v1"></script>
+</body>
+
+</html>

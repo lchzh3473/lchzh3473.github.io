@@ -1,0 +1,56 @@
+.textbox {
+	margin: auto;
+	width: 80vw;
+	min-width: 24px;
+	max-width: 252px;
+	min-height: 19px;
+	line-height: normal;
+}
+
+.inner {
+	text-align: left;
+	margin: 3px auto;
+}
+
+.inner>:nth-child(2) {
+	float: right;
+	margin: 1px;
+	margin-bottom: 3px;
+}
+
+.inner>select:nth-child(2) {
+	width: 100%;
+	max-width: 100px;
+}
+
+input.outer {
+	display: block;
+	clear: both;
+	margin: auto;
+}
+
+.img {
+	margin: 0 1%;
+	padding: 20%;
+	border: 1px dashed gray;
+	border-radius: 2px;
+	display: inline-block;
+	background-color: #fff;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	image-rendering: pixelated;
+}
+
+.tbx {
+	background: #fff;
+	border: 1px solid #888;
+	border-radius: 2px;
+	padding: 0.2em;
+	text-align: start;
+	cursor: text;
+	clear: both;
+	font-size: 13.33px;
+	white-space: nowrap;
+	overflow: hidden;
+}

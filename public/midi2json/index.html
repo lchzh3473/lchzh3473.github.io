@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
+	<title>(っ °Д °;)っ</title>
+	<link rel="stylesheet" href="/utils/style.css">
+	<script>if (!window.Promise) location.href = '/412.html';</script>
+	<script src="/utils/main.js"></script>
+</head>
+
+<body>
+	<noscript><strong style="color:#f00">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<div class="index">
+		<div class="main">
+			<h1 class="title"></h1>
+			<p class="info"></p>
+			<p>
+				<input type="file" accept="audio/midi" id="openfile">
+				<label for="openfile">上传文件</label>
+				<input type="button" value="重置" onclick="location.reload(true)">
+			</p>
+			<textarea id="result" rows="30" cols="40" placeholder="最终输出将在这里。" style="border: 1px solid #888" readonly></textarea>
+			<p>最小音符: <select id="limnotes">
+					<option value="256">H</option>
+					<option value="128">I</option>
+					<option value="64">J</option>
+					<option value="32">K</option>
+					<option value="16">L</option>
+					<option value="8">M</option>
+					<option value="4">N</option>
+					<option value="2">O</option>
+					<option value="1" selected>P</option>
+				</select>&ensp;&ensp; <input type="checkbox" id="drumsets">
+				<label for="drumsets">鼓点模式</label> &ensp;&ensp;<br><br>
+				<input type="button" value="转换" onclick="convert()">
+			</p>
+			<p>结果：</p>
+			<p id="output"></p>
+		</div>
+		<p class="footer">&copy;&nbsp;2020-2023&nbsp;lchz&#104;3473</p>
+	</div>
+	<script src="./script.js?v1"></script>
+</body>
+
+</html>

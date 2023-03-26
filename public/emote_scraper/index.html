@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
+	<!--防止b站403-->
+	<meta name="referrer" content="no-referrer">
+	<base target="_blank">
+	<title>(っ °Д °;)っ</title>
+	<link rel="stylesheet" href="/utils/style.css">
+	<link rel="stylesheet" href="./style.css">
+	<script>if (!window.Promise) location.href = '/412.html';</script>
+	<script src="/utils/main.js"></script>
+</head>
+
+<body>
+	<noscript><strong style="color:#f00">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<div class="index">
+		<div class="main">
+			<h1 class="title"></h1>
+			<p class="info"></p>
+			<p class="profile">点击<a id="website1" href="//passport.bilibili.com/login">登录</a>，然后点击<a id="website2" href="//api.bilibili.com/x/emote/setting/panel?business=reply">跳转</a>，将页面内全部内容复制粘贴至文本框，<br>最后点击“解析”按钮。留空以调用最近一次记录。</p>
+			<div style="display:flex;justify-content:center">
+				<textarea class="input" id="input" style="resize: none" cols="30" rows="1" placeholder="这是文本框。"></textarea>
+				<input type="button" id="analyse" value="解析">
+				<input type="button" onclick="location.reload(true)" value="重置">
+			</div>
+			<p><strong id="output"></strong></p>
+			<div id="control" class="hide">选择类型：<input type="radio" name="type" id="packages">
+				<label for="packages">表情包</label>
+				<input type="radio" name="type" id="statics">
+				<label for="statics">静态</label>
+				<input type="radio" name="type" id="dynamics">
+				<label for="dynamics">动态</label>
+				<div>筛选：<input type="radio" name="filter" id="added">
+					<label for="added" style="color:#080">新增</label>
+					<input type="radio" name="filter" id="removed">
+					<label for="removed" style="color:#f00">移除</label>
+					<input type="radio" name="filter" id="changed">
+					<label for="changed" style="color:#fa0">更改</label>
+					<input type="radio" name="filter" id="all">
+					<label for="all" style="color:#00f">全部</label>
+				</div>
+				<div>
+					<span id="static">
+						<input type="button" onclick="fold(0)" value="全部展开">
+						<input type="button" onclick="fold(1)" value="全部收起">
+					</span>
+					<span id="scroll">
+						<input type="button" onclick="scrollStage(0)" value="滑到顶部">
+						<input type="button" onclick="scrollStage(1)" value="滑到底部">
+					</span>
+					<input type="checkbox" id="sort">
+					<label for="sort">按id排序</label>
+				</div>
+				<hr>
+				<div id="stage"></div>
+				<hr>最近一次记录：<span id="date"></span>
+				<input type="button" onclick="saveHistory()" value="保存记录">
+			</div>
+		</div>
+		<p class="footer">&copy;&nbsp;2020-2023&nbsp;lchz&#104;3473</p>
+	</div>
+	<script src="./script.js?v1"></script>
+</body>
+
+</html>

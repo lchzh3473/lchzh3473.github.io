@@ -1,0 +1,158 @@
+@import url('/fonts/Futura-PT_Cond-Medium.css');
+
+::-webkit-scrollbar {
+	display: none;
+}
+
+html,
+body {
+	overflow: hidden;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+#stage {
+	position: fixed;
+	width: 100vw;
+	left: 0;
+	top: 0;
+}
+
+.btn {
+	position: fixed;
+	opacity: 0.6;
+	color: #fff;
+	font-size: 50px;
+	line-height: 0;
+	right: 15px;
+	top: 15px;
+}
+
+@keyframes cover_ani {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 0.65;
+	}
+}
+
+#cover-dark {
+	position: fixed;
+	opacity: 0.65;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	left: 0px;
+	bottom: 0px;
+	animation: cover_ani 0.2s;
+}
+
+@keyframes config_ani {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+.view-config {
+	background-color: #fff;
+	border-radius: 12px;
+	position: fixed;
+	width: 75vmin;
+	height: 75vh;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	padding: 5vmin;
+	animation: config_ani 0.2s;
+}
+
+.config-title {
+	font-size: 6vmin;
+	margin: 0px;
+}
+
+.config-table {
+	font-size: 4vmin;
+	margin: 0px auto;
+}
+
+.item-left {
+	text-align: right;
+}
+
+.item-right {
+	text-align: left;
+}
+
+.item-right input[type="text"] {
+	font-size: 4vmin;
+	width: 30vmin;
+}
+
+.item-right select {
+	font-size: 4vmin;
+	width: 30vmin;
+	border: 1px solid #888;
+	border-radius: 2px;
+	padding: 0.2em;
+	margin: 1px;
+}
+
+@keyframes pause_ani {
+	from {
+		height: 70vmin;
+	}
+
+	to {
+		height: 50vmin;
+	}
+}
+
+.view-pause {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	position: fixed;
+	width: 90vmin;
+	height: 50vmin;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	animation: pause_ani 0.2s;
+}
+
+#cover-light {
+	position: fixed;
+	opacity: 0.85;
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+	left: 0px;
+	bottom: 0px;
+}
+
+.pause-title {
+	font-size: 10vmin;
+	margin: 0px;
+}
+
+.pause-config {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.pause-config a {
+	font-size: 8vmin;
+	background-color: #359dc2;
+	padding: 4vmin 12vmin;
+	border-radius: 12vmin;
+	color: #fff;
+}

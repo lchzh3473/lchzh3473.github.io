@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
+	<base target="_blank">
+	<title>(っ °Д °;)っ</title>
+	<link rel="stylesheet" href="/utils/style.css">
+	<link rel="stylesheet" href="./style.css">
+	<script>if (!window.Promise) location.href = '/412.html';</script>
+	<script src="/utils/main.js"></script>
+</head>
+
+<body>
+	<noscript><strong style="color:#f00">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<div class="index">
+		<div class="main">
+			<h1 class="title"></h1>
+			<p class="info"></p>
+			<p class="profile">在上框输入或粘贴一段包含AV号或BV号的文本，转换结果将在下框显示。<br>点击彩色字可以跳转，点击“复制”按钮将转换结果复制到剪贴板。</p>
+			<div class="textbox">
+				<div class="inner">
+					<div>输入：</div>
+					<div>
+						<input type="checkbox" id="av2bv" onchange="convert()" checked>
+						<label for="av2bv">av转bv</label>
+						<input type="checkbox" id="bv2av" onchange="convert()" checked>
+						<label for="bv2av">bv转av</label>
+					</div>
+				</div>
+			</div>
+			<textarea id="input" class="text" oninput="convert()"></textarea>
+			<div class="textbox">
+				<div class="inner">
+					<div>输出：</div>
+					<div>
+						<input type="button" id="copy" value="复制">
+						<input type="button" id="reset" value="重置">
+					</div>
+				</div>
+			</div>
+			<div id="output" class="text"></div>
+			<div class="textbox">
+				<div class="inner">
+					<div>结果：<strong id="result"></strong></div>
+				</div><br>
+				<div class="inner">
+					<div>不知道什么是bv号？<a href="//www.bilibili.com/read/cv5167957">点此了解</a></div>
+				</div>
+			</div>
+		</div>
+		<p class="footer">&copy;&nbsp;2020-2023&nbsp;lchz&#104;3473</p>
+	</div>
+	<script src="./script.js?v1"></script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
+	<title>(っ °Д °;)っ</title>
+	<link rel="stylesheet" href="/utils/style.css">
+	<script>if (!window.Promise) location.href = '/412.html';</script>
+	<script src="/utils/main.js"></script>
+	<style>
+		.upload {
+			width: 80vw;
+			max-width: 500px;
+			display: inline-flex;
+			justify-content: center;
+		}
+
+		.textbox {
+			width: 80vw;
+			max-width: 500px;
+			height: calc(100vh - 400px);
+			min-height: 4.8em;
+			resize: none;
+		}
+	</style>
+</head>
+
+<body>
+	<noscript><strong style="color:#f00">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<div class="index">
+		<div class="main">
+			<h1 class="title"></h1>
+			<p class="info"></p>
+			<div class="upload">
+				<input type="file" accept="audio/midi" id="upload">
+				<label for="upload">选择midi</label>
+				<input type="text" style="width:0;flex-grow:1;flex-shrink:1;pointer-events:none" id="filename">
+				<input type="button" value="重置" onclick="location.reload(true)">
+			</div><br>
+			<textarea id="result" class="textbox" placeholder="最终输出将在这里。" readonly></textarea>
+			<p style="line-height:2"> 最小音量(1~127)：<input type="number" style="width:3em" id="volMin" value="2" min="1" max="127">
+				<input type="checkbox" id="isMerged">
+				<label for="isMerged">合并音轨</label><br> 最小音符：<select id="note">
+					<option value="0.125">H</option>
+					<option value="0.25">I</option>
+					<option value="0.5">J</option>
+					<option value="1">K</option>
+					<option value="2">L</option>
+					<option value="4">M</option>
+					<option value="8">N</option>
+					<option value="16">O</option>
+					<option value="32" selected>P</option>
+				</select> &emsp;选择音轨：<select id="track" style="width:5em"></select><br>
+				<input type="button" value="分析" onclick="analyse()">
+				<input type="button" value="转换" onclick="convert()"><br>
+				<strong id="output"></strong>
+			</p>
+		</div>
+		<p class="footer">&copy;&nbsp;2020-2023&nbsp;lchz&#104;3473</p>
+	</div>
+	<script src="./script.js?v1"></script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
+	<title>(っ °Д °;)っ</title>
+	<link rel="stylesheet" href="/utils/style.css">
+	<link rel="stylesheet" href="./style.css">
+	<script>if (!window.Promise) location.href = '/412.html';</script>
+	<script src="/utils/main.js"></script>
+</head>
+
+<body>
+	<noscript><strong style="color:#f00">此浏览器不支持JavaScript，该脚本无法运行。</strong></noscript>
+	<div class="index">
+		<div class="main">
+			<h1 class="title"></h1>
+			<p class="info"></p>
+			<div>
+				<span>选择类型：</span>
+				<select name="" id="config-select">
+					<option value="color" selected>颜色代码</option>
+					<option value="gradient">渐变</option>
+					<option value="emote">小表情</option>
+				</select>
+			</div>
+			<div id="config-color">
+				<p class="profile">在上框输入颜色代码(如red或#1f1e33)，<br>对应qq彩色群昵称代码将在下框显示，<br>点击“复制”按钮将转换结果复制到剪贴板。</p>
+				<div class="textbox inner" id="preset-color"><span>输入颜色代码：</span></div>
+				<input type="text" id="color-input" class="textbox outer" placeholder="">
+				<div class="textbox inner"><span>解析结果：<span id="color-data"></span></span></div>
+				<div type="text" id="color-cmd" class="textbox outer tbx"></div>
+				<div class="textbox inner"><span>预览：</span></div>
+				<input type="text" id="color-preset-input" class="textbox outer" style="display:none" placeholder="在此输入预览文本...">
+				<div type="text" id="color-preset" class="textbox outer tbx" style="background-color:#eaedf4"></div>
+			</div>
+			<div id="config-gradient">
+				<p class="profile">在上框输入渐变id，对应qq渐变群昵称代码将在下框显示，<br>点击“复制”按钮将转换结果复制到剪贴板。</p>
+				<div class="textbox inner" id="preset-gradient"><span>输入渐变id：</span></div>
+				<input type="text" id="gradient-input" class="textbox outer" placeholder="">
+				<div class="textbox inner"><span>解析结果：<span id="gradient-data"></span></span></div>
+				<div type="text" id="gradient-cmd" class="textbox outer tbx"></div>
+				<div class="textbox inner"><span>预览：</span></div>
+				<input type="text" id="gradient-preset-input" class="textbox outer" style="display:none" placeholder="在此输入预览文本...">
+				<div type="text" id="gradient-preset" class="textbox outer tbx" style="background-color:#eaedf4"></div>
+			</div>
+			<div id="config-emote">
+				<p class="profile">分别输入表情包id和表情id，对应qq小表情代码将在下框显示，<br>点击“复制”按钮将转换结果复制到剪贴板。</p>
+				<div class="textbox inner" id="preset-pid"><span>输入表情包id：</span></div>
+				<input type="text" id="emote-pid" class="textbox outer">
+				<div class="textbox inner" id="preset-id"><span>输入表情id：</span></div>
+				<input type="text" id="emote-id" class="textbox outer">
+				<div class="textbox inner"><span>解析结果：<span id="emote-data"></span></span></div>
+				<div type="text" id="emote-cmd" class="textbox outer tbx"></div>
+				<div class="textbox">预览(左png，右gif)<br><a href="#" class="img" id="emote-png"></a><a href="#" class="img" id="emote-gif"></a>
+				</div>
+			</div>
+		</div>
+		<p class="footer">&copy;&nbsp;2020-2023&nbsp;lchz&#104;3473</p>
+	</div>
+	<script src="./script.js?v110"></script>
+</body>
+
+</html>
