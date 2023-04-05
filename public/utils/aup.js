@@ -53,6 +53,7 @@ const audio = {
 			if (isOut) gain.connect(actx.destination);
 			bufferSource.start();
 			bfs[bfs.length] = bufferSource;
+			return _ => bufferSource.bfs;
 		} else {
 			const bufferSource = actx.createBufferSource();
 			bufferSource.buffer = res;
@@ -63,6 +64,7 @@ const audio = {
 			if (isOut) gain.connect(actx.destination);
 			bufferSource.start(0, offset);
 			bfs[bfs.length] = bufferSource;
+			return _ => bufferSource;
 		}
 	},
 	stop() {
@@ -147,6 +149,9 @@ class IntervalBufferSource {
 			if (currentOffset + this.interval > this.res.duration && !this.loop) return;
 			this._loop();
 		}
+	}
+	get bfs() {
+		return this._bfs || this.actx.createBufferSource();
 	}
 }
 class AudioURLParam {
