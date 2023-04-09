@@ -51,14 +51,11 @@ const Utils = {
 		}
 		document.head.appendChild(script);
 	}),
+	/**@param {(...args)} func */
 	lazyload(func, ...args) {
 		if (document.readyState === 'complete') return func(...args);
 		return new Promise(resolve => {
-			const listener = () => {
-				self.removeEventListener('load', listener);
-				resolve(func(...args));
-			};
-			self.addEventListener('load', listener);
+			self.addEventListener('load', () => resolve(func(...args)), { once: true });
 		});
 	},
 	/**@param {string} str */
