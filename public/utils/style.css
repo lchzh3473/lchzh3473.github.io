@@ -39,6 +39,15 @@
 	background-color: var(--select-bg);
 }
 
+::-webkit-scrollbar {
+	display: none;
+}
+
+* {
+	/* Firefox */
+	scrollbar-width: none;
+}
+
 :root,
 input,
 select,

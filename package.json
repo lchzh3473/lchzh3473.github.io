@@ -1,0 +1,10 @@
+{
+	"scripts": {
+		"deploy": ""
+	},
+	"dependencies": {
+		"earcut": "^2.2.3",
+		"gl-matrix": "^3.4.3",
+		"three": "^0.139.2"
+	}
+}
