@@ -43,9 +43,11 @@
 	display: none;
 }
 
-* {
-	/* Firefox */
-	scrollbar-width: none;
+@supports (scrollbar-width:none) {
+	* {
+		/* Firefox */
+		scrollbar-width: none;
+	}
 }
 
 :root,
