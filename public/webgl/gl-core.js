@@ -11,65 +11,45 @@ const earcut = arr => {
 };
 const program1 = {
 	vertexShader: ` 
-		// attribute声明vec4类型变量aVertexPosition
-		attribute vec4 aVertexPosition;
-		// attribute声明顶点颜色变量
-		attribute vec4 aVertexColor;
-
-		uniform mat4 uModelViewMatrix;
-		uniform mat4 uProjectionMatrix;
-
-		// varying声明顶点颜色插值后变量
+		attribute vec4 a_position;
+		attribute vec4 a_color;
+		uniform mat4 u_matrix;
 		varying vec4 v_color;
 		void main() {
-			// 给内置变量gl_PointSize赋值像素大小
-			gl_PointSize=10.0;
-			// 顶点坐标aVertexPosition赋值给内置变量gl_Position
-			gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
-			// 顶点颜色插值计算
-			v_color = aVertexColor;
+			gl_Position = u_matrix * a_position;
+			v_color = a_color;
 		}
 	`,
 	fragmentShader: `
-		// 所有float类型数据的精度是lowp
 		precision lowp float;
-		// precision highp float;
-		// 接收顶点着色器中v_color数据
 		varying vec4 v_color;
 		void main() {
-			// 插值后颜色数据赋值给对应的片元
 			gl_FragColor = v_color;
 		}
 	`,
-	attributes: { aVertexPosition: 3, aVertexColor: 4 },
-	uniforms: { uModelViewMatrix: 0, uProjectionMatrix: 0 }
+	attributes: { a_position: 3, a_color: 4 },
+	uniforms: { u_matrix: 0 }
 };
 const program2 = {
 	vertexShader: `
-		attribute vec4 aVertexPosition;
-		attribute vec2 aTextureCoord;
-
-		uniform mat4 uModelViewMatrix;
-		uniform mat4 uProjectionMatrix;
-
-		varying highp vec2 vTextureCoord;
-
+		attribute vec4 a_position;
+		attribute vec2 a_texCoord;
+		uniform mat4 u_matrix;
+		varying highp vec2 v_texCoord;
 		void main(void) {
-			gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
-			vTextureCoord = aTextureCoord;
+			gl_Position = u_matrix * a_position;
+			v_texCoord = a_texCoord;
 		}
 	`,
 	fragmentShader: `
-		varying highp vec2 vTextureCoord;
-
-		uniform sampler2D uSampler;
-
+		varying highp vec2 v_texCoord;
+		uniform sampler2D u_image;
 		void main(void) {
-			gl_FragColor = texture2D(uSampler, vTextureCoord);
+			gl_FragColor = texture2D(u_image, v_texCoord);
 		}
 	`,
-	attributes: { aVertexPosition: 3, aTextureCoord: 2 },
-	uniforms: { uModelViewMatrix: 0, uProjectionMatrix: 0, uSampler: 7 }
+	attributes: { a_position: 3, a_texCoord: 2 },
+	uniforms: { u_matrix: 0, u_image: 7 }
 };
 /**
  * lchzh试图自制WebGL引擎qwq
@@ -209,15 +189,13 @@ export class Renderer {
 	/**
 	 * 渲染几何体qwq
 	 * @param {WebGLElement} elem 要画的几何体qwq 
-	 * @param {mat4} projectionMatrix 摄像机视角
-	 * @param {mat4} modelViewMatrix 玩家视角
+	 * @param {mat4} matrix 摄像机视角x玩家视角
 	 */
-	drawScene(elem, projectionMatrix, modelViewMatrix) {
+	drawScene(elem, matrix) {
 		const { gl } = this;
 		if (!this.program) this.initScene(elem);
 		gl.useProgram(this.program);
-		gl.uniformMatrix4fv(this.uProjectionMatrix, false, projectionMatrix);
-		gl.uniformMatrix4fv(this.uModelViewMatrix, false, modelViewMatrix);
+		gl.uniformMatrix4fv(this.u_matrix, false, matrix);
 		if (elem.texture) gl.bindTexture(gl.TEXTURE_2D, elem.texture);
 		gl.drawElements(gl.TRIANGLES, elem.indices.length, gl.UNSIGNED_SHORT, 0);
 	}
@@ -264,7 +242,7 @@ export class WebGLElement {
 		const { triangles, colors } = this.link(coords, targets, colormaps);
 		this.program = program1;
 		const points = targets.flatMap(e => e.flatMap(v => coords[v]));
-		this.attributes = { aVertexPosition: points, aVertexColor: colors.flat() };
+		this.attributes = { a_position: points, a_color: colors.flat() };
 		this.indices = triangles.flat();
 	}
 	link(coords, targets, colormaps = []) {
@@ -283,7 +261,7 @@ export class WebGLElement {
 export class WebGLElement2 {
 	constructor(vertices, textureCoords, indices) {
 		this.program = program2;
-		this.attributes = { aVertexPosition: vertices, aTextureCoord: textureCoords };
+		this.attributes = { a_position: vertices, a_texCoord: textureCoords };
 		this.indices = indices;
 	}
 }

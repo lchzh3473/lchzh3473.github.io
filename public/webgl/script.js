@@ -141,20 +141,22 @@ stage.addEventListener('click', () => light = !light);
 function draw(now) {
 	elem.texture = light ? texture1 : texture2;
 	renderer.baseColor = light ? [0.94, 0.94, 0.94, 1.0] : [0.24, 0.18, 0.30, 1.0];
-	const projectionMatrix = mat4.create();
-	mat4.perspective(projectionMatrix, 45 * Math.PI / 180, renderer.aspect, 0.1, 100);
-	const modelViewMatrix = mat4.create();
+	const matrix = mat4.create();
+	//正射投影
+	// mat4.ortho(matrix, -renderer.aspect, renderer.aspect, -1, 1, 0.1, 100);
+	//透視投影
+	mat4.perspective(matrix, 45 * Math.PI / 180, renderer.aspect, 0.1, 100);
 	if (model === elem) {
-		mat4.translate(modelViewMatrix, modelViewMatrix, [0, 0, -3]);
-		mat4.rotateX(modelViewMatrix, modelViewMatrix, 0.5);
-		mat4.rotateY(modelViewMatrix, modelViewMatrix, Math.PI / 180 * now / 20);
+		mat4.translate(matrix, matrix, [0, 0, -3]);
+		mat4.rotateX(matrix, matrix, 0.5);
+		mat4.rotateY(matrix, matrix, Math.PI / 180 * now / 20);
 	} else {
-		mat4.translate(modelViewMatrix, modelViewMatrix, [0, 0, -20]);
-		mat4.rotate(modelViewMatrix, modelViewMatrix, Math.PI / 180 * now / 20, [1, 1, 0]);
-		mat4.rotate(modelViewMatrix, modelViewMatrix, Math.sin(now / 2000), [-1, 1, 0]);
+		mat4.translate(matrix, matrix, [0, 0, -20]);
+		mat4.rotate(matrix, matrix, Math.PI / 180 * now / 20, [1, 1, 0]);
+		mat4.rotate(matrix, matrix, Math.sin(now / 2000), [-1, 1, 0]);
 	}
 	renderer.initdraw();
-	renderer.drawScene(model, projectionMatrix, modelViewMatrix);
+	renderer.drawScene(model, matrix);
 	requestAnimationFrame(draw);
 }
 requestAnimationFrame(draw);
