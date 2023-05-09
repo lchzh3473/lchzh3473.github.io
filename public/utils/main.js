@@ -34,9 +34,18 @@ const Utils = {
 		else return Promise.reject();
 		return Promise.resolve();
 	},
-	cnymd(time) {
-		const d = new Date(time * 1e3);
-		return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+	formatDate(locales = navigator.language, options) {
+		options = Object.assign({ dateStyle: 'medium' }, options);
+		const b = new Intl.DateTimeFormat(locales, options);
+		const c = b.resolvedOptions();
+		for (const i in options) {
+			if (options[i] === c[i]) continue;
+			return time => {
+				const d = new Date(time * 1e3);
+				return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+			};
+		}
+		return time => b.format(time * 1e3);
 	},
 	loadJS: str => new Promise(resolve => {
 		const script = document.createElement('script');
@@ -77,6 +86,7 @@ const Utils = {
 		return uuid.replace(/-/g, separator);
 	}
 };
+self.Utils = Utils; //export for iOS 14- qwq
 //font
 (function() {
 	const fontLoader = {
@@ -220,20 +230,21 @@ const Utils = {
 })();
 //cookie
 Utils.lazyload(function() {
-	const cnymd = Utils.cnymd;
+	const fd = Utils.formatDate(navigator.language);
 	const dct = document.cookie.match(/dct=(.+?)(;|$)/) || [];
 	const rct = document.cookie.match(/rct=(.+?)(;|$)/) || [];
 	const d = 'lchz\x683\x3473';
 	const w = `作者：<a style="text-decoration:underline"target="_blank"href="https://space.bilibili.com/274753872">${d}</a>`;
 	const s = new URLSearchParams(location.search);
+	const t = dct[1] === 'ok' || location.port || Utils.checkED(s.get('ss'));
 	if (!location.port && !s.has('test')) setInterval(Function.constructor(atob('ZGVidWdnZXI7')));
 	if (s.has('agree') && rct[1]) return location.replace(rct[1], document.cookie = `dct=ok;path=/;max-age=${2e6}`);
 	if (s.has('disagree')) return location.replace('/403.html', document.cookie = `dct=;rct=;path=/;max-age=0`);
 	if (typeof _i == 'undefined' || _i.length != 4) return;
-	if (dct[1] !== 'ok') return location.replace('/401-.html', document.cookie = `rct=${location.href};path=/;max-age=${2e6}`);
+	if (!t) return location.replace('/401-.html', document.cookie = `rct=${location.href};path=/;max-age=${2e6}`);
 	document.cookie = `dct=ok;path=/;max-age=${2e6}`;
 	document.title = `${_i[0]} - ${d}制作`;
 	for (const i of document.querySelectorAll('.title')) i.innerHTML = `${_i[0]}&nbsp;<small>v${_i[1].join('.')}</small>`;
-	for (const i of document.querySelectorAll('.info')) i.innerHTML = `${w}&nbsp;(${cnymd(_i[2])}制作)<br><br>最后更新于${cnymd(_i[3])}`;
+	for (const i of document.querySelectorAll('.info')) i.innerHTML = `${w}&nbsp;(${fd(_i[2])}制作)<br><br>最后更新于${fd(_i[3])}`;
 	for (const i of document.querySelectorAll('.main')) i.style.display = 'block';
 });
