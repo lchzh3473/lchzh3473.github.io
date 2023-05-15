@@ -9,66 +9,66 @@ const example = '144,Prelude in g minor BWV930,g小调小前奏曲 ,g小調小�
 input.placeholder = example;
 let qwq = '';
 const convert = () => {
-	const inValue = input.value;
-	output.innerHTML = '';
-	reset.classList[inValue ? 'remove' : 'add']('disabled');
-	try {
-		qwq = csv2array(inValue ? inValue : example);
-		output.innerHTML = JSON.stringify(qwq);
-		result.className = 'accept';
-		result.innerHTML = '转换成功。';
-	} catch (err) {
-		result.className = 'error';
-		result.innerHTML = err;
-	}
+  const inValue = input.value;
+  output.innerHTML = '';
+  reset.classList[inValue ? 'remove' : 'add']('disabled');
+  try {
+    qwq = csv2array(inValue ? inValue : example);
+    output.innerHTML = JSON.stringify(qwq);
+    result.className = 'accept';
+    result.innerHTML = '转换成功。';
+  } catch (err) {
+    result.className = 'error';
+    result.innerHTML = err;
+  }
 }
 convert();
 copy.onclick = () => Utils.copyText.call(output).then(Utils.setText.bind(copy, '复制成功'), Utils.setText.bind(copy, '复制失败'));
 copy.onblur = Utils.setText.bind(copy, '复制');
 reset.onclick = () => {
-	input.value = '';
-	convert();
+  input.value = '';
+  convert();
 }
 
 function csv2array(data) {
-	const strarr = data.replace(/\r/g, '').split('\n');
-	const col = [];
-	for (const i of strarr) {
-		let rowstr = '';
-		let isQuot = false;
-		let beforeQuot = false;
-		const row = [];
-		for (const j of i) {
-			if (j == '"') {
-				if (!isQuot) isQuot = true;
-				else if (beforeQuot) {
-					rowstr += j;
-					beforeQuot = false;
-				} else beforeQuot = true;
-			} else if (j == ',') {
-				if (!isQuot) {
-					row.push(rowstr);
-					rowstr = '';
-				} else if (beforeQuot) {
-					row.push(rowstr);
-					rowstr = '';
-					isQuot = false;
-					beforeQuot = false;
-				} else rowstr += j;
-			} else if (!beforeQuot) rowstr += j;
-			else throw 'Error 1';
-		}
-		if (!isQuot) {
-			row.push(rowstr);
-			rowstr = '';
-		} else if (beforeQuot) {
-			row.push(rowstr);
-			rowstr = '';
-			isQuot = false;
-			beforeQuot = false;
-		} else throw 'Error 2';
-		col.push(row);
-	}
-	console.log(col); //test
-	return col;
+  const strarr = data.replace(/\r/g, '').split('\n');
+  const col = [];
+  for (const i of strarr) {
+    let rowstr = '';
+    let isQuot = false;
+    let beforeQuot = false;
+    const row = [];
+    for (const j of i) {
+      if (j == '"') {
+        if (!isQuot) isQuot = true;
+        else if (beforeQuot) {
+          rowstr += j;
+          beforeQuot = false;
+        } else beforeQuot = true;
+      } else if (j == ',') {
+        if (!isQuot) {
+          row.push(rowstr);
+          rowstr = '';
+        } else if (beforeQuot) {
+          row.push(rowstr);
+          rowstr = '';
+          isQuot = false;
+          beforeQuot = false;
+        } else rowstr += j;
+      } else if (!beforeQuot) rowstr += j;
+      else throw 'Error 1';
+    }
+    if (!isQuot) {
+      row.push(rowstr);
+      rowstr = '';
+    } else if (beforeQuot) {
+      row.push(rowstr);
+      rowstr = '';
+      isQuot = false;
+      beforeQuot = false;
+    } else throw 'Error 2';
+    col.push(row);
+  }
+  console.log(col); //test
+  return col;
 }

@@ -6,18 +6,18 @@ var vFlash;
 var flashInfo = document.getElementById('flashInfo');
 let a = navigator.plugins;
 if (a) {
-	for (const i of a) {
-		if (i.name.toLowerCase().indexOf('shockwave flash') >= 0) {
-			let b = i.description;
-			iFlash = true;
-			vFlash = b.substring(b.toLowerCase().lastIndexOf('flash ') + 6, b.length);
-		}
-	}
+  for (const i of a) {
+    if (i.name.toLowerCase().indexOf('shockwave flash') >= 0) {
+      let b = i.description;
+      iFlash = true;
+      vFlash = b.substring(b.toLowerCase().lastIndexOf('flash ') + 6, b.length);
+    }
+  }
 }
 if (iFlash) {
-	flashInfo.className = 'accept';
-	flashInfo.innerText = `当前Flash版本：${vFlash}`;
+  flashInfo.className = 'accept';
+  flashInfo.innerText = `当前Flash版本：${vFlash}`;
 } else {
-	flashInfo.className = 'error';
-	flashInfo.innerText = `此浏览器不支持Flash，该脚本无法运行。`;
+  flashInfo.className = 'error';
+  flashInfo.innerText = `此浏览器不支持Flash，该脚本无法运行。`;
 }

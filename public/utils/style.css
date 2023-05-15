@@ -1,265 +1,265 @@
 /* noto-sans-sc-regular */
 @font-face {
-	font-family: 'Noto Sans SC';
-	font-style: normal;
-	font-weight: regular;
-	src: url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.eot');
-	src: local('Noto Sans SC'), local('NotoSans SC-Normal'),
-		url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.eot?#iefix') format('embedded-opentype'),
-		url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.woff2') format('woff2'),
-		url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.woff') format('woff'),
-		url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.ttf') format('truetype'),
-		url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.svg#NotoSans SC') format('svg');
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: regular;
+  src: url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.eot');
+  src: local('Noto Sans SC'), local('NotoSans SC-Normal'),
+    url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.eot?#iefix') format('embedded-opentype'),
+    url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.woff2') format('woff2'),
+    url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.woff') format('woff'),
+    url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.ttf') format('truetype'),
+    url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.svg#NotoSans SC') format('svg');
 }
 
 @font-face {
-	font-family: icomoon;
-	src: url("data:application/font-woff;base64,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");
+  font-family: icomoon;
+  src: url("data:application/font-woff;base64,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");
 }
 
 :root {
-	--select-bg: rgba(147, 107, 255, 0.286);
-	--hover-bg: rgba(60, 251, 76, 0.286);
-	--active-bg: rgba(25, 240, 43, 0.427);
-	--link-color: #f00;
-	--link-bg: #37723a;
-	--button-bg: #4ca951;
-	--button-hover-bg: #57d15d;
-	--button-active-bg: #37723a;
+  --select-bg: rgba(147, 107, 255, 0.286);
+  --hover-bg: rgba(60, 251, 76, 0.286);
+  --active-bg: rgba(25, 240, 43, 0.427);
+  --link-color: #f00;
+  --link-bg: #37723a;
+  --button-bg: #4ca951;
+  --button-hover-bg: #57d15d;
+  --button-active-bg: #37723a;
 }
 
 /* [theme="dark"] {
-	--select-color: rgba(255, 107, 147, 0.286);
+  --select-color: rgba(255, 107, 147, 0.286);
 } */
 ::selection {
-	background-color: var(--select-bg);
+  background-color: var(--select-bg);
 }
 
 ::-moz-selection {
-	background-color: var(--select-bg);
+  background-color: var(--select-bg);
 }
 
 ::-webkit-scrollbar {
-	display: none;
+  display: none;
 }
 
 @supports (scrollbar-width:none) {
-	* {
-		/* Firefox */
-		scrollbar-width: none;
-	}
+  * {
+    /* Firefox */
+    scrollbar-width: none;
+  }
 }
 
 :root,
 input,
 select,
 button {
-	font-family: Noto Sans SC;
-	line-height: 1.2;
+  font-family: Noto Sans SC;
+  line-height: 1.2;
 }
 
 body {
-	margin: 0;
-	text-align: center;
-	background-color: #f1eff6;
+  margin: 0;
+  text-align: center;
+  background-color: #f1eff6;
 }
 
 a {
-	text-decoration: none;
-	color: var(--link-color);
-	border-radius: 2px;
-	cursor: pointer;
+  text-decoration: none;
+  color: var(--link-color);
+  border-radius: 2px;
+  cursor: pointer;
 }
 
 a:hover,
 input[type="checkbox"]+label:hover,
 input[type="radio"]+label:hover {
-	background-color: var(--hover-bg);
+  background-color: var(--hover-bg);
 }
 
 a:active {
-	background-color: var(--active-bg);
+  background-color: var(--active-bg);
 }
 
 button,
 input[type="button"],
 input[type="file"]+label {
-	background-color: var(--button-bg);
-	color: #fff;
-	border: none;
-	border-radius: 2px;
-	font-size: 0.9em;
-	padding: 0.1em 0.6em;
-	margin: 0.1em;
-	cursor: pointer;
-	line-height: normal;
+  background-color: var(--button-bg);
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  font-size: 0.9em;
+  padding: 0.1em 0.6em;
+  margin: 0.1em;
+  cursor: pointer;
+  line-height: normal;
 }
 
 button:hover,
 input[type="button"]:hover,
 input[type="file"]+label:hover {
-	background-color: var(--button-hover-bg);
+  background-color: var(--button-hover-bg);
 }
 
 button:active,
 input[type="button"]:active,
 input[type="file"]+label:active {
-	background-color: var(--button-active-bg);
+  background-color: var(--button-active-bg);
 }
 
 button,
 label,
 input[type="button"] {
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 
 input[type="checkbox"],
 input[type="file"],
 input[type="radio"],
 .hide {
-	display: none !important;
+  display: none !important;
 }
 
 .i-pause::after {
-	font: 1em icomoon;
-	content: "\e900";
+  font: 1em icomoon;
+  content: "\e900";
 }
 
 .i-settings::after {
-	font: 1em icomoon;
-	content: "\e909";
+  font: 1em icomoon;
+  content: "\e909";
 }
 
 input[type="checkbox"]+label::before {
-	font: 0.9em icomoon;
-	content: "\e907";
-	margin: 0 0.2em;
+  font: 0.9em icomoon;
+  content: "\e907";
+  margin: 0 0.2em;
 }
 
 input[type="checkbox"]:checked+label::before {
-	font: 0.9em icomoon;
-	content: "\e906";
-	margin: 0 0.2em;
+  font: 0.9em icomoon;
+  content: "\e906";
+  margin: 0 0.2em;
 }
 
 input[type="radio"]+label::before {
-	font: 0.9em icomoon;
-	content: "\e903";
-	margin: 0 0.2em;
+  font: 0.9em icomoon;
+  content: "\e903";
+  margin: 0 0.2em;
 }
 
 input[type="radio"]:checked+label::before {
-	font: 0.9em icomoon;
-	content: "\e908";
-	margin: 0 0.2em;
+  font: 0.9em icomoon;
+  content: "\e908";
+  margin: 0 0.2em;
 }
 
 textarea,
 input[type="text"] {
-	border: 1px solid #888;
-	border-radius: 2px;
-	padding: 0.2em;
-	margin: 1px;
-	line-height: 1.2;
+  border: 1px solid #888;
+  border-radius: 2px;
+  padding: 0.2em;
+  margin: 1px;
+  line-height: 1.2;
 }
 
 .main {
-	display: none;
+  display: none;
 }
 
 .title {
-	color: #00f;
-	word-break: break-all;
+  color: #00f;
+  word-break: break-all;
 }
 
 small {
-	font-size: 70%;
+  font-size: 70%;
 }
 
 .info,
 strong.error {
-	color: #f00;
+  color: #f00;
 }
 
 strong.warning {
-	color: #fa0;
+  color: #fa0;
 }
 
 strong.accept {
-	color: #080;
+  color: #080;
 }
 
 .index {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
 }
 
 .index>.header {
-	color: blue;
-	font-size: 2em;
-	font-weight: bold;
-	margin: 0;
-	padding: 2rem;
-	overflow-wrap: break-word;
+  color: blue;
+  font-size: 2em;
+  font-weight: bold;
+  margin: 0;
+  padding: 2rem;
+  overflow-wrap: break-word;
 }
 
 .index>.footer {
-	margin: 0;
-	padding: 2rem;
-	overflow-wrap: break-word;
+  margin: 0;
+  padding: 2rem;
+  overflow-wrap: break-word;
 }
 
 .index>.content {
-	flex-grow: 1;
-	width: 90%;
-	max-width: 480px;
-	margin: 0 auto;
+  flex-grow: 1;
+  width: 90%;
+  max-width: 480px;
+  margin: 0 auto;
 }
 
 .index>.content fieldset {
-	margin: auto;
-	border: none;
-	border-top: 1px dashed gray;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
+  margin: auto;
+  border: none;
+  border-top: 1px dashed gray;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .index>.content legend {
-	padding: 0 1em;
-	margin: 0 auto;
+  padding: 0 1em;
+  margin: 0 auto;
 }
 
 .index>.content a {
-	display: inline-block;
-	margin: 5px;
-	border: 2px solid var(--link-bg);
-	border-radius: 5px;
-	padding: 10px;
-	flex-grow: 1;
-	word-break: break-all;
+  display: inline-block;
+  margin: 5px;
+  border: 2px solid var(--link-bg);
+  border-radius: 5px;
+  padding: 10px;
+  flex-grow: 1;
+  word-break: break-all;
 }
 
 .info {
-	font-size: 1em;
-	line-height: 1.33em;
+  font-size: 1em;
+  line-height: 1.33em;
 }
 
 .profile {
-	font-size: 0.8em;
-	line-height: 1.5em;
+  font-size: 0.8em;
+  line-height: 1.5em;
 }
 
 .disabled {
-	opacity: 0.2;
-	pointer-events: none;
+  opacity: 0.2;
+  pointer-events: none;
 }
 
 .fade {
-	opacity: 0 !important;
-	visibility: hidden;
+  opacity: 0 !important;
+  visibility: hidden;
 }

@@ -32,30 +32,30 @@ v 30`;
 function init(x, y, zoom, maxitr, colorstr) {}
 
 function draw() {
-	let qwq = [...input.value.matchAll(/-?\d+/g)].sort((a, b) => a - b);
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	ctx.strokeStyle = '#fff';
-	const path = new Path2D(input.value);
-	ctx.stroke(path);
-	requestAnimationFrame(draw);
+  let qwq = [...input.value.matchAll(/-?\d+/g)].sort((a, b) => a - b);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = '#fff';
+  const path = new Path2D(input.value);
+  ctx.stroke(path);
+  requestAnimationFrame(draw);
 }
 draw();
 
 function resize() {
-	canvas.width = size;
-	canvas.height = size;
+  canvas.width = size;
+  canvas.height = size;
 }
 
 function arradd(str, a, b) {
-	let arr = str.split(' ').map(n => Number(n));
-	arr[0] += a;
-	arr[1] += b;
-	arr[0] = arr[0].toFixed(1);
-	arr[1] = arr[1].toFixed(1);
-	return arr.join(' ');
+  let arr = str.split(' ').map(n => Number(n));
+  arr[0] += a;
+  arr[1] += b;
+  arr[0] = arr[0].toFixed(1);
+  arr[1] = arr[1].toFixed(1);
+  return arr.join(' ');
 }
 
 function qwqadd(str, a, b) {
-	let qwq = str;
-	return qwq.replaceAll(/(?<!\d)[+-]?\d*(\.\d*)? [+-]?\d*(\.\d*)?(?!\d)/g, e => e ? arradd(e, a, b) : e);
+  let qwq = str;
+  return qwq.replaceAll(/(?<!\d)[+-]?\d*(\.\d*)? [+-]?\d*(\.\d*)?(?!\d)/g, e => e ? arradd(e, a, b) : e);
 }

@@ -1,10 +1,16 @@
 {
-	"scripts": {
-		"deploy": ""
-	},
-	"dependencies": {
-		"earcut": "^2.2.3",
-		"gl-matrix": "^3.4.3",
-		"three": "^0.139.2"
-	}
+  "scripts": {
+    "deploy": "",
+    "eslint:check": "eslint --ext .js,.ts public",
+    "eslint:format": "eslint --fix \"public/**/*.{js,ts}\""
+  },
+  "dependencies": {
+    "earcut": "^2.2.4",
+    "gl-matrix": "^3.4.3",
+    "three": "^0.139.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.59.5",
+    "eslint": "^8.40.0"
+  }
 }
