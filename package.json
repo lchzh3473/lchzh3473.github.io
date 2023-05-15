@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "build": "node scripts/build.mjs",
     "deploy": "",
     "eslint:check": "eslint --ext .js,.ts public",
     "eslint:format": "eslint --fix \"public/**/*.{js,ts}\""
