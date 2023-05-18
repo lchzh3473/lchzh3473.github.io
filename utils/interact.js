@@ -2,14 +2,15 @@ export class Interact {
   /** @param {HTMLElement} element */
   constructor(element) {
     this.element = element;
+    /** @type {any[]} */
     this.callbacks = [];
   }
   /**
    * @typedef {object} MouseCallbacks
-   * @property {(ev:MouseEvent)} mousedownCallback
-   * @property {(ev:MouseEvent)} mousemoveCallback
-   * @property {(ev:MouseEvent)} mouseupCallback
-   * @property {(ev:MouseEvent)} mouseoutCallback
+   * @property {(ev:MouseEvent)=>void} [mousedownCallback]
+   * @property {(ev:MouseEvent)=>void} [mousemoveCallback]
+   * @property {(ev:MouseEvent)=>void} [mouseupCallback]
+   * @property {(ev:MouseEvent)=>void} [mouseoutCallback]
    * @param {MouseCallbacks} param0
    */
   setMouseEvent({
@@ -18,27 +19,31 @@ export class Interact {
     mouseupCallback = function() {},
     mouseoutCallback = function() {}
   }) {
+    /** @type {(ev:MouseEvent)=>void} */
     const mousedown = evt => {
       evt.preventDefault();
       mousedownCallback(evt);
-    }
+    };
     // 踩坑：对move和up进行preventDefault会影响input元素交互
+    /** @type {(ev:MouseEvent)=>void} */
     const mousemove = evt => {
       mousemoveCallback(evt);
-    }
+    };
+    /** @type {(ev:MouseEvent)=>void} */
     const mouseup = evt => {
       mouseupCallback(evt);
-    }
+    };
+    /** @type {(ev:MouseEvent)=>void} */
     const mouseout = evt => {
       mouseoutCallback(evt);
-    }
+    };
     this.element.addEventListener('mousedown', mousedown);
     self.addEventListener('mousemove', mousemove);
     self.addEventListener('mouseup', mouseup);
     this.element.addEventListener('mouseout', mouseout);
     return this.callbacks.push({ mousedown, mousemove, mouseup, mouseout });
   }
-  /** @param {number} [id] */
+  /** @param {number} id */
   clearMouseEvent(id) {
     const { mousedown, mousemove, mouseup, mouseout } = this.callbacks[id - 1];
     this.element.removeEventListener('mousedown', mousedown);
@@ -49,10 +54,10 @@ export class Interact {
   }
   /**
    * @typedef {object} TouchCallbacks
-   * @property {(ev:TouchEvent)} touchstartCallback
-   * @property {(ev:TouchEvent)} touchmoveCallback
-   * @property {(ev:TouchEvent)} touchendCallback
-   * @property {(ev:TouchEvent)} touchcancelCallback
+   * @property {(ev:TouchEvent)=>void} [touchstartCallback]
+   * @property {(ev:TouchEvent)=>void} [touchmoveCallback]
+   * @property {(ev:TouchEvent)=>void} [touchendCallback]
+   * @property {(ev:TouchEvent)=>void} [touchcancelCallback]
    * @param {TouchCallbacks} param0
    */
   setTouchEvent({
@@ -61,30 +66,34 @@ export class Interact {
     touchendCallback = function() {},
     touchcancelCallback = function() {}
   }) {
-    const passive = { passive: false }; //warning
+    const passive = { passive: false }; // warning
+    /** @type {(ev:TouchEvent)=>void} */
     const touchstart = evt => {
       evt.preventDefault();
       touchstartCallback(evt);
-    }
+    };
+    /** @type {(ev:TouchEvent)=>void} */
     const touchmove = evt => {
       evt.preventDefault();
       touchmoveCallback(evt);
-    }
+    };
+    /** @type {(ev:TouchEvent)=>void} */
     const touchend = evt => {
       evt.preventDefault();
       touchendCallback(evt);
-    }
+    };
+    /** @type {(ev:TouchEvent)=>void} */
     const touchcancel = evt => {
       evt.preventDefault();
       touchcancelCallback(evt);
-    }
+    };
     this.element.addEventListener('touchstart', touchstart, passive);
     this.element.addEventListener('touchmove', touchmove, passive);
     this.element.addEventListener('touchend', touchend);
     this.element.addEventListener('touchcancel', touchcancel);
     return this.callbacks.push({ touchstart, touchmove, touchend, touchcancel });
   }
-  /** @param {number} [id] */
+  /** @param {number} id */
   clearTouchEvent(id) {
     const { touchstart, touchmove, touchend, touchcancel } = this.callbacks[id - 1];
     this.element.removeEventListener('touchstart', touchstart);
@@ -95,8 +104,8 @@ export class Interact {
   }
   /**
    * @typedef {object} KeyboardCallbacks
-   * @property {(ev:KeyboardEvent)} keydownCallback
-   * @property {(ev:KeyboardEvent)} keyupCallback
+   * @property {(ev:KeyboardEvent)=>void} [keydownCallback]
+   * @property {(ev:KeyboardEvent)=>void} [keyupCallback]
    * @param {KeyboardCallbacks} param0
    */
   setKeyboardEvent({
@@ -106,27 +115,29 @@ export class Interact {
     const isInput = () => {
       if (document.activeElement instanceof HTMLTextAreaElement) return true;
       if (document.activeElement instanceof HTMLInputElement) {
-        const type = document.activeElement.getAttribute('type');
+        const type = document.activeElement.getAttribute('type') || '';
         if (/^(button|checkbox|image|radio|reset|submit)$/.test(type)) return false;
         return true;
       }
       return false;
-    }
+    };
+    /** @type {(ev:KeyboardEvent)=>void} */
     const keydown = evt => {
       if (isInput()) return;
       evt.preventDefault();
       keydownCallback(evt);
-    }
+    };
+    /** @type {(ev:KeyboardEvent)=>void} */
     const keyup = evt => {
       if (isInput()) return;
       evt.preventDefault();
       keyupCallback(evt);
-    }
+    };
     self.addEventListener('keydown', keydown);
     self.addEventListener('keyup', keyup);
     return this.callbacks.push({ keydown, keyup });
   }
-  /** @param {number} [id] */
+  /** @param {number} id */
   clearKeyboardEvent(id) {
     const { keydown, keyup } = this.callbacks[id - 1];
     self.removeEventListener('keydown', keydown);
@@ -145,7 +156,7 @@ export class InteractProxy {
     this.touchEventId = 0;
     this.keyboardEventId = 0;
   }
-  /** @param {MouseEventCallbacks} callbacks */
+  /** @param {MouseCallbacks} callbacks */
   setMouseEvent(callbacks) {
     this.mouseEvent = callbacks;
   }

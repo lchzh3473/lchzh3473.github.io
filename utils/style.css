@@ -110,9 +110,14 @@ input[type="file"]+label:active {
 button,
 label,
 input[type="button"] {
+  /* Prevent text selection */
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
+  /* Fix style inconsistency for Safari 14.5- */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 input[type="checkbox"],
