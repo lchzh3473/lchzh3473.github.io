@@ -5,14 +5,15 @@
     "worker": true
   },
   "extends": ["eslint:all"],
-  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "script"
   },
   "rules": {
     "array-element-newline": ["error", "consistent"],
+    "arrow-parens": ["error", "as-needed"],
     "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+    "camelcase": ["error", { "properties": "never" }],
     "capitalized-comments": "off",
     "complexity": "off", //qwq
     "curly": ["error", "multi-line"],
@@ -36,12 +37,15 @@
     "multiline-comment-style": ["error", "separate-lines"],
     "multiline-ternary": ["error", "never"],
     "newline-per-chained-call": "off", //qwq
+    "no-alert": "off", //qwq
     "no-bitwise": "off",
     "no-confusing-arrow": "off", //qwq
     "no-console": "off", //qwq
     "no-continue": "off", //qwq
     "no-control-regex": "off",
+    "no-empty-function": "off",
     "no-eq-null": "off",
+    "no-implicit-globals": "off",
     "no-inline-comments": "off",
     "no-magic-numbers": "off", //qwq
     "no-mixed-operators": "off", //qwq
@@ -58,7 +62,7 @@
     "no-warning-comments": "off", //qwq
     "object-curly-spacing": ["error", "always"],
     "object-property-newline": ["error", { "allowAllPropertiesOnSameLine": true }], //qwq
-    "one-var": ["error", "never"],
+    "one-var": ["error", { "initialized": "never", "uninitialized": "always" }],
     "padded-blocks": ["error", "never"],
     "prefer-const": ["error", { "destructuring": "all" }],
     "prefer-destructuring": ["error", { "object": true, "array": false }],
@@ -70,6 +74,7 @@
     "sort-imports": ["error", { "ignoreDeclarationSort": true }],
     "sort-keys": "off",
     "space-before-function-paren": ["error", "never"],
+    "strict": ["error", "global"],
     "wrap-regex": "off" //someday will be never
     // "array-bracket-spacing": "error", // space inside brackets
     // "comma-spacing": "error", // space after comma
@@ -90,40 +95,27 @@
   },
   "overrides": [
     {
-      "extends": ["plugin:@typescript-eslint/all"],
-      "files": ["./**/*.{ts,tsx}"],
-      "parser": "@typescript-eslint/parser",
+      "files": [
+        //qwq
+        "./public/utils/aup.js",
+        "./public/utils/interact.js",
+        "./public/webgl/gl-core.js",
+        "./public/webgl/script.js",
+        "./scripts/*"
+      ],
       "parserOptions": {
         "ecmaVersion": "latest",
-        "sourceType": "module",
-        "project": "tsconfig.json"
+        "sourceType": "module"
       },
-      "plugins": ["@typescript-eslint"],
       "rules": {
-        "@typescript-eslint/brace-style": ["error", "1tbs", { "allowSingleLine": true }],
-        "@typescript-eslint/explicit-function-return-type": "off", //qwq
-        "@typescript-eslint/indent": ["error", 2, { "SwitchCase": 1 }],
-        "@typescript-eslint/lines-around-comment": ["error", { "beforeBlockComment": false }],
-        "@typescript-eslint/lines-between-class-members": ["error", "never"],
-        "@typescript-eslint/no-confusing-void-expression": "off", //qwq
-        "@typescript-eslint/no-empty-function": "off",
-        "@typescript-eslint/no-explicit-any": ["error", { "fixToUnknown": true, "ignoreRestArgs": true }],
-        "@typescript-eslint/no-extra-parens": ["error", "all", { "returnAssign": false }],
-        "@typescript-eslint/no-magic-numbers": "off", //qwq
-        "@typescript-eslint/no-non-null-assertion": "off", //qwq
-        "@typescript-eslint/no-type-alias": "off",
-        "@typescript-eslint/no-unnecessary-condition": "off", //qwq
-        "@typescript-eslint/no-unsafe-call": "off", //qwq
-        "@typescript-eslint/no-unsafe-member-access": "off", //qwq
-        "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-        "@typescript-eslint/no-use-before-define": ["error", "nofunc"],
-        "@typescript-eslint/object-curly-spacing": ["error", "always"],
-        "@typescript-eslint/prefer-nullish-coalescing": "off", //qwq
-        "@typescript-eslint/prefer-readonly-parameter-types": "off", //qwq
-        "@typescript-eslint/quotes": ["error", "single"],
-        "@typescript-eslint/semi": ["error", "always", { "omitLastInOneLineBlock": true }],
-        "@typescript-eslint/space-before-function-paren": ["error", "never"],
-        "no-control-regex": "off"
+        "strict": ["error", "never"]
+      }
+    },
+    {
+      "files": ["./public/utils/main.js"],
+      "rules": {},
+      "globals": {
+        "Utils": "off"
       }
     }
   ],
@@ -131,5 +123,5 @@
     "hook": "writable",
     "Utils": "readonly"
   },
-  "ignorePatterns": ["* copy.*", "**/lib/*"]
+  "ignorePatterns": ["* copy.*", "**/lib/*", "**/service-worker.js", "**/sw.js"]
 }

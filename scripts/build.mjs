@@ -6,4 +6,4 @@ const source = resolve(dir, '../public');
 const target = resolve(dir, '../dist');
 // fs.rmSync(target, { recursive: true, force: true });
 // fs.mkdirSync(target);
-fs.cpSync('public/', 'dist/', { recursive: true });
+fs.cpSync(source, target, { recursive: true });
