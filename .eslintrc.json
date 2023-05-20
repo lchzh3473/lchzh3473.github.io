@@ -26,6 +26,7 @@
     "line-comment-position": "off",
     "lines-around-comment": ["error", { "beforeBlockComment": false }],
     "lines-between-class-members": ["error", "never"],
+    "init-declarations": "off",
     "max-classes-per-file": "off",
     "max-depth": "off", //qwq
     "max-len": "off",
@@ -57,7 +58,7 @@
     "no-ternary": "off",
     "no-undefined": "off",
     "no-underscore-dangle": "off",
-    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
     "no-use-before-define": ["error", "nofunc"],
     "no-warning-comments": "off", //qwq
     "object-curly-spacing": ["error", "always"],
@@ -123,5 +124,5 @@
     "hook": "writable",
     "Utils": "readonly"
   },
-  "ignorePatterns": ["* copy.*", "**/lib/*", "**/service-worker.js", "**/sw.js"]
+  "ignorePatterns": ["* copy.*", "**/lib/*", "**/service-worker.js", "**/sw.js", "**/rubbish/*"]
 }

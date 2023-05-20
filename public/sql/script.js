@@ -1,5 +1,5 @@
 'use strict';
-const _i = ['WebSQL', [1, 0, 0], 1651645939, 1651645939];
+self._i = ['WebSQL', [1, 0, 0], 1651645939, 1651645939];
 let db = null;
 const stage = document.getElementById('stage');
 const inputbox = document.createElement('div');
@@ -15,9 +15,8 @@ resizeObserver.observe(textarea);
 resizeObserver.observe(document.body);
 stage.appendChild(inputbox).append(textarea, textarea2);
 input('输入sql语句，然后回车。');
-
 function enterKeyCheck(evt) {
-  if (evt.inputType == 'insertLineBreak') {
+  if (evt.inputType === 'insertLineBreak') {
     evt.preventDefault();
     if (textarea.value) {
       input(textarea.value);
@@ -25,24 +24,21 @@ function enterKeyCheck(evt) {
     }
   } else console.log(evt);
 }
-
 function resize() {
   textarea2.value = textarea.value;
-  textarea2.style.width = textarea.clientWidth + 'px';
-  textarea.style.height = Math.max(stage.clientHeight + stage.offsetTop - textarea.offsetTop, textarea2.scrollHeight) + 'px';
+  textarea2.style.width = `${textarea.clientWidth}px`;
+  textarea.style.height = `${Math.max(stage.clientHeight + stage.offsetTop - textarea.offsetTop, textarea2.scrollHeight)}px`;
 }
-
 function input(command) {
   console.log(command);
   const node = document.createElement('div');
   node.classList.add('arcinput');
   node.textContent = command;
   reset(node);
-  if (typeof openDatabase != 'function') error(null, { message: '当前浏览器不支持openDatabase方法，该脚本无法运行。' });
+  if (typeof openDatabase !== 'function') error(null, { message: '当前浏览器不支持openDatabase方法，该脚本无法运行。' });
   else if (db) db.transaction(t => t.executeSql(command, [], success, error));
   else db = openDatabase('test', '', '', 5 * 1024 * 1024);
 }
-
 function success(t, e) {
   console.log('callback:', t, e);
   const table = e.rows;
@@ -51,7 +47,7 @@ function success(t, e) {
     for (let i = 0; i < table.length; i++) {
       const row = table.item(i);
       const arrx = [];
-      for (const j in row) {
+      for (const j of Object.keys(row)) {
         if (arr[0].indexOf(j) < 0) arr[0].push(j);
         arrx[arr[0].indexOf(j)] = row[j];
       }
@@ -73,7 +69,6 @@ function success(t, e) {
     reset(node);
   }
 }
-
 function error(t, e) {
   console.log('errorCallback:', t, e);
   console.error(e.message);
@@ -82,7 +77,6 @@ function error(t, e) {
   node.textContent = e.message;
   reset(node);
 }
-
 function reset(node) {
   stage.insertBefore(node, inputbox);
   stage.scrollTo(0, stage.scrollHeight);

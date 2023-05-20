@@ -1,5 +1,5 @@
 'use strict';
-const _i = ['AV号与BV号转换器', [2, 1, 1], 1585055154, 1654211197];
+self._i = ['AV号与BV号转换器', [2, 1, 1], 1585055154, 1654211197];
 const copy = document.getElementById('copy');
 const input = document.getElementById('input');
 const output = document.getElementById('output');
@@ -20,12 +20,12 @@ const av2bv = code => {
   const s = {};
   pos.forEach((p, i) => s[p] = table[Math.floor(n / 58 ** i) % 58]);
   return `1${s[1]}${s[2]}4${s[4]}1${s[6]}7${s[8]}${s[9]}`;
-}
+};
 const bv2av = code => {
   let n = 0;
   pos.forEach((p, i) => n += tr[code[p]] * 58 ** i);
-  return (n - add) ^ xor;
-}
+  return n - add ^ xor;
+};
 const convert = () => {
   const av = [0, 0];
   const bv = [0, 0];
@@ -33,13 +33,13 @@ const convert = () => {
   reset.classList[inValue ? 'remove' : 'add']('disabled');
   output.innerHTML = Utils.escapeHTML(inValue ? inValue : example).replace(/av[1-9]\d*|bv1[1-9a-z]{9}|cv\d+/gi, code => {
     const enc = code.substring(2);
-    let dec;
+    let dec = '';
     switch (code[0]) {
       case 'A':
       case 'a':
         dec = av2bv(enc);
         av[0]++;
-        if (enc == bv2av(dec)) {
+        if (Number(enc) === bv2av(dec)) {
           av[1]++;
           if (a2b.checked) return `<a class="bv"href="http://www.bilibili.com/video/BV${dec}">BV${dec}</a>`;
           return `<a class="av"href="http://www.bilibili.com/video/av${enc}">av${enc}</a>`;
@@ -49,7 +49,7 @@ const convert = () => {
       case 'b':
         dec = bv2av(enc);
         bv[0]++;
-        if (dec > 0 && enc == av2bv(dec)) {
+        if (dec > 0 && enc === av2bv(dec)) {
           bv[1]++;
           if (b2a.checked) return `<a class="av"href="http://www.bilibili.com/video/av${dec}">av${dec}</a>`;
           return `<a class="bv"href="http://www.bilibili.com/video/BV${enc}">BV${enc}</a>`;
@@ -59,40 +59,42 @@ const convert = () => {
         return `<a class="cv"href="http://www.bilibili.com/read/cv${enc}">cv${enc}</a>`;
     }
   });
-  if (av[0] + bv[0] == 0) {
+  if (av[0] + bv[0] === 0) {
     result.className = 'error';
-    result.innerText = `未检测到av号或bv号`;
-  } else if (av[0] + bv[0] != av[1] + bv[1]) {
-    result.className = 'warning';
-    result.innerText = `已部分转换（av:${av[1]}/${av[0]}\u2002bv:${bv[1]}/${bv[0]}）`;
-  } else {
+    result.innerText = '未检测到av号或bv号';
+  } else if (av[0] + bv[0] === av[1] + bv[1]) {
     result.className = 'accept';
     result.innerText = `已全部转换（av:${av[1]}/${av[0]}\u2002bv:${bv[1]}/${bv[0]}）`;
+  } else {
+    result.className = 'warning';
+    result.innerText = `已部分转换（av:${av[1]}/${av[0]}\u2002bv:${bv[1]}/${bv[0]}）`;
   }
-}
+};
 convert();
 copy.onclick = () => Utils.copyText.call(output).then(Utils.setText.bind(copy, '复制成功'), Utils.setText.bind(copy, '复制失败'));
 copy.onblur = Utils.setText.bind(copy, '复制');
 reset.onclick = () => {
   input.value = '';
   convert();
-}
-//api test
-const enableAPI = self.localStorage.getItem('enableAPI') == 'true';
+};
+// api test
+const enableAPI = self.localStorage.getItem('enableAPI') === 'true';
 if (enableAPI) {
   const script = document.createElement('script');
   script.src = './api.js';
   document.head.appendChild(script);
 }
-input.addEventListener('input', function() {
-  if (this.value == '/test\n') setTimeout(() => {
-    if (this.value == '/test\n') {
-      const str = enableAPI ? '关闭' : '开启';
-      if (confirm(`是否${str}实验性功能(b站api)?`)) {
-        self.localStorage.setItem('enableAPI', !enableAPI);
-        alert(`已经${str}实验性功能。`);
+input.addEventListener('input', () => {
+  if (input.value === '/test\n') {
+    setTimeout(() => {
+      if (input.value === '/test\n') {
+        const str = enableAPI ? '关闭' : '开启';
+        if (confirm(`是否${str}实验性功能(b站api)?`)) {
+          self.localStorage.setItem('enableAPI', !enableAPI);
+          alert(`已经${str}实验性功能。`);
+        }
+        location.reload(true);
       }
-      location.reload(true);
-    }
-  }, 1e3);
+    }, 1e3);
+  }
 });
