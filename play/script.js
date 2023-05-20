@@ -47,7 +47,7 @@ document.getElementById('play').addEventListener('click', () => {
         const arr = note.match(/[a-gA-G]\d?/g);
         for (const n of arr) {
           const octave = n.match(/\d/);
-          const octaveNumber = (octave || octave[0]) | 0;
+          const octaveNumber = (octave && octave[0]) | 0;
           const pitch = octaveNumber * 12 + pitches.indexOf(n.match(/[a-gA-G]/)[0]) - 9;
           stops.push(setTimeout(() => playNote(pitch * 100, 1 / arr.length), offset));
         }

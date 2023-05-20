@@ -58,14 +58,14 @@ function getEmoteCommand(value = '', value2 = '') {
   return { data: [num, num2].join(), cmd: str };
 }
 function setEmote() {
-  const { value } = document.getElementById('emote-pid');
+  const value1 = document.getElementById('emote-pid').value;
   const value2 = document.getElementById('emote-id').value;
-  const { data, cmd } = getEmoteCommand(value, value2);
+  const { data, cmd } = getEmoteCommand(value1, value2);
   document.getElementById('emote-data').textContent = data;
   document.getElementById('emote-cmd').textContent = cmd;
   const getSrc = (pid = 0, id = 0, ext = 'png') => `https://gxh.vip.qq.com/qqshow/admindata/comdata/vipSmallEmoji_item_${pid}/${id}.${ext}`;
-  const png = getSrc(value | 0, value2 | 0);
-  const gif = getSrc(value | 0, value2 | 0, 'gif');
+  const png = getSrc(value1 | 0, value2 | 0);
+  const gif = getSrc(value1 | 0, value2 | 0, 'gif');
   const invalid = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAMAAACfWMssAAAAkFBMVEUAAADd3d3c3Nzc3Nze3t7c3Nzd3d3c3Nzd3d3c3Nze3t7m5ubd3d3d3d3d3d3d3d3d3d3d3d3f39/U1NTe3t7h4eHe3t7d3d3d3d3e3t7d3d3e3t7c3Nze3t7d3d3d3d3d3d3e3t7c3Nze3t7e3t7d3d3e3t7d3d3c3Nzd3d3d3d3d3d3e3t7d3d3d3d3d3d3EcJv9AAAAL3RSTlMAcmYjdzL3K/oakALbXvOchTkPBWwK9erkiX8lFO7SqqGCHEw/y7laUDTCspRhvt6c888AAAHLSURBVEjH7dXZkoIwEAVQRI1hVVAWRVxw36b//+8m9GQISwyVV8v70Fp1PSRlATG++aAEi1E7tlUWg4HZzmss3BS6IRErxgQksav1ZG6KV6QgS8DhQtLRGyuiGKRZcDgAgOSSDWsZbcrC24xbuZk5AAxq8GI0csKL3k2jE7MFs0Y7ISGbmR924aQFh43W3pVzOTU04Tw54gx04cV12Lzi1II/o3KesdeBQ2qxWZC1Lpxty7nCKa5m9cJ5emDTSa91NwPi9cFr6rAZ3lPPqTkWrwc+9gbmkJ4C4VAqYUim/IaJVvHOEg6lasXsnC/4Joudv5oLx6QMihzcapPHjbsFqEklNKKRvy34f2z6pC6X76A1//vATWLWO1qXb+ASNla1ycP/D6gaogNwuXS85DzBLy70QMcG4BKzTvCJ9IgKCifkkw7xFgQ15E7IPcUFTaKG3Am5B1qwNkpACbkTkrkntkQJM3S15AD4PEc5KOGjW1Mbn+dYBaXBV0fogy6kS7wjYm2IC64J6EKC7wHb14ZxyJqCgi4kKzxYfTlUHKw+HldUfbAGkgXxENjGcnirTrVOlUflm5DK3cyoMn6ZjdhH3MnMlMSbGN98Tn4BzcG9ugWu42sAAAAASUVORK5CYII=';
   ep.href = png;
   eg.href = gif;
@@ -168,7 +168,7 @@ self.onload = function() {
       document.getElementById('gradient-preset-input').dispatchEvent(new Event('change'));
     });
     document.getElementById('gradient-preset-input').onchange = evt => {
-      const gradient = gradients.find(v => v.id === document.getElementById('gradient-data').textContent | 0);
+      const gradient = gradients.find(v => v.id === (document.getElementById('gradient-data').textContent | 0));
       if (gradient) {
         document.getElementById('gradient-preset').innerHTML = '';
         document.getElementById('gradient-preset').appendChild(getGradientHTML(evt.target.value, gradient));
@@ -211,7 +211,7 @@ self.onload = function() {
       const idNode = new Preset();
       document.getElementById('preset-id').appendChild(idNode.select);
       const qwqwq = () => {
-        const vl = arr.find(e => e.id === pidNode.select.value | 0);
+        const vl = arr.find(e => e.id === (pidNode.select.value | 0));
         idNode.loadPreset(vl && vl.items);
         idNode.input.dispatchEvent(new Event('input'));
       };
