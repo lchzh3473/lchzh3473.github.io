@@ -1,5 +1,5 @@
 'use strict';
-const _i = ['CSV转换器', [1, 0, 0], 1616081874, 1616081874];
+self._i = ['CSV转换器', [1, 0, 0], 1616081874, 1616081874];
 const copy = document.getElementById('copy');
 const input = document.getElementById('input');
 const output = document.getElementById('output');
@@ -21,15 +21,14 @@ const convert = () => {
     result.className = 'error';
     result.innerHTML = err;
   }
-}
+};
 convert();
 copy.onclick = () => Utils.copyText.call(output).then(Utils.setText.bind(copy, '复制成功'), Utils.setText.bind(copy, '复制失败'));
 copy.onblur = Utils.setText.bind(copy, '复制');
 reset.onclick = () => {
   input.value = '';
   convert();
-}
-
+};
 function csv2array(data) {
   const strarr = data.replace(/\r/g, '').split('\n');
   const col = [];
@@ -39,13 +38,13 @@ function csv2array(data) {
     let beforeQuot = false;
     const row = [];
     for (const j of i) {
-      if (j == '"') {
+      if (j === '"') {
         if (!isQuot) isQuot = true;
         else if (beforeQuot) {
           rowstr += j;
           beforeQuot = false;
         } else beforeQuot = true;
-      } else if (j == ',') {
+      } else if (j === ',') {
         if (!isQuot) {
           row.push(rowstr);
           rowstr = '';
@@ -55,8 +54,8 @@ function csv2array(data) {
           isQuot = false;
           beforeQuot = false;
         } else rowstr += j;
-      } else if (!beforeQuot) rowstr += j;
-      else throw 'Error 1';
+      } else if (beforeQuot) throw new Error('Error 1');
+      else rowstr += j;
     }
     if (!isQuot) {
       row.push(rowstr);
@@ -66,9 +65,9 @@ function csv2array(data) {
       rowstr = '';
       isQuot = false;
       beforeQuot = false;
-    } else throw 'Error 2';
+    } else throw new Error('Error 2');
     col.push(row);
   }
-  console.log(col); //test
+  console.log(col); // test
   return col;
 }

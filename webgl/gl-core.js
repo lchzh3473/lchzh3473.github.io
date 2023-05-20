@@ -1,12 +1,12 @@
 import '//fastly.jsdelivr.net/npm/earcut';
 /** @type {import('earcut')} */
-const earcutbase = window.earcut; //存在投影bug
+const earcutbase = window.earcut; // 存在投影bug
 delete window.earcut;
 /** @param {ArrayLike<number>} arr */
 const earcut = arr => {
   let triangles = earcutbase(arr, null, 3);
-  if (!triangles.length) triangles = earcutbase(arr.map((v, i) => i % 3 == 0 ? arr[i + 2] : v), null, 3);
-  if (!triangles.length) triangles = earcutbase(arr.map((v, i) => i % 3 == 1 ? arr[i + 1] : v), null, 3);
+  if (!triangles.length) triangles = earcutbase(arr.map((v, i) => i % 3 === 0 ? arr[i + 2] : v), null, 3);
+  if (!triangles.length) triangles = earcutbase(arr.map((v, i) => i % 3 === 1 ? arr[i + 1] : v), null, 3);
   return triangles;
 };
 const program1 = {
@@ -82,10 +82,10 @@ export class Renderer {
     const program = gl.createProgram(); // 创建着色器程序
     gl.attachShader(program, this.loadShader(gl.VERTEX_SHADER, vsSource));
     gl.attachShader(program, this.loadShader(gl.FRAGMENT_SHADER, fsSource));
-    gl.linkProgram(program); //链接program
-    //gl.useProgram(shaderProgram); //使用program
+    gl.linkProgram(program); // 链接program
+    // gl.useProgram(shaderProgram); //使用program
     if (gl.getProgramParameter(program, gl.LINK_STATUS)) return program;
-    console.warn('Unable to initialize the shader program: ' + gl.getProgramInfoLog(program));
+    console.warn(`Unable to initialize the shader program: ${gl.getProgramInfoLog(program)}`);
     return null;
   }
   /**
@@ -96,29 +96,29 @@ export class Renderer {
    */
   loadShader(type, source) {
     const { gl } = this;
-    const shader = gl.createShader(type); //创建着色器对象
+    const shader = gl.createShader(type); // 创建着色器对象
     gl.shaderSource(shader, source); // 引入着色器源代码
     gl.compileShader(shader); // 编译着色器
     if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) return shader;
-    console.warn('An error occurred compiling the shaders: ' + gl.getShaderInfoLog(shader));
+    console.warn(`An error occurred compiling the shaders: ${gl.getShaderInfoLog(shader)}`);
     gl.deleteShader(shader);
     return null;
   }
   /**
    * qwq
-   * @param {WebGLProgram} program 
-   * @param {string} name 
-   * @param {number[]} arr 
-   * @param {number} size 
+   * @param {WebGLProgram} program
+   * @param {string} name
+   * @param {number[]} arr
+   * @param {number} size
    */
-  vertexAttrib(program, name = '', arr, size) {
+  vertexAttrib(program, name, arr, size) {
     const { gl } = this;
-    const al = gl.getAttribLocation(program, name); //获取着色器变量
+    const al = gl.getAttribLocation(program, name); // 获取着色器变量
     if (!~al) throw new RangeError(`Cannot find variable name '${name}'`);
-    const buffer = this.initBuffer(gl.ARRAY_BUFFER, arr); //类型数组构造函数Float32Array创建顶点数组
-    gl.vertexAttribPointer(al, size, gl.FLOAT, false, 0, 0); //缓冲区中的数据按照一定的规律传递给变量
-    gl.enableVertexAttribArray(al); //允许数据传递
-    //最后三个语句似乎是无序的qwq
+    const buffer = this.initBuffer(gl.ARRAY_BUFFER, arr); // 类型数组构造函数Float32Array创建顶点数组
+    gl.vertexAttribPointer(al, size, gl.FLOAT, false, 0, 0); // 缓冲区中的数据按照一定的规律传递给变量
+    gl.enableVertexAttribArray(al); // 允许数据传递
+    // 最后三个语句似乎是无序的qwq
     return buffer;
   }
   initBuffer(target, arr = [0]) {
@@ -128,19 +128,21 @@ export class Renderer {
         return this.createBuffer(gl.ARRAY_BUFFER, new Float32Array(arr), gl.STATIC_DRAW);
       case gl.ELEMENT_ARRAY_BUFFER:
         return this.createBuffer(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(arr), gl.STATIC_DRAW);
+      default:
+        throw new RangeError(`Unknown target '${target}'`);// qwq
     }
   }
   /**
    * 创建缓冲区对象并传入数据
-   * @param {number} target 
-   * @param {BufferSource} data 
-   * @param {number} usage 
+   * @param {number} target
+   * @param {BufferSource} data
+   * @param {number} usage
    */
   createBuffer(target, data, usage) {
     const { gl } = this;
-    const buffer = gl.createBuffer(); //创建缓冲区对象
-    gl.bindBuffer(target, buffer); //绑定缓冲区对象,激活buffer
-    gl.bufferData(target, data, usage); //顶点数组data数据传入缓冲区
+    const buffer = gl.createBuffer(); // 创建缓冲区对象
+    gl.bindBuffer(target, buffer); // 绑定缓冲区对象,激活buffer
+    gl.bufferData(target, data, usage); // 顶点数组data数据传入缓冲区
     return buffer;
   }
   loadTexture(url) {
@@ -166,9 +168,8 @@ export class Renderer {
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
       }
-
       function isPowerOf2(value) {
-        return (value & (value - 1)) == 0;
+        return (value & value - 1) === 0;
       }
     };
     image.src = url;
@@ -188,7 +189,7 @@ export class Renderer {
   }
   /**
    * 渲染几何体qwq
-   * @param {WebGLElement} elem 要画的几何体qwq 
+   * @param {WebGLElement} elem 要画的几何体qwq
    * @param {mat4} matrix 摄像机视角x玩家视角
    */
   drawScene(elem, matrix) {
@@ -207,7 +208,7 @@ export class Renderer {
     for (let i = 0; i < attribLength; i++) {
       const { type, name } = gl.getActiveAttrib(this.program, i);
       const location = gl.getAttribLocation(this.program, name);
-      if (type == gl.FLOAT_VEC2 || type == gl.FLOAT_VEC4) {
+      if (type === gl.FLOAT_VEC2 || type === gl.FLOAT_VEC4) {
         const buffer = this.initBuffer(gl.ARRAY_BUFFER, elem.attributes[name]);
         const size = elem.program.attributes[name];
         gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
@@ -219,12 +220,12 @@ export class Renderer {
     for (let i = 0; i < uniformLength; i++) {
       const { type, name } = gl.getActiveUniform(this.program, i);
       const location = gl.getUniformLocation(this.program, name);
-      if (type == gl.SAMPLER_2D) {
+      if (type === gl.SAMPLER_2D) {
         const id = elem.program.uniforms[name];
         gl.useProgram(this.program);
-        gl.activeTexture(gl['TEXTURE' + id]);
+        gl.activeTexture(gl[`TEXTURE${id}`]);
         gl.uniform1i(location, id);
-      } else if (type == gl.FLOAT_MAT4) {
+      } else if (type === gl.FLOAT_MAT4) {
         this[name] = location;
       }
     }
@@ -239,24 +240,24 @@ export class WebGLElement {
    * @param {number[][]} colormaps 若干坐标下标表示的形状颜色
    */
   constructor(coords, targets, colormaps = []) {
-    const { triangles, colors } = this.link(coords, targets, colormaps);
+    const { triangles, colors } = link(coords, targets, colormaps);
     this.program = program1;
     const points = targets.flatMap(e => e.flatMap(v => coords[v]));
     this.attributes = { a_position: points, a_color: colors.flat() };
     this.indices = triangles.flat();
   }
-  link(coords, targets, colormaps = []) {
-    const triangles = [];
-    const colors = [];
-    let tmp = 0;
-    targets.forEach((v, i) => {
-      triangles.push(earcut(v.flatMap(v => coords[v])).map(v => v + tmp));
-      const base = [Math.random(), Math.random(), Math.random(), 1];
-      for (const _ of v) colors.push(colormaps[i] || base);
-      tmp += v.length;
-    });
-    return { triangles, colors };
-  }
+}
+function link(coords, targets, colormaps = []) {
+  const triangles = [];
+  const colors = [];
+  let tmp = 0;
+  targets.forEach((v, i) => {
+    triangles.push(earcut(v.flatMap(w => coords[w])).map(x => x + tmp));
+    const base = [Math.random(), Math.random(), Math.random(), 1];
+    for (const _ of v) colors.push(colormaps[i] || base);
+    tmp += v.length;
+  });
+  return { triangles, colors };
 }
 export class WebGLElement2 {
   constructor(vertices, textureCoords, indices) {

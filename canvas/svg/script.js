@@ -1,14 +1,14 @@
 'use strict';
-const _i = ['SVG制作器', [1, 0, 0], 1632837172, 1632837172];
+self._i = ['SVG制作器', [1, 0, 0], 1632837172, 1632837172];
 const canvas = document.getElementById('stage');
 const size = 500;
-const size2 = size / 2;
+// const size2 = size / 2;
 const ctx = canvas.getContext('2d');
 const input = document.getElementById('input');
 self.addEventListener('resize', resize);
 resize();
-const imgData = new ImageData(size, size);
-init();
+// const imgData = new ImageData(size, size);
+// init();
 input.value = `M5.5 63.2C5.5 84.7 11.4 100.6 29.9 100.6C35.1 100.6 47.3 99.7 54.3 98.4L54.3 92.5C54.3 92.5 40.4 93.2 29.9 93.2C16.6 93.2 12.9 79.8 12.9 63.4C12.9 39.1 17.4 33.4 29.9 33.4C39.1 33.4 54.2 34.4 54.3 34.4L54.3 28.5C47.3 27.2 35.1 26 29.9 26C10 26 5.5 39.8 5.5 63.2Z
 M68.7 74.2C68.7 55.1 73.5 53.8 84.7 53.8C96.4 53.8 100.7 55.2 100.7 74.2C100.7 91.7 95.5 93.1 84.7 93.1C74.4 93.1 68.7 91.9 68.7 74.2ZM61.3 74.2C61.3 93.2 66.8 100.5 84.7 100.5C102.6 100.5 108.1 93.9 108.1 74.2C108.1 53.1 102.6 46.4 84.7 46.4C67.3 46.4 61.3 52.5 61.3 74.2Z
 M122.5 73.7C122.5 57.4 126.2 53.5 132.6 53.5C140.3 53.5 145.3 54.3 152.2 56.1L152.2 88.6C146.8 90.8 140.5 93.2 132.6 93.2C126.1 93.2 122.5 86.7 122.5 73.7ZM115.1 73.7C115.1 85.9 118.1 100.6 132.6 100.6C139.4 100.6 149.6 96.0 152.2 94.1L154.2 100.0L159.5 100.0L159.5 21.5L152.2 21.5L152.2 50.1C145.8 47.5 137.1 46.1 132.6 46.1C117.5 46.1 115.1 60.1 115.1 73.7Z
@@ -28,11 +28,10 @@ m 40 -100 v 100
 m 0 -30
 a 25 25 0 0 1 50 0
 v 30`;
-//作图
-function init(x, y, zoom, maxitr, colorstr) {}
-
+// 作图
+// function init(x, y, zoom, maxitr, colorstr) {}
 function draw() {
-  let qwq = [...input.value.matchAll(/-?\d+/g)].sort((a, b) => a - b);
+  // const qwq = [...input.value.matchAll(/-?\d+/g)].sort((a, b) => a - b);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.strokeStyle = '#fff';
   const path = new Path2D(input.value);
@@ -40,22 +39,19 @@ function draw() {
   requestAnimationFrame(draw);
 }
 draw();
-
 function resize() {
   canvas.width = size;
   canvas.height = size;
 }
-
-function arradd(str, a, b) {
-  let arr = str.split(' ').map(n => Number(n));
-  arr[0] += a;
-  arr[1] += b;
-  arr[0] = arr[0].toFixed(1);
-  arr[1] = arr[1].toFixed(1);
-  return arr.join(' ');
-}
-
-function qwqadd(str, a, b) {
-  let qwq = str;
-  return qwq.replaceAll(/(?<!\d)[+-]?\d*(\.\d*)? [+-]?\d*(\.\d*)?(?!\d)/g, e => e ? arradd(e, a, b) : e);
-}
+// function arradd(str, a, b) {
+//   const arr = str.split(' ').map((n) => Number(n));
+//   arr[0] += a;
+//   arr[1] += b;
+//   arr[0] = arr[0].toFixed(1);
+//   arr[1] = arr[1].toFixed(1);
+//   return arr.join(' ');
+// }
+// function qwqadd(str, a, b) {
+//   const qwq = str;
+//   return qwq.replaceAll(/(?<!\d)[+-]?\d*(\.\d*)? [+-]?\d*(\.\d*)?(?!\d)/g, (e) => e ? arradd(e, a, b) : e);
+// }

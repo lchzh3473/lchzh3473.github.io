@@ -1,90 +1,89 @@
 'use strict';
-const _i = ['MIDI转JSON', [2, 1, 4], 1585107102, 1590850976];
-if (typeof FileReader == 'undefined') {
+self._i = ['MIDI转JSON', [2, 1, 4], 1585107102, 1590850976];
+const re = document.getElementById('result');
+const ou = document.getElementById('output');
+const of = document.getElementById('openfile');
+if (typeof FileReader === 'undefined') {
   ou.innerHTML = '<strong style="color:#f00">此浏览器不支持FileReader接口，该脚本无法运行。</strong>';
-  openfile.setAttribute('disabled', 'disabled');
+  of.setAttribute('disabled', 'disabled');
 }
-
 function c(arr) {
-  var b = 0;
+  let b = 0;
   while (parseInt(arr[0], 16) > 127) b = (b - 1) * 128 + parseInt(arr.shift(), 16);
   b = b * 128 + parseInt(arr.shift(), 16);
   return b;
 }
-String.prototype.s = function(t, u) {
-  var v = this;
-  while (v != v.replace(t, u)) v = v.replace(t, u);
+function s(str, t, u) {
+  let v = str;
+  while (v !== v.replace(t, u))v = v.replace(t, u);
   return v;
-};
-
+}
+// eslint-disable-next-line no-unused-vars
 function convert() {
-  var re = document.getElementById('result');
-  var ou = document.getElementById('output');
   re.innerHTML = '';
   ou.innerHTML = '';
-  var midi = document.getElementById('openfile').files[0];
+  const midi = of.files[0];
   if (midi) {
     const start = Date.now();
-    let files = new FileReader();
+    const files = new FileReader();
     files.readAsBinaryString(midi);
-    files.onprogress = function(progress) { //显示加载文件进度
-      let size = document.getElementById('openfile').files[0].size;
-      ou.innerHTML = `<strong style="color:#f00">加载中：${parseInt((progress.loaded / size) * 100)}%</strong>`;
+    files.onprogress = function(progress) { // 显示加载文件进度
+      const { size } = of.files[0];
+      ou.innerHTML = `<strong style="color:#f00">加载中：${Math.floor(progress.loaded / size * 100)}%</strong>`;
     };
     files.onload = function() {
-      ou.innerHTML = '<strong style="color:#f00">发生了致命错误</strong>'; //读取错误时此条不会被替换
-      var bin = this.result.split('');
-      var text = '';
+      ou.innerHTML = '<strong style="color:#f00">发生了致命错误</strong>'; // 读取错误时此条不会被替换
+      let bin = this.result.split('');
+      let text = '';
       for (let i = 0; i < 4; i++) text += bin.shift();
-      if (text != 'MThd') ou.innerHTML = '<strong style="color:#f00">不是有效的midi文件！</strong>'; //检查midi头
-      else {
-        var j = '';
+      if (text === 'MThd') {
+        let j = '';
         for (let i = 0; i < bin.length; i++) bin[i] = 0 + bin[i].charCodeAt().toString(16);
         bin = bin.join();
         bin = bin.replace(/0+([0-f]{2})/g, '$1');
         bin = bin.split(',');
         text = '';
         for (let i = 0; i < 4; i++) text += bin.shift();
-        var k = parseInt(text, 16);
-        if (k != 6) ou.innerHTML = '<strong style="color:#f00">不支持的midi文件！</strong>';
-        else {
+        const k = parseInt(text, 16);
+        if (k === 6) {
           for (let i = 0; i < 4; i++) bin.shift();
           text = '';
           for (let i = 0; i < k - 4; i++) text += bin.shift();
-          var ppqn = parseInt(text, 16);
-          var w = document.getElementById('drumsets').checked;
-          var m = 0;
-          while (bin.length > 1 && m != bin.length) {
+          const ppqn = parseInt(text, 16);
+          const w = document.getElementById('drumsets').checked;
+          let m = 0;
+          let o;
+          let q = 0;
+          while (bin.length > 1 && m !== bin.length) {
             m = bin.length;
-            var o;
             switch (parseInt(bin[0].substr(0, 1), 16)) {
-              case 4:
-                var n = '';
+              case 4: {
+                let n = '';
                 for (let i = 0; i < 4; i++) n += bin.shift();
-                if (n == '4d54726b') {
+                if (n === '4d54726b') {
                   for (let i = 0; i < 4; i++) bin.shift();
                   o = 1;
                   o += c(bin);
-                } else re.innerHTML = 'CODE ERROR(4)\n' + n + '\n' + bin.slice(0, 10);
-                break;
+                } else re.innerHTML = `CODE ERROR(4)\n${n}\n${bin.slice(0, 10)}`;
+                break; }
               case 8:
                 text = bin.shift();
-                if (!(text == '89') != w) j += o + '999,\n';
+                if (text === '89' === w) j += `${o}999,\n`;
                 bin.shift();
                 bin.shift();
                 o += c(bin);
                 if (parseInt(bin[0].substr(0, 1), 16) < 8) bin.unshift(text);
                 break;
-              case 9:
+              case 9: {
                 text = bin.shift();
-                var p = parseInt(bin.shift(), 16);
-                if (!(text == '99') != w) {
-                  if (parseInt(bin.shift(), 16) == 0) j += o + '999,\n';
-                  else j += o * 1000 + p + ',\n';
+                const p = parseInt(bin.shift(), 16);
+                if (text === '99' === w) {
+                  if (parseInt(bin.shift(), 16) === 0) j += `${o}999,\n`;
+                  else j += `${o * 1000 + p},\n`;
                 } else bin.shift();
                 o += c(bin);
                 if (parseInt(bin[0].substr(0, 1), 16) < 8) bin.unshift(text);
-                break;
+                break; }
               case 10:
               case 11:
               case 14:
@@ -102,24 +101,24 @@ function convert() {
                 if (parseInt(bin[0].substr(0, 1), 16) < 8) bin.unshift(text);
                 break;
               case 15:
-                if (bin.shift() == 'ff') {
+                if (bin.shift() === 'ff') {
                   switch (bin.shift()) {
                     case '2f':
                       bin.shift();
                       break;
-                    case '51':
+                    case '51': {
                       text = parseInt(bin.shift(), 16);
-                      var z = '';
+                      let z = '';
                       for (let i = 0; i < text; i++) z += bin.shift();
-                      var q = 60000000 / parseInt(z, 16);
+                      q = 60000000 / parseInt(z, 16);
                       o += c(bin);
-                      break;
+                      break; }
                     default:
                       text = parseInt(bin.shift(), 16);
-                      if (text != 0) {
+                      if (text === 0)o += c(bin); else {
                         for (let i = 0; i < text; i++) bin.shift();
                         o += c(bin);
-                      } else o += c(bin);
+                      }
                   }
                 } else {
                   text = parseInt(bin.shift(), 16);
@@ -131,11 +130,9 @@ function convert() {
                 re.innerHTML = `CODE ERROR(15)\n\n${bin.slice(0, 10)}`;
             }
           }
-          if (bin.length == 0 && j) {
+          if (bin.length === 0 && j) {
             j = j.split(',');
-            j.sort(function(a, b) {
-              return a - b;
-            });
+            j.sort((a, b) => a - b);
             j.shift();
             j = j.join();
             j = j.replace(/[0-9]+999,/g, '');
@@ -143,8 +140,8 @@ function convert() {
             j = j.substring(0, j.lastIndexOf('999'));
             j = j.split(',');
             j = j.map(Number);
-            var x = document.getElementById('limnotes').value;
-            var r = ppqn / 32;
+            const x = document.getElementById('limnotes').value;
+            const r = ppqn / 32;
             for (let i = Math.floor(j.length / 2) * 2; i >= 2; i -= 2) j[i] = (Math.round(j[i] / r / x) - Math.round(j[i - 2] / r / x)) * x;
             j.shift();
             for (let i = 1; i < j.length; i += 2) j[i] = j[i].toString(2);
@@ -332,31 +329,31 @@ function convert() {
             j = j.replace(/#=/g, '#');
             j = j.replace(/0([1-5])/g, '$1');
             j = j.replace(/0-([123])/g, '-$1');
-            j = j.s(/([#=][a-g][0-5])\.([#=][A-G]-[123])/g, '$2.$1');
-            j = j.s(/(#[a-g][0-5])\.(=[a-g][0-5])/g, '$2.$1');
-            j = j.s(/(#[A-G]-[123])\.(=[A-G]-[123])/g, '$2.$1');
-            j = j.s(/([#=][ABD-G]-[123])\.([#=]C-[123])/g, '$2.$1');
-            j = j.s(/([#=][ABEFG]-[123])\.([#=]D-[123])/g, '$2.$1');
-            j = j.s(/([#=][ABFG]-[123])\.([#=]E-[123])/g, '$2.$1');
-            j = j.s(/([#=][ABG]-[123])\.([#=]F-[123])/g, '$2.$1');
-            j = j.s(/([#=][AB]-[123])\.([#=]G-[123])/g, '$2.$1');
-            j = j.s(/([#=]B-[123])\.([#=]A-[123])/g, '$2.$1');
-            j = j.s(/(#[a-g][0-5])\.(=[a-g][0-5])/g, '$2.$1');
-            j = j.s(/([#=][abd-g][0-5])\.([#=]c[0-5])/g, '$2.$1');
-            j = j.s(/([#=][abefg][0-5])\.([#=]d[0-5])/g, '$2.$1');
-            j = j.s(/([#=][abfg][0-5])\.([#=]e[0-5])/g, '$2.$1');
-            j = j.s(/([#=][abg][0-5])\.([#=]f[0-5])/g, '$2.$1');
-            j = j.s(/([#=][ab][0-5])\.([#=]g[0-5])/g, '$2.$1');
-            j = j.s(/([#=]b[0-5])\.([#=]a[0-5])/g, '$2.$1');
-            j = j.s(/([#=][A-G]-[12])\.([#=][A-G]-3)/g, '$2.$1');
-            j = j.s(/([#=][A-G]-1)\.([#=][A-G]-2)/g, '$2.$1');
-            j = j.s(/([#=][a-g][1-5])\.([#=][a-g]0)/g, '$2.$1');
-            j = j.s(/([#=][a-g][2-5])\.([#=][a-g]1)/g, '$2.$1');
-            j = j.s(/([#=][a-g][345])\.([#=][a-g]2)/g, '$2.$1');
-            j = j.s(/([#=][a-g][45])\.([#=][a-g]3)/g, '$2.$1');
-            j = j.s(/([#=][a-g]5)\.([#=][a-g]4)/g, '$2.$1');
-            j = j.s(/([a-g])([0-5])/g, '$1+$2');
-            j = j.s(/([#=][a-gA-G][+-][0-5])\.\1/g, '$1');
+            j = s(j, /([#=][a-g][0-5])\.([#=][A-G]-[123])/g, '$2.$1');
+            j = s(j, /(#[a-g][0-5])\.(=[a-g][0-5])/g, '$2.$1');
+            j = s(j, /(#[A-G]-[123])\.(=[A-G]-[123])/g, '$2.$1');
+            j = s(j, /([#=][ABD-G]-[123])\.([#=]C-[123])/g, '$2.$1');
+            j = s(j, /([#=][ABEFG]-[123])\.([#=]D-[123])/g, '$2.$1');
+            j = s(j, /([#=][ABFG]-[123])\.([#=]E-[123])/g, '$2.$1');
+            j = s(j, /([#=][ABG]-[123])\.([#=]F-[123])/g, '$2.$1');
+            j = s(j, /([#=][AB]-[123])\.([#=]G-[123])/g, '$2.$1');
+            j = s(j, /([#=]B-[123])\.([#=]A-[123])/g, '$2.$1');
+            j = s(j, /(#[a-g][0-5])\.(=[a-g][0-5])/g, '$2.$1');
+            j = s(j, /([#=][abd-g][0-5])\.([#=]c[0-5])/g, '$2.$1');
+            j = s(j, /([#=][abefg][0-5])\.([#=]d[0-5])/g, '$2.$1');
+            j = s(j, /([#=][abfg][0-5])\.([#=]e[0-5])/g, '$2.$1');
+            j = s(j, /([#=][abg][0-5])\.([#=]f[0-5])/g, '$2.$1');
+            j = s(j, /([#=][ab][0-5])\.([#=]g[0-5])/g, '$2.$1');
+            j = s(j, /([#=]b[0-5])\.([#=]a[0-5])/g, '$2.$1');
+            j = s(j, /([#=][A-G]-[12])\.([#=][A-G]-3)/g, '$2.$1');
+            j = s(j, /([#=][A-G]-1)\.([#=][A-G]-2)/g, '$2.$1');
+            j = s(j, /([#=][a-g][1-5])\.([#=][a-g]0)/g, '$2.$1');
+            j = s(j, /([#=][a-g][2-5])\.([#=][a-g]1)/g, '$2.$1');
+            j = s(j, /([#=][a-g][345])\.([#=][a-g]2)/g, '$2.$1');
+            j = s(j, /([#=][a-g][45])\.([#=][a-g]3)/g, '$2.$1');
+            j = s(j, /([#=][a-g]5)\.([#=][a-g]4)/g, '$2.$1');
+            j = s(j, /([a-g])([0-5])/g, '$1+$2');
+            j = s(j, /([#=][a-gA-G][+-][0-5])\.\1/g, '$1');
             j = j.replace(/\(([#=][a-gA-G][+-][0-5])\)/g, '$1');
             j = j.replace(/[+=]/g, '');
             j = j.replace(/([a-gA-G])0/g, '$1');
@@ -380,8 +377,8 @@ function convert() {
             const end = (Date.now() - start) / 1000;
             ou.innerHTML = `<strong style="color:#080">转换成功。(${end}s)<br><br>PPQN: ${ppqn} BPM: ${Math.round(q)}</strong>`;
           } else ou.innerHTML = '<strong style="color:#f00">转换失败或转换结果为空</strong>';
-        }
-      }
-    }
+        } else ou.innerHTML = '<strong style="color:#f00">不支持的midi文件！</strong>';
+      } else ou.innerHTML = '<strong style="color:#f00">不是有效的midi文件！</strong>'; // 检查midi头
+    };
   } else ou.innerHTML = '<strong style="color:#f00">未选择任何文件</strong>';
 }
