@@ -5,7 +5,7 @@ class IntervalBufferSource {
    */
   constructor(res, {
     loop = false,
-    isOut = true, // qwq
+    isOut = true, // TODO: Rename to isConnect
     offset = 0,
     playbackrate = 1,
     gainrate = 1,
