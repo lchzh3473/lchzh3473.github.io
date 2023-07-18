@@ -86,6 +86,42 @@ const audio = {
     const { actx } = this;
     return actx.createBuffer(2, 44100 * length, 44100);
   },
+  sine(length, frequency = 440, gain = 1) {
+    const { actx } = this;
+    const buffer = actx.createBuffer(1, 44100 * length, 44100);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < data.length; i++) {
+      data[i] = Math.sin(i * frequency * 2 * Math.PI / 44100) * gain;
+    }
+    return buffer;
+  },
+  sawtooth(length, frequency = 440, gain = 1) {
+    const { actx } = this;
+    const buffer = actx.createBuffer(1, 44100 * length, 44100);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < data.length; i++) {
+      data[i] = (i * frequency / 44100 % 1 - 0.5) * 2 * gain;
+    }
+    return buffer;
+  },
+  square(length, frequency = 440, gain = 1) {
+    const { actx } = this;
+    const buffer = actx.createBuffer(1, 44100 * length, 44100);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < data.length; i++) {
+      data[i] = (i * frequency / 44100 % 1 < 0.5 ? 1 : -1) * gain;
+    }
+    return buffer;
+  },
+  triangle(length, frequency = 440, gain = 1) {
+    const { actx } = this;
+    const buffer = actx.createBuffer(1, 44100 * length, 44100);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < data.length; i++) {
+      data[i] = (Math.abs((i * frequency / 44100 % 1 - 0.5) * 4) - 1) * gain;
+    }
+    return buffer;
+  },
   /**
    * @param {AudioBuffer} res
    * @param {AudioParamOptions} options
