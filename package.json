@@ -8,9 +8,9 @@
   "dependencies": {
     "earcut": "^2.2.4",
     "gl-matrix": "^3.4.3",
-    "three": "^0.139.2"
+    "three": "^0.154.0"
   },
   "devDependencies": {
-    "eslint": "^8.40.0"
+    "eslint": "^8.45.0"
   }
 }
