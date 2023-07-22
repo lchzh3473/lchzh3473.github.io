@@ -122,6 +122,15 @@ const audio = {
     }
     return buffer;
   },
+  noise(length, gain = 1) {
+    const { actx } = this;
+    const buffer = actx.createBuffer(1, 44100 * length, 44100);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < data.length; i++) {
+      data[i] = (Math.random() * 2 - 1) * gain;
+    }
+    return buffer;
+  },
   /**
    * @param {AudioBuffer} res
    * @param {AudioParamOptions} options
