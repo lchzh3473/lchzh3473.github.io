@@ -89,8 +89,10 @@ input.addEventListener('input', () => {
     setTimeout(() => {
       if (input.value === '/test\n') {
         const str = enableAPI ? '关闭' : '开启';
+        // eslint-disable-next-line no-alert
         if (confirm(`是否${str}实验性功能(b站api)?`)) {
           self.localStorage.setItem('enableAPI', !enableAPI);
+          // eslint-disable-next-line no-alert
           alert(`已经${str}实验性功能。`);
         }
         location.reload(true);

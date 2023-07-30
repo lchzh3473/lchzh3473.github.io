@@ -52,8 +52,8 @@ const program2 = {
   uniforms: { u_matrix: 0, u_image: 7 }
 };
 /**
- * lchzh试图自制WebGL引擎qwq
- * @author lchzh3473
+ * lchz&#104;试图自制WebGL引擎qwq
+ * @author lchz&#104;3473
  */
 export class Renderer {
   constructor(width = 960, height = 540) {
@@ -129,7 +129,7 @@ export class Renderer {
       case gl.ELEMENT_ARRAY_BUFFER:
         return this.createBuffer(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(arr), gl.STATIC_DRAW);
       default:
-        throw new RangeError(`Unknown target '${target}'`);// qwq
+        throw new RangeError(`Unknown target '${target}'`); // qwq
     }
   }
   /**

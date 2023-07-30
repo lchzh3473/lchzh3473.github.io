@@ -131,9 +131,9 @@ function init() {
   // 加载音色
   function loadAudio() {
     const size0 = {
-      app: 2700975,
+      'app': 2700975,
       '8rock11e': 3300100,
-      umod: 6511396
+      'umod': 6511396
     }; // 表示文件大小，以后会优化
     const xhr = new XMLHttpRequest();
     xhr.open('get', `src/music/${soundfont}/piano.dat`);
@@ -368,7 +368,7 @@ function draw() {
     switch (i.type) {
       case 2:
         if (i.played) {
-          if (i.ended)i.ended++;
+          if (i.ended) i.ended++;
           else {
             score++;
             rabbit = 1.1;
@@ -378,7 +378,7 @@ function draw() {
         break;
       case 5:
         if (i.played) {
-          if (i.ended)i.ended++;
+          if (i.ended) i.ended++;
           else {
             score += 4;
             rabbit = 1.1;
@@ -553,7 +553,7 @@ function strToTiles(scores) {
         } else if (!table[notee]) throw new Error(`无效音符：${notee}`);
         notes.push({ type, notes: [{ note: notee, start: 0, len }], len });
       } else {
-        notes.push({ type, notes: [], len });// 代表空白
+        notes.push({ type, notes: [], len }); // 代表空白
       }
       if (type !== 1) type = 0;
     }

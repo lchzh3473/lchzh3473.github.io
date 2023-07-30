@@ -22,7 +22,7 @@ function init(x, y, zoom, maxitr, colorstr) {
   if (!isNaN(y)) dy = y;
   if (!isNaN(zoom)) dzoom = zoom;
   maxitr0 = isNaN(maxitr) ? rowitr * 2 ** dzoom : maxitr;
-  if (colorstr)[cr, cg, cb] = JSON.parse(colorstr);
+  if (colorstr) [cr, cg, cb] = JSON.parse(colorstr);
   const mxzoom = 4 / size * 10 ** -dzoom;
   const { data } = imgData;
   let avgitr = 0;
