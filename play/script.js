@@ -1,11 +1,11 @@
 'use strict';
 self._i = ['Oscillator', [1, 0, 1], 1671954360, 1672045280];
 const config = {
-  set duration(value) { document.getElementById('duration').value = value },
   get duration() { return parseFloat(document.getElementById('duration').value) || 0.05 },
+  set duration(value) { document.getElementById('duration').value = value },
   // get base(){return document.getElementById('base').value},
-  set input(value) { document.getElementById('input').value = value },
-  get input() { return document.getElementById('input').value }
+  get input() { return document.getElementById('input').value },
+  set input(value) { document.getElementById('input').value = value }
 };
 // const base = document.getElementById('base');
 const output = document.getElementById('output');

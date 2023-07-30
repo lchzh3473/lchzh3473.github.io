@@ -1,3 +1,4 @@
+// eslint-disable-next-line strict
 'use strict';
 // utils
 const Utils = {
@@ -29,8 +30,8 @@ const Utils = {
     const isHTMLElement = that instanceof HTMLElement;
     const isHTMLInputElement = that instanceof HTMLInputElement;
     const isHTMLTextAreaElement = that instanceof HTMLTextAreaElement;
-    if (isHTMLInputElement || isHTMLTextAreaElement)that.value = str;
-    else if (isHTMLElement)that.textContent = str;
+    if (isHTMLInputElement || isHTMLTextAreaElement) that.value = str;
+    else if (isHTMLElement) that.textContent = str;
     else return Promise.reject(new Error('未知错误'));
     return Promise.resolve();
   },
@@ -170,7 +171,7 @@ self.Utils = Utils; // export for iOS 14- qwq
   Utils.addFont = (...args) => fontLoader.load(...args).then(i => i.forEach(a => document.fonts.add(a)));
   Utils.addFont('Noto Sans SC').catch(_ => '');
 }());
-// fuck safe
+// fxxk safe
 {
   let percent = 0;
   const _ = localStorage;

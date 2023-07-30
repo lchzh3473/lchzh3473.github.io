@@ -2,12 +2,12 @@
 self._i = ['MIDI转JSON', [3, 0, 1], 1585107102, 1612073331];
 const out = document.getElementById('output');
 const trkSet = document.getElementById('track');
-/* result start*/
+/* result start */
 const data = {};
 const tempo = [];
 const trkList = [];
 const drum = [];
-/* result end*/
+/* result end */
 document.getElementById('upload').onchange = function() {
   const file = this.files[0];
   document.getElementById('filename').value = file ? file.name : '';

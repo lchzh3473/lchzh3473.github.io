@@ -6,7 +6,7 @@ self.addEventListener('resize', resize);
 resize();
 const item = [];
 const clicks = [];
-/* 定义点类*/
+/* 定义点类 */
 const df = 0.5; // 摩擦因数
 class Point {
   constructor(x, y, vx, vy, r, color) {
@@ -20,7 +20,7 @@ class Point {
     this.ay = 0;
   }
   collide(point) {
-    /* 碰撞判定*/
+    /* 碰撞判定 */
     const dist = Math.sqrt((this.x - point.x) ** 2 + (this.y - point.y) ** 2);
     const rdist = this.r + point.r;
     if (dist && dist <= rdist) {
@@ -34,19 +34,19 @@ class Point {
     }
   }
   wall() {
-    /* 速度反转*/
+    /* 速度反转 */
     if (this.x >= canvas.width - this.r && this.vx >= 0) this.vx = -this.vx * df;
     if (this.x <= this.r && this.vx <= 0) this.vx = -this.vx * df;
     if (this.y >= canvas.height - this.r && this.vy >= 0) this.vy = -this.vy * df;
     if (this.y <= this.r && this.vy <= 0) this.vy = -this.vy * df;
-    /* 防止穿墙*/
+    /* 防止穿墙 */
     if (this.x > canvas.width - this.r) this.x = canvas.width - this.r;
     if (this.x < this.r) this.x = this.r;
     if (this.y > canvas.height - this.r) this.y = canvas.height - this.r;
     if (this.y < this.r) this.y = this.r;
   }
 }
-/* 适配PC鼠标*/
+/* 适配PC鼠标 */
 let isMouseDown = false;
 canvas.addEventListener('mousedown', evt => {
   evt.preventDefault();
@@ -75,7 +75,7 @@ function mouseup() {
   clicks[0] = {};
   isMouseDown = false;
 }
-/* 适配移动设备*/
+/* 适配移动设备 */
 const passive = {
   passive: false
 };
@@ -106,12 +106,12 @@ canvas.addEventListener('touchend', evt => {
     if (idx >= 0) clicks[idx] = {};
   }
 });
-/* 作图*/
+/* 作图 */
 function draw() {
   const ctx = canvas.getContext('2d');
   ctx.fillStyle = '#000';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  /* 绘制图形*/
+  /* 绘制图形 */
   ctx.strokeStyle = '#fff';
   for (const i of item) {
     const { color } = i;
@@ -121,7 +121,7 @@ function draw() {
     ctx.stroke();
     ctx.fill();
   }
-  /* 绘制事件*/
+  /* 绘制事件 */
   const tek = [];
   for (const i of clicks) {
     i.color = `rgb(${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)})`;
@@ -136,7 +136,7 @@ function draw() {
     const tekn = (i.x1 - i.x2) ** 2 + (i.y1 - i.y2) ** 2;
     if (!isNaN(tekn)) tek.push(Math.round(Math.sqrt(tekn) / 2));
   }
-  /* 绘制文本*/
+  /* 绘制文本 */
   let ek = 0;
   for (const i of item) ek += i.vx ** 2 + i.vy ** 2;
   const px = 16 * self.devicePixelRatio;
@@ -148,7 +148,7 @@ function draw() {
   for (let i = 0, len = tek.length; i < len; i++) ctx.fillText(tek[i], px * 0.6, px * (4.2 + i * 1.3));
   ctx.textAlign = 'end';
   ctx.fillText('lchz\x683\x3473制作', canvas.width - px * 0.6, canvas.height - px * 0.6);
-  /* 计算下一帧*/
+  /* 计算下一帧 */
   for (const i of item) {
     for (const j of item) i.collide(j);
     i.wall();

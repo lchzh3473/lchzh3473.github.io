@@ -15,7 +15,7 @@ function c(arr) {
 }
 function s(str, t, u) {
   let v = str;
-  while (v !== v.replace(t, u))v = v.replace(t, u);
+  while (v !== v.replace(t, u)) v = v.replace(t, u);
   return v;
 }
 // eslint-disable-next-line no-unused-vars
@@ -115,7 +115,7 @@ function convert() {
                       break; }
                     default:
                       text = parseInt(bin.shift(), 16);
-                      if (text === 0)o += c(bin); else {
+                      if (text === 0) o += c(bin); else {
                         for (let i = 0; i < text; i++) bin.shift();
                         o += c(bin);
                       }

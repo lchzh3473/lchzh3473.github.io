@@ -1,3 +1,4 @@
+// eslint-disable-next-line strict
 'use strict';
 let apiNum = self.localStorage.getItem('api');
 document.getElementById('api').innerHTML = Number(apiNum);
@@ -35,6 +36,7 @@ document.getElementById('api').innerHTML = Number(apiNum);
         self.localStorage.setItem('api', apiNum);
       }).catch(() => {
         if (!isError) {
+          // eslint-disable-next-line no-alert
           alert('调用api过于频繁，已被b站暂时封禁，请30分钟后重试');
           isError = true;
         }

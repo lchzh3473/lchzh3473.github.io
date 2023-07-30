@@ -25,6 +25,7 @@ upload.onchange = function() { // 上传文件
     if (isUnknown) {
       document.getElementById('info').innerText = `时长：${video.duration}s，尺寸：未知，`;
       videoHeight = Math.round(videoWidth / 1920 * 1080 / 1.8);
+      // eslint-disable-next-line no-alert
       alert('视频尺寸未知，可能无法正常播放');
     } else {
       document.getElementById('info').innerText = `时长：${video.duration}s，尺寸：${video.videoWidth}x${video.videoHeight}，`;
@@ -37,6 +38,7 @@ upload.onchange = function() { // 上传文件
   };
   self.onresize = resize;
   video.onended = function() {
+    // eslint-disable-next-line no-alert
     alert('播放结束');
   };
   document.getElementById('play').onclick = function(a) {
