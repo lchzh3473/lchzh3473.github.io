@@ -113,12 +113,14 @@ export class Interact {
     keyupCallback = function() {}
   }) {
     const isInput = () => {
-      if (document.activeElement instanceof HTMLTextAreaElement) return true;
-      if (document.activeElement instanceof HTMLInputElement) {
-        const type = document.activeElement.getAttribute('type') || '';
+      const elem = document.activeElement;
+      if (elem instanceof HTMLTextAreaElement) return true;
+      if (elem instanceof HTMLInputElement) {
+        const type = elem.getAttribute('type') || '';
         if (/^(button|checkbox|image|radio|reset|submit)$/.test(type)) return false;
         return true;
       }
+      if (elem.contentEditable === 'true') return true;
       return false;
     };
     /** @type {(ev:KeyboardEvent)=>void} */

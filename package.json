@@ -8,12 +8,12 @@
   "dependencies": {
     "earcut": "^2.2.4",
     "gl-matrix": "^3.4.3",
-    "three": "^0.155.0"
+    "three": "^0.157.0"
   },
   "devDependencies": {
-    "@types/eslint": "^8.44.1",
-    "@typescript-eslint/eslint-plugin": "^6.2.0",
-    "eslint": "^8.46.0",
+    "@types/eslint": "^8.44.3",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "eslint": "^8.50.0",
     "eslint-plugin-rulesdir": "^0.2.2"
   }
 }
