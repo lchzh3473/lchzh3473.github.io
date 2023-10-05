@@ -10,7 +10,8 @@ class IntervalBufferSource {
     playbackrate = 1,
     gainrate = 1,
     interval = 0,
-    actx = null
+    actx = null,
+    dest = null
   } = {}) {
     this.res = res;
     this.loop = loop;
@@ -20,12 +21,14 @@ class IntervalBufferSource {
     this.gainrate = gainrate;
     this.interval = interval;
     this.actx = actx;
+    this.dest = dest;
   }
   start() {
     this.startTime = performance.now() / 1000; // 使用actx.currentTime会有迷之延迟
     this._gain = this.actx.createGain();
     this._gain.gain.value = this.gainrate;
     if (this.isOut) this._gain.connect(this.actx.destination);
+    if (this.dest) this._gain.connect(this.dest);
     this._loop();
   }
   stop() {
@@ -60,6 +63,7 @@ class IntervalBufferSource {
  * @property {number} [gainrate=1]
  * @property {number} [interval=0]
  * @property {AudioContext} [actx=null]
+ * @property {MediaStreamAudioDestinationNode} [dest=null]
  */
 const audio = {
   /** @type {AudioContext} */
@@ -68,6 +72,8 @@ const audio = {
   _started: false,
   /** @type {(AudioBufferSourceNode|IntervalBufferSource)[]} */
   _bfs: [],
+  /** @type {MediaStreamAudioDestinationNode} */
+  dest: null,
   /** @param {typeof AudioContext} actx */
   init(actx) {
     this._actx = actx || self.AudioContext || self.webkitAudioContext;
@@ -143,14 +149,15 @@ const audio = {
     gainrate = 1,
     interval = 0
   } = {}) {
-    const { actx } = this;
+    const { actx, dest } = this;
     const bfs = this._bfs;
     const gain = actx.createGain();
     if (isFinite(interval) && interval > 0) {
-      const options = { loop, isOut, offset, playbackrate, gainrate, interval, actx };
+      const options = { loop, isOut, offset, playbackrate, gainrate, interval, actx, dest };
       const bufferSource = new IntervalBufferSource(res, options);
       gain.gain.value = gainrate;
       if (isOut) gain.connect(actx.destination);
+      if (dest) gain.connect(dest);
       bufferSource.start();
       bfs[bfs.length] = bufferSource;
       return _ => bufferSource.bfs;
@@ -162,6 +169,7 @@ const audio = {
     gain.gain.value = gainrate;
     bufferSource.playbackRate.value = playbackrate;
     if (isOut) gain.connect(actx.destination);
+    if (dest) gain.connect(dest);
     bufferSource.start(0, offset);
     bfs[bfs.length] = bufferSource;
     return _ => bufferSource;
