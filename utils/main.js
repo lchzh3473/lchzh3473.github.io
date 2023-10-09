@@ -139,7 +139,7 @@ self.Utils = Utils; // export for iOS 14- qwq
           const u0 = `//fonts.googleapis.com/css?family=${f3}:${w1}${s1 === 'italic' ? 'i' : ''}`;
           // const u1 = `//fonts.googleapis.com/css2?family=${f3}&display=swap`;
           const text = await fetch(u0).then(a => a.text(), _ => '');
-          const rg0 = (text.match(/{.+?}/gs) || []).map(a => a.slice(1, -1)); // Safari不支持(?<=)
+          const rg0 = (text.match(/@font-face {.+?}/gs) || []).map(a => a.slice(12, -1)); // Safari不支持(?<=)
           const rg = rg0.map(a => Object.fromEntries(a.split(';').filter(b => b.trim()).map(c => c.split(': ').map(d => d.trim()))));
           return rg.map(a => new FontFace(alt || a['font-family'], a.src, {
             style: a['font-style'],
@@ -169,7 +169,8 @@ self.Utils = Utils; // export for iOS 14- qwq
     }
   };
   Utils.addFont = (...args) => fontLoader.load(...args).then(i => i.forEach(a => document.fonts.add(a)));
-  Utils.addFont('Noto Sans SC').catch(_ => '');
+  // Utils.addFont('Noto Sans SC').catch(_ => '');
+  // Utils.addFont('Material Icons').catch(_ => '');
 }());
 // fxxk safe
 {
