@@ -96,7 +96,7 @@ input[type="file"]+label {
   color: #fff;
   border: none;
   border-radius: 2px;
-  font-size: 0.9em;
+  font-size: 1em;
   padding: 0.1em 0.6em;
   margin: 0.1em;
   cursor: pointer;
@@ -146,27 +146,27 @@ input[type="radio"],
 }
 
 input[type="checkbox"]+label::before {
-  font: 0.9em 'Material Icons';
+  font: 1em 'Material Icons';
   content: "\e835";
   margin: 0 0.2em;
+  display: inline-block;
+  transform: translateY(0.1em);
 }
 
 input[type="checkbox"]:checked+label::before {
-  font: 0.9em 'Material Icons';
   content: "\e834";
-  margin: 0 0.2em;
 }
 
 input[type="radio"]+label::before {
-  font: 0.9em 'Material Icons';
+  font: 1em 'Material Icons';
   content: "\e836";
   margin: 0 0.2em;
+  display: inline-block;
+  transform: translateY(0.1em);
 }
 
 input[type="radio"]:checked+label::before {
-  font: 0.9em 'Material Icons';
   content: "\e837";
-  margin: 0 0.2em;
 }
 
 textarea,
