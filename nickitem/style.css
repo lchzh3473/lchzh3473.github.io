@@ -12,13 +12,13 @@
   margin: 3px auto;
 }
 
-.inner>:nth-child(2) {
+.inner > :nth-child(2) {
   float: right;
   margin: 1px;
   margin-bottom: 3px;
 }
 
-.inner>select:nth-child(2) {
+.inner > select:nth-child(2) {
   width: 100%;
   max-width: 100px;
 }
