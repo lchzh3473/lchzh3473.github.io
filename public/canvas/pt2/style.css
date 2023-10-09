@@ -91,7 +91,7 @@ body {
   text-align: left;
 }
 
-.item-right input[type="text"] {
+.item-right input[type='text'] {
   font-size: 4vmin;
   width: 30vmin;
 }

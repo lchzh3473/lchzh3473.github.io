@@ -32,7 +32,7 @@
 
 .input::before {
   display: inline-block;
-  content: ">";
+  content: '>';
   color: #0078d4;
   font-weight: bold;
   margin: 0 0.5em;
@@ -40,7 +40,7 @@
 
 .arcinput::before {
   display: inline-block;
-  content: ">";
+  content: '>';
   color: #939393;
   font-weight: bold;
   margin: 0 0.5em;
@@ -48,7 +48,7 @@
 
 .error::before {
   display: inline-block;
-  content: "x";
+  content: 'x';
   color: #c42b1c;
   font-weight: bold;
   margin: 0 0.5em;
@@ -72,7 +72,7 @@ tr:nth-child(odd) {
   background-color: #e8e8e8;
 }
 
-tr:first-child>td {
+tr:first-child > td {
   background-color: #f7f7f7;
   border-bottom: 1px solid #cacdd1;
 }

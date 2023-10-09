@@ -4,17 +4,16 @@
   font-style: normal;
   font-weight: regular;
   src: url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.eot');
-  src: local('Noto Sans SC'), local('NotoSans SC-Normal'),
-    url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.eot?#iefix') format('embedded-opentype'),
-    url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.woff2') format('woff2'),
-    url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.woff') format('woff'),
-    url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.ttf') format('truetype'),
-    url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.svg#NotoSans SC') format('svg');
+  src: local('Noto Sans SC'), local('NotoSans SC-Normal'), url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.eot?#iefix') format('embedded-opentype'), url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.woff2') format('woff2'), url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.woff') format('woff'), url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.ttf') format('truetype'), url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.svg#NotoSans SC') format('svg');
 }
 
+/* material-design-icons */
 @font-face {
-  font-family: icomoon;
-  src: url("data:application/font-woff;base64,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");
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url('//lib.baomitu.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.eot');
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('//lib.baomitu.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff2') format('woff2'), url('//lib.baomitu.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff') format('woff'), url('//lib.baomitu.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.ttf') format('truetype');
 }
 
 :root {
@@ -43,7 +42,7 @@
   display: none;
 }
 
-@supports (scrollbar-width:none) {
+@supports (scrollbar-width: none) {
   * {
     /* Firefox */
     scrollbar-width: none;
@@ -72,8 +71,8 @@ a {
 }
 
 a:hover,
-input[type="checkbox"]+label:hover,
-input[type="radio"]+label:hover {
+input[type='checkbox'] + label:hover,
+input[type='radio'] + label:hover {
   background-color: var(--hover-bg);
 }
 
@@ -82,8 +81,8 @@ a:active {
 }
 
 button,
-input[type="button"],
-input[type="file"]+label {
+input[type='button'],
+input[type='file'] + label {
   background-color: var(--button-bg);
   color: #fff;
   border: none;
@@ -96,20 +95,20 @@ input[type="file"]+label {
 }
 
 button:hover,
-input[type="button"]:hover,
-input[type="file"]+label:hover {
+input[type='button']:hover,
+input[type='file'] + label:hover {
   background-color: var(--button-hover-bg);
 }
 
 button:active,
-input[type="button"]:active,
-input[type="file"]+label:active {
+input[type='button']:active,
+input[type='file'] + label:active {
   background-color: var(--button-active-bg);
 }
 
 button,
 label,
-input[type="button"] {
+input[type='button'] {
   /* Prevent text selection */
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -120,49 +119,49 @@ input[type="button"] {
   appearance: none;
 }
 
-input[type="checkbox"],
-input[type="file"],
-input[type="radio"],
+input[type='checkbox'],
+input[type='file'],
+input[type='radio'],
 .hide {
   display: none !important;
 }
 
 .i-pause::after {
-  font: 1em icomoon;
-  content: "\e900";
+  font: 1em 'Material Icons';
+  content: '\e034';
 }
 
 .i-settings::after {
-  font: 1em icomoon;
-  content: "\e909";
+  font: 1em 'Material Icons';
+  content: '\e8b8';
 }
 
-input[type="checkbox"]+label::before {
-  font: 0.9em icomoon;
-  content: "\e907";
+input[type='checkbox'] + label::before {
+  font: 0.9em 'Material Icons';
+  content: '\e835';
   margin: 0 0.2em;
+  display: inline-block;
+  transform: translateY(0.1em);
 }
 
-input[type="checkbox"]:checked+label::before {
-  font: 0.9em icomoon;
-  content: "\e906";
-  margin: 0 0.2em;
+input[type='checkbox']:checked + label::before {
+  content: '\e834';
 }
 
-input[type="radio"]+label::before {
-  font: 0.9em icomoon;
-  content: "\e903";
+input[type='radio'] + label::before {
+  font: 0.9em 'Material Icons';
+  content: '\e836';
   margin: 0 0.2em;
+  display: inline-block;
+  transform: translateY(0.1em);
 }
 
-input[type="radio"]:checked+label::before {
-  font: 0.9em icomoon;
-  content: "\e908";
-  margin: 0 0.2em;
+input[type='radio']:checked + label::before {
+  content: '\e837';
 }
 
 textarea,
-input[type="text"] {
+input[type='text'] {
   border: 1px solid #888;
   border-radius: 2px;
   padding: 0.2em;
@@ -203,7 +202,7 @@ strong.accept {
   min-height: 100vh;
 }
 
-.index>.header {
+.index > .header {
   color: blue;
   font-size: 2em;
   font-weight: bold;
@@ -212,20 +211,20 @@ strong.accept {
   overflow-wrap: break-word;
 }
 
-.index>.footer {
+.index > .footer {
   margin: 0;
   padding: 2rem;
   overflow-wrap: break-word;
 }
 
-.index>.content {
+.index > .content {
   flex-grow: 1;
   width: 90%;
   max-width: 480px;
   margin: 0 auto;
 }
 
-.index>.content fieldset {
+.index > .content fieldset {
   margin: auto;
   border: none;
   border-top: 1px dashed gray;
@@ -234,12 +233,12 @@ strong.accept {
   justify-content: center;
 }
 
-.index>.content legend {
+.index > .content legend {
   padding: 0 1em;
   margin: 0 auto;
 }
 
-.index>.content a {
+.index > .content a {
   display: inline-block;
   margin: 5px;
   border: 2px solid var(--link-bg);
