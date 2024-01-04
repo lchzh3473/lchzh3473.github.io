@@ -27,6 +27,8 @@ export class Interact {
     // 踩坑：对move和up进行preventDefault会影响input元素交互
     /** @type {(ev:MouseEvent)=>void} */
     const mousemove = evt => {
+      // 踩坑：新版浏览器按下鼠标即使不移动也会定期触发mousemove事件
+      if (!evt.movementX && !evt.movementY) return;
       mousemoveCallback(evt);
     };
     /** @type {(ev:MouseEvent)=>void} */
