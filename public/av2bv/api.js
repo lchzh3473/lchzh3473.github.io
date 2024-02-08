@@ -30,7 +30,7 @@ document.getElementById('api').innerHTML = Number(apiNum);
         if (data.code) {
           j.remove('av', 'bv');
           j.add('invalid');
-        } else { i.title = data.data.title }
+        } else i.title = data.data.title;
         apiNum++;
         document.getElementById('api').innerText = apiNum;
         self.localStorage.setItem('api', apiNum);
