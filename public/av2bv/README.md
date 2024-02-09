@@ -6,6 +6,18 @@
 
 ## 更新日志
 
+### [2.2.0] - 2024-02-09
+
+#### 修复
+
+- 修复了 av 号大于 `1073741823` 时转换错误的问题
+
+  - 参考代码：[Colerar/abv](https://github.com/Colerar/abv/blob/main/src/lib.rs) (Under MIT License)
+
+  - 由于引入了 `BigInt`，浏览器兼容性有所下降
+
+- 修复了 “调用 B 站 API” 功能失效的问题
+
 ### [2.1.1] - 2022-06-03
 
 #### 优化

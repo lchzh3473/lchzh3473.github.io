@@ -1,13 +1,13 @@
 // eslint-disable-next-line strict
 'use strict';
 let apiNum = self.localStorage.getItem('api');
-document.getElementById('api').innerHTML = Number(apiNum);
 (function() {
   const c1 = document.querySelectorAll('.inner');
   const c2 = c1[c1.length - 1];
   const c3 = document.createElement('div');
   c3.innerHTML = '调用api次数：<span id="api"></span>';
   c2.appendChild(c3);
+  document.getElementById('api').innerHTML = Number(apiNum);
   document.querySelector('.profile').innerHTML += '<br>点击“检查”按钮调用B站API检查视频是否存在。(频繁操作可能被封禁)';
   const e1 = document.querySelector('#reset');
   const e2 = e1.parentElement;
