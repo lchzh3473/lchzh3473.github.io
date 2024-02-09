@@ -1,10 +1,10 @@
-# [Demo](https://lchz&#104;3473.github.io/canvas/pt2/index "钢琴块2模拟器")
+# <!-- prettier-ignore -->[Demo](https://lchz&#104;3473.github.io/canvas/pt2/index "钢琴块2模拟器")
 
 ## 简介
 
-如题，用 js/canvas 还原 钢琴块2 游戏画面。
+如题，用 js/canvas 还原 钢琴块 2 游戏画面。
 
-相关页面：[钢琴块2谱面json格式说明](Usage.md)
+相关页面：[钢琴块 2 谱面 json 格式说明](Usage.md)
 
 ## 更新日志
 
@@ -22,6 +22,6 @@
 
 #### 优化
 
-- 将同一种音色以base64编码放入单个json以减少请求数
+- 将同一种音色以 base64 编码放入单个 json 以减少请求数
 
 ### [1.0.0] - 2021-02-27
