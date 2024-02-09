@@ -110,7 +110,7 @@ for (const i of document.querySelectorAll('input')) {
         panelSort[e].sort((obj1, obj2) => obj1.id - obj2.id);
       }
     }
-    for (const e of pName) { if (document.getElementById(e).checked) addToStage(e); }
+    for (const e of pName) if (document.getElementById(e).checked) addToStage(e);
   };
 }
 function addToStage(str) {

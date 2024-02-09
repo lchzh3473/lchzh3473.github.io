@@ -1,4 +1,4 @@
-# [Demo](https://lch&#122;h&#51;473.github.io/ascii_player/index "视频转字符画")
+# <!-- prettier-ignore -->[Demo](https://lchz&#104;3473.github.io/ascii_player/index "视频转字符画")
 
 ## 简介
 
@@ -10,7 +10,7 @@
 
 #### 修复
 
-- 修复Firefox字符画显示比例不正确的问题
+- 修复 Firefox 字符画显示比例不正确的问题
 
 ### [1.0.6] - 2022-10-26
 

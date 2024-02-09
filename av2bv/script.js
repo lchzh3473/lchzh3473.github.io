@@ -1,5 +1,5 @@
 'use strict';
-self._i = ['AV号与BV号转换器', [2, 1, 1], 1585055154, 1654211197];
+self._i = ['AV号与BV号转换器', [2, 2, 0], 1585055154, 1707448956];
 const copy = document.getElementById('copy');
 const input = document.getElementById('input');
 const output = document.getElementById('output');
@@ -9,22 +9,21 @@ const a2b = document.getElementById('av2bv');
 const b2a = document.getElementById('bv2av');
 const example = '示例：\nav92343654\nBV1UE411n763';
 input.placeholder = example;
-const table = Array.from('fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF');
-const pos = [9, 8, 1, 6, 2, 4];
-const xor = 177451812;
-const add = 8728348608;
+const table = Array.from('FcwAPNKTMug3GV5Lj7EJnHpWsx4tb8haYeviqBz6rkCy12mUSDQX9RdoZf');
+const pos = [8, 7, 0, 5, 1, 3, 2, 4, 6];
+const xor = 2275242641476827n;
 const tr = {};
-table.forEach((p, i) => tr[p] = i);
+table.forEach((p, i) => tr[p] = BigInt(i));
 const av2bv = code => {
-  const n = (code ^ xor) + add;
-  const s = {};
-  pos.forEach((p, i) => s[p] = table[Math.floor(n / 58 ** i) % 58]);
-  return `1${s[1]}${s[2]}4${s[4]}1${s[6]}7${s[8]}${s[9]}`;
+  let b = BigInt(code) ^ xor;
+  const s = [];
+  pos.forEach(p => { s[p] = table[b % 58n]; b /= 58n });
+  return `1${s.join('')}`;
 };
 const bv2av = code => {
-  let n = 0;
-  pos.forEach((p, i) => n += tr[code[p]] * 58 ** i);
-  return n - add ^ xor;
+  let n = 0n;
+  pos.forEach((p, i) => n += tr[code[p + 1]] * 58n ** BigInt(i));
+  return (n ^ xor).toString();
 };
 const convert = () => {
   const av = [0, 0];
@@ -39,7 +38,7 @@ const convert = () => {
       case 'a':
         dec = av2bv(enc);
         av[0]++;
-        if (Number(enc) === bv2av(dec)) {
+        if (enc === bv2av(dec)) {
           av[1]++;
           if (a2b.checked) return `<a class="bv"href="http://www.bilibili.com/video/BV${dec}">BV${dec}</a>`;
           return `<a class="av"href="http://www.bilibili.com/video/av${enc}">av${enc}</a>`;
