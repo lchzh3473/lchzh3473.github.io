@@ -1,5 +1,5 @@
 'use strict';
-self._i = ['小球碰撞', [1, 0], 1612411902, 1612411902];
+self._i = ['小球碰撞', [1, 0, 1], 1612411902, 1709123171];
 document.oncontextmenu = e => e.preventDefault();
 const canvas = document.getElementById('stage');
 self.addEventListener('resize', resize);
@@ -46,65 +46,77 @@ class Point {
     if (this.y < this.r) this.y = this.r;
   }
 }
-/* 适配PC鼠标 */
-let isMouseDown = false;
-canvas.addEventListener('mousedown', evt => {
-  evt.preventDefault();
-  if (isMouseDown) mouseup();
-  else {
-    clicks[0] = {
-      x1: evt.pageX * self.devicePixelRatio,
-      y1: evt.pageY * self.devicePixelRatio
-    };
-    isMouseDown = true;
-  }
-});
-canvas.addEventListener('mousemove', evt => {
-  evt.preventDefault();
-  if (isMouseDown) {
-    clicks[0].x2 = evt.pageX * self.devicePixelRatio;
-    clicks[0].y2 = evt.pageY * self.devicePixelRatio;
-  }
-});
-canvas.addEventListener('mouseup', evt => {
-  evt.preventDefault();
-  if (isMouseDown) mouseup();
-});
-function mouseup() {
-  item.push(new Point(clicks[0].x1, clicks[0].y1, (clicks[0].x1 - clicks[0].x2) / 20, (clicks[0].y1 - clicks[0].y2) / 20, clicks[0].r, clicks[0].color));
-  clicks[0] = {};
-  isMouseDown = false;
-}
-/* 适配移动设备 */
-const passive = {
-  passive: false
-};
-canvas.addEventListener('touchstart', evt => {
-  evt.preventDefault();
-  for (const i of evt.changedTouches) {
-    clicks[i.identifier] = {
-      x1: i.pageX * self.devicePixelRatio,
-      y1: i.pageY * self.devicePixelRatio
-    };
-  }
-}, passive);
-canvas.addEventListener('touchmove', evt => {
-  evt.preventDefault();
-  for (const i of evt.changedTouches) {
-    const idx = i.identifier;
-    if (idx >= 0) {
-      clicks[idx].x2 = i.pageX * self.devicePixelRatio;
-      clicks[idx].y2 = i.pageY * self.devicePixelRatio;
+import('../../utils/interact.js').then(({ Interact }) => {
+  const interact = new Interact(canvas);
+  /* 适配PC鼠标 */
+  let isMouseDown = false;
+  interact.setMouseEvent({
+    mousedownCallback(evt) {
+      if (isMouseDown) mouseup();
+      else {
+        clicks[0] = {
+          x1: evt.pageX * self.devicePixelRatio,
+          y1: evt.pageY * self.devicePixelRatio
+        };
+        isMouseDown = true;
+      }
+    },
+    mousemoveCallback(evt) {
+      if (isMouseDown) {
+        clicks[0].x2 = evt.pageX * self.devicePixelRatio;
+        clicks[0].y2 = evt.pageY * self.devicePixelRatio;
+      }
+    },
+    mouseupCallback(_evt) {
+      if (isMouseDown) mouseup();
     }
+  });
+  function mouseup() {
+    item.push(new Point(clicks[0].x1, clicks[0].y1, (clicks[0].x1 - clicks[0].x2) / 20, (clicks[0].y1 - clicks[0].y2) / 20, clicks[0].r, clicks[0].color));
+    clicks[0] = {};
+    isMouseDown = false;
   }
-}, passive);
-canvas.addEventListener('touchend', evt => {
-  evt.preventDefault();
-  for (const i of evt.changedTouches) {
-    const idx = i.identifier;
-    item.push(new Point(clicks[idx].x1, clicks[idx].y1, (clicks[idx].x1 - clicks[idx].x2) / 20, (clicks[idx].y1 - clicks[idx].y2) / 20, clicks[idx].r, clicks[idx].color));
-    if (idx >= 0) clicks[idx] = {};
-  }
+  /* 适配移动设备 */
+  interact.setTouchEvent({
+    /* 苹果设备Touch事件的identifier为随机整数，不适合用于索引 */
+    touchstartCallback(evt) {
+      for (const i of evt.changedTouches) {
+        clicks.push({
+          id: i.identifier,
+          x1: i.pageX * self.devicePixelRatio,
+          y1: i.pageY * self.devicePixelRatio
+        });
+      }
+    },
+    touchmoveCallback(evt) {
+      for (const i of evt.changedTouches) {
+        const idx = i.identifier;
+        const click = clicks.find(j => j.id === idx);
+        if (click) {
+          click.x2 = i.pageX * self.devicePixelRatio;
+          click.y2 = i.pageY * self.devicePixelRatio;
+        }
+      }
+    },
+    touchendCallback(evt) {
+      for (const i of evt.changedTouches) {
+        const idx = i.identifier;
+        const click = clicks.find(j => j.id === idx);
+        if (click) {
+          item.push(new Point(click.x1, click.y1, (click.x1 - click.x2) / 20, (click.y1 - click.y2) / 20, click.r, click.color));
+          clicks.splice(clicks.findIndex(j => j.id === idx), 1);
+        }
+      }
+    },
+    /* 实测iPhone超过5个触点会触发touchcancel */
+    touchcancelCallback(evt) {
+      for (const i of evt.changedTouches) {
+        const idx = i.identifier;
+        const click = clicks.find(j => j.id === idx);
+        if (click) clicks.splice(clicks.findIndex(j => j.id === idx), 1);
+      }
+    }
+  });
 });
 /* 作图 */
 function draw() {
@@ -122,7 +134,7 @@ function draw() {
     ctx.fill();
   }
   /* 绘制事件 */
-  const tek = [];
+  const stack = [];
   for (const i of clicks) {
     i.color = `rgb(${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)})`;
     i.r = Math.random() * 35 + 15;
@@ -133,8 +145,8 @@ function draw() {
     ctx.lineTo((i.x1 + i.x2) / 2, (i.y1 + i.y2) / 2);
     ctx.stroke();
     ctx.fill();
-    const tekn = (i.x1 - i.x2) ** 2 + (i.y1 - i.y2) ** 2;
-    if (!isNaN(tekn)) tek.push(Math.round(Math.sqrt(tekn) / 2));
+    const energy = (i.x1 - i.x2) ** 2 + (i.y1 - i.y2) ** 2;
+    if (!isNaN(energy)) stack.push(Math.round(Math.sqrt(energy) / 2));
   }
   /* 绘制文本 */
   let ek = 0;
@@ -145,7 +157,7 @@ function draw() {
   ctx.textAlign = 'start';
   ctx.fillText(`小球数量：${item.length}`, px * 0.6, px * 1.6);
   ctx.fillText(`动能：${ek ? Math.round(Math.sqrt(ek) * 10) : 0}`, px * 0.6, px * 2.9);
-  for (let i = 0, len = tek.length; i < len; i++) ctx.fillText(tek[i], px * 0.6, px * (4.2 + i * 1.3));
+  for (let i = 0, len = stack.length; i < len; i++) ctx.fillText(stack[i], px * 0.6, px * (4.2 + i * 1.3));
   ctx.textAlign = 'end';
   ctx.fillText('lchz\x683\x3473制作', canvas.width - px * 0.6, canvas.height - px * 0.6);
   /* 计算下一帧 */
