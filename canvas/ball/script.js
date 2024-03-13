@@ -4,7 +4,8 @@ document.oncontextmenu = e => e.preventDefault();
 const canvas = document.getElementById('stage');
 self.addEventListener('resize', resize);
 resize();
-const item = [];
+/** @type {Point[]} */
+const items = [];
 const clicks = [];
 /* 定义点类 */
 const df = 0.5; // 摩擦因数
@@ -72,7 +73,7 @@ import('../../utils/interact.js').then(({ Interact }) => {
     }
   });
   function mouseup() {
-    item.push(new Point(clicks[0].x1, clicks[0].y1, (clicks[0].x1 - clicks[0].x2) / 20, (clicks[0].y1 - clicks[0].y2) / 20, clicks[0].r, clicks[0].color));
+    items.push(new Point(clicks[0].x1, clicks[0].y1, (clicks[0].x1 - clicks[0].x2) / 20, (clicks[0].y1 - clicks[0].y2) / 20, clicks[0].r, clicks[0].color));
     clicks[0] = {};
     isMouseDown = false;
   }
@@ -103,7 +104,7 @@ import('../../utils/interact.js').then(({ Interact }) => {
         const idx = i.identifier;
         const click = clicks.find(j => j.id === idx);
         if (click) {
-          item.push(new Point(click.x1, click.y1, (click.x1 - click.x2) / 20, (click.y1 - click.y2) / 20, click.r, click.color));
+          items.push(new Point(click.x1, click.y1, (click.x1 - click.x2) / 20, (click.y1 - click.y2) / 20, click.r, click.color));
           clicks.splice(clicks.findIndex(j => j.id === idx), 1);
         }
       }
@@ -125,7 +126,7 @@ function draw() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   /* 绘制图形 */
   ctx.strokeStyle = '#fff';
-  for (const i of item) {
+  for (const i of items) {
     const { color } = i;
     ctx.fillStyle = color;
     ctx.beginPath();
@@ -150,22 +151,22 @@ function draw() {
   }
   /* 绘制文本 */
   let ek = 0;
-  for (const i of item) ek += i.vx ** 2 + i.vy ** 2;
+  for (const i of items) ek += i.vx ** 2 + i.vy ** 2;
   const px = 16 * self.devicePixelRatio;
   ctx.font = `${px}px Noto Sans SC`;
   ctx.fillStyle = 'rgba(255,255,255,0.6)';
   ctx.textAlign = 'start';
-  ctx.fillText(`小球数量：${item.length}`, px * 0.6, px * 1.6);
+  ctx.fillText(`小球数量：${items.length}`, px * 0.6, px * 1.6);
   ctx.fillText(`动能：${ek ? Math.round(Math.sqrt(ek) * 10) : 0}`, px * 0.6, px * 2.9);
   for (let i = 0, len = stack.length; i < len; i++) ctx.fillText(stack[i], px * 0.6, px * (4.2 + i * 1.3));
   ctx.textAlign = 'end';
   ctx.fillText('lchz\x683\x3473制作', canvas.width - px * 0.6, canvas.height - px * 0.6);
   /* 计算下一帧 */
-  for (const i of item) {
-    for (const j of item) i.collide(j);
+  for (const i of items) {
+    for (const j of items) i.collide(j);
     i.wall();
   }
-  for (const i of item) {
+  for (const i of items) {
     i.ay += 0.1; // 重力
     i.vx += i.ax * df;
     i.vy += i.ay * df;
