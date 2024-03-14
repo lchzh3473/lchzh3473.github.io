@@ -115,8 +115,8 @@ function analyse() {
           p += 4;
           const trklen = getUint(midi, p, 4) + p + 4;
           p += 4;
-          let tick = 0; let
-            type;
+          let tick = 0;
+          let type;
           while (p < trklen) {
             const meta = {};
             const duraVLQ = getVLQ(midi, p);
@@ -147,7 +147,8 @@ function analyse() {
                 }
                 if (type % 16 === 9) drum.push(meta);
                 else trk.push(meta);
-                break; }
+                break;
+              }
               case 10: // 0xA
               case 11: // 0xB
               case 14: // 0xE

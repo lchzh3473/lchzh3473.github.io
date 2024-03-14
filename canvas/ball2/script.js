@@ -1,7 +1,7 @@
 'use strict';
 self._i = ['小球排斥', [1, 0, 1], 1708151788, 1710337679];
 document.oncontextmenu = e => e.preventDefault();
-const/** @type {HTMLCanvasElement} */ canvas = document.getElementById('stage');
+const /** @type {HTMLCanvasElement} */ canvas = document.getElementById('stage');
 self.addEventListener('resize', resize);
 resize();
 /** @type {Point[]} */

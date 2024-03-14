@@ -1,5 +1,9 @@
 'use strict';
-self._i = ['AV号与BV号转换器', [2, 2, 0], 1585055154, 1707448956];
+/** @type {import('../../node_modules/jsbi/jsbi').default} */
+// eslint-disable-next-line prefer-destructuring
+const JSBI = window.JSBI;
+delete window.JSBI;
+self._i = ['AV号与BV号转换器', [2, 2, 1], 1585055154, 1710403044];
 const copy = document.getElementById('copy');
 const input = document.getElementById('input');
 const output = document.getElementById('output');
@@ -11,19 +15,29 @@ const example = '示例：\nav92343654\nBV1UE411n763';
 input.placeholder = example;
 const table = Array.from('FcwAPNKTMug3GV5Lj7EJnHpWsx4tb8haYeviqBz6rkCy12mUSDQX9RdoZf');
 const pos = [8, 7, 0, 5, 1, 3, 2, 4, 6];
-const xor = 2275242641476827n;
+// const xor = 2275242641476827n;
+const xor = JSBI.BigInt('2275242641476827');
 const tr = {};
-table.forEach((p, i) => tr[p] = BigInt(i));
+// table.forEach((p, i) => tr[p] = BigInt(i));
+table.forEach((p, i) => tr[p] = JSBI.BigInt(i));
 const av2bv = code => {
-  let b = BigInt(code) ^ xor;
+  // let b = BigInt(code) ^ xor;
+  let b = JSBI.bitwiseXor(JSBI.BigInt(code), xor);
   const s = [];
-  pos.forEach(p => { s[p] = table[b % 58n]; b /= 58n });
+  // pos.forEach(p => { s[p] = table[b % 58n]; b /= 58n });
+  pos.forEach(p => {
+    s[p] = table[JSBI.remainder(b, JSBI.BigInt(58))];
+    b = JSBI.divide(b, JSBI.BigInt(58));
+  });
   return `1${s.join('')}`;
 };
 const bv2av = code => {
-  let n = 0n;
-  pos.forEach((p, i) => n += tr[code[p + 1]] * 58n ** BigInt(i));
-  return (n ^ xor).toString();
+  // let n = 0n;
+  let n = JSBI.BigInt(0);
+  // pos.forEach((p, i) => n += tr[code[p + 1]] * 58n ** BigInt(i));
+  pos.forEach((p, i) => n = JSBI.add(n, JSBI.multiply(tr[code[p + 1]], JSBI.exponentiate(JSBI.BigInt(58), JSBI.BigInt(i)))));
+  // return (n ^ xor).toString();
+  return JSBI.bitwiseXor(n, xor).toString();
 };
 const convert = () => {
   const av = [0, 0];

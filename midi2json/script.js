@@ -65,7 +65,8 @@ function convert() {
                   o = 1;
                   o += c(bin);
                 } else re.innerHTML = `CODE ERROR(4)\n${n}\n${bin.slice(0, 10)}`;
-                break; }
+                break;
+              }
               case 8:
                 text = bin.shift();
                 if (text === '89' === w) j += `${o}999,\n`;
@@ -83,7 +84,8 @@ function convert() {
                 } else bin.shift();
                 o += c(bin);
                 if (parseInt(bin[0].substr(0, 1), 16) < 8) bin.unshift(text);
-                break; }
+                break;
+              }
               case 10:
               case 11:
               case 14:
@@ -112,10 +114,12 @@ function convert() {
                       for (let i = 0; i < text; i++) z += bin.shift();
                       q = 60000000 / parseInt(z, 16);
                       o += c(bin);
-                      break; }
+                      break;
+                    }
                     default:
                       text = parseInt(bin.shift(), 16);
-                      if (text === 0) o += c(bin); else {
+                      if (text === 0) o += c(bin);
+                      else {
                         for (let i = 0; i < text; i++) bin.shift();
                         o += c(bin);
                       }
