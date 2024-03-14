@@ -1,4 +1,4 @@
-self.addEventListener('install', function() {});
+self.addEventListener('install', function(){});
 self.addEventListener('fetch', (event) => {
   /**@type {Request} */
   const request = event.request;

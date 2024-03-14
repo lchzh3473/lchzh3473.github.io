@@ -34,7 +34,7 @@ module.exports = {
         tokens.forEach(token => {
           const commentText = token.value.trim();
           words.forEach(word => {
-          // use regex to match
+            // use regex to match
             const regex = new RegExp(word, 'i');
             // if match, report original comment
             if (regex.test(commentText)) {

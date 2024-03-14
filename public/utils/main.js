@@ -153,7 +153,7 @@ self.Utils = Utils; // export for iOS 14- qwq
         }
         case 'Baomitu': {
           const u0 = `//lib.baomitu.com/fonts/${f1}/${f1}-${w1}`;
-          const source = [ //
+          const source = [
             `url('${u0}.woff2')format('woff2')`, // Super Modern Browsers
             `url('${u0}.woff')format('woff')`, // Modern Browsers
             `url('${u0}.ttf')format('truetype')` // Safari, Android, iOS
@@ -205,6 +205,15 @@ self.Utils = Utils; // export for iOS 14- qwq
 }
 // stat
 (function() {
+  /* Eruda */
+  Utils.loadJS(`
+    (function() {
+      var src = '//fastly.jsdelivr.net/npm/eruda';
+      if (!new URLSearchParams(location.search).has('test')) return;
+      document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+      document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
+    })();
+  `);
   if (location.port) return;
   /* Baidu Tongji */
   Utils.loadJS(`
