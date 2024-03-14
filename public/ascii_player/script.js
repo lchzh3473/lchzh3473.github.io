@@ -1,5 +1,5 @@
 'use strict';
-self._i = ['视频转字符画', [1, 0, 7], 1592263658, 1677138548];
+self._i = ['视频转字符画', [1, 0, 8], 1592263658, 1710405257];
 const upload = document.getElementById('upload');
 // let videoHeight = 105; //自行设置
 upload.onchange = function() { // 上传文件
@@ -17,9 +17,10 @@ upload.onchange = function() { // 上传文件
   const canvas = document.createElement('canvas');
   const video = document.createElement('video');
   const ctx = canvas.getContext('2d', { willReadFrequently: true }); // warning
-  ctx.font = '1rem Consolas,monospace';
+  ctx.font = '16px Consolas,monospace'; // 1rem=16px(rem对于部分浏览器存在差异)
   const charWidth = ctx.measureText('W'.repeat(140)).width; // 计算字符宽度
   video.src = URL.createObjectURL(this.files[0]);
+  video.setAttribute('playsinline', ''); // 阻止iPhone自动全屏
   video.onloadedmetadata = function() {
     const isUnknown = video.videoWidth === 0 || video.videoHeight === 0;
     if (isUnknown) {
