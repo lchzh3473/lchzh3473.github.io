@@ -1,5 +1,5 @@
 'use strict';
-self._i = ['WebSQL', [1, 0, 0], 1651645939, 1651645939];
+self._i = ['WebSQL', [1, 0, 1], 1651645939, 1710417960];
 let db = null;
 const stage = document.getElementById('stage');
 const inputbox = document.createElement('div');
@@ -10,9 +10,12 @@ textarea.addEventListener('beforeinput', enterKeyCheck);
 textarea.addEventListener('input', resize);
 const textarea2 = document.createElement('textarea');
 textarea2.classList.add('mirror');
-const resizeObserver = new ResizeObserver(resize);
-resizeObserver.observe(textarea);
-resizeObserver.observe(document.body);
+// 是否支持ResizeObserver
+if (typeof ResizeObserver === 'function') {
+  const resizeObserver = new ResizeObserver(resize);
+  resizeObserver.observe(textarea);
+  resizeObserver.observe(document.body);
+} else setInterval(resize, 100);
 stage.appendChild(inputbox).append(textarea, textarea2);
 input('输入sql语句，然后回车。');
 function enterKeyCheck(evt) {
