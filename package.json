@@ -8,6 +8,7 @@
   "dependencies": {
     "earcut": "^2.2.4",
     "gl-matrix": "^3.4.3",
+    "jsbi": "^4.3.0",
     "three": "^0.161.0"
   },
   "devDependencies": {
